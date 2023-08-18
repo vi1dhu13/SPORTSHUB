@@ -1,0 +1,153 @@
+<mxfile host="Electron" modified="2023-08-02T09:41:13.613Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.5 Chrome/114.0.5735.243 Electron/25.3.1 Safari/537.36" etag="QkTJyZuYgqvW_zIDoddw" version="21.6.5" type="device">
+  <diagram name="Page-1" id="77nReOHHrCNFoWFJTKwl">
+    <mxGraphModel dx="1446" dy="710" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-11" value="Registergymuser" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="2093" y="560" width="165" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-12" value="- Email: serviceprovider@example.com (string)&lt;br/&gt;&lt;br&gt;- Password:&amp;nbsp;&lt;br&gt;&amp;nbsp;+ Provider ID: 2002 (int)&lt;br/&gt;&lt;br&gt;+ Name: Fitness First Studio (string)&lt;br/&gt;&lt;br&gt;+ Phone: +1 (555) 876-5432 (string)&lt;br/&gt;&lt;br&gt;+ Location: Miami, USA (string)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="-2Y2omNcPgbmkeUkjKXX-11" vertex="1">
+          <mxGeometry y="26" width="165" height="173" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-13" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="-2Y2omNcPgbmkeUkjKXX-11" vertex="1">
+          <mxGeometry y="199" width="165" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-14" value="+ register()&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ login()&lt;br&gt;+ editProfile()&lt;br&gt;+ manageBookings()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="-2Y2omNcPgbmkeUkjKXX-11" vertex="1">
+          <mxGeometry y="207" width="165" height="73" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-15" value="Admin" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="1822" y="312" width="160" height="138" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-16" value="- email: string&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;- password: string&lt;br&gt;+ adminid: int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="-2Y2omNcPgbmkeUkjKXX-15" vertex="1">
+          <mxGeometry y="26" width="160" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-17" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="-2Y2omNcPgbmkeUkjKXX-15" vertex="1">
+          <mxGeometry y="74" width="160" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-18" value="+ verifyUser()&lt;br&gt;+ manageProfile()&lt;br&gt;+ login()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="-2Y2omNcPgbmkeUkjKXX-15" vertex="1">
+          <mxGeometry y="82" width="160" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-57" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" target="-2Y2omNcPgbmkeUkjKXX-15" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="2174" y="560" as="sourcePoint" />
+            <mxPoint x="2287" y="438" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="2174" y="532" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-58" value="0 ...*" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="2114.0006456801475" y="528.0023385799633" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-66" value="1" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1901.0027716619315" y="825.001818181818" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-80" value="Payment" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="1794" y="1299" width="170" height="247" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-81" value="+ Amount: $120.50 (float)&lt;br/&gt;+ Date: 2023-07-20 (date)&lt;br/&gt;+ Payment Status: Pending (string)&lt;br/&gt;+ Payment Method: PayPal (string)&lt;br/&gt;+ Transaction ID: TRX67890 (string)&lt;br/&gt;+ Trainer ID: 3001 (int)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="-2Y2omNcPgbmkeUkjKXX-80" vertex="1">
+          <mxGeometry y="26" width="170" height="137" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-82" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="-2Y2omNcPgbmkeUkjKXX-80" vertex="1">
+          <mxGeometry y="163" width="170" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-83" value="+ payment()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="-2Y2omNcPgbmkeUkjKXX-80" vertex="1">
+          <mxGeometry y="171" width="170" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-87" value="1" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="2165.99785011574" y="1139.9992954282407" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-88" value="1" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="2158.9982204861108" y="1170.0041102430555" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="-2Y2omNcPgbmkeUkjKXX-90">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1468" y="467" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-90" value="REGISTEREDSPROTSUSER" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="1388" y="484" width="167" height="255" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-91" value="&lt;div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Email: john.doe@example.com&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Password:&amp;nbsp;&lt;/div&gt;&lt;div&gt;+ Attendee ID: 12345&lt;/div&gt;&lt;div&gt;+ Name: John Doe&lt;/div&gt;&lt;div&gt;+ Areas of Interest: Calisthenics&lt;/div&gt;&lt;div&gt;+ Location: New York, USA&lt;/div&gt;&lt;div&gt;+ Phone: +1 (555) 123-4567&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="-2Y2omNcPgbmkeUkjKXX-90" vertex="1">
+          <mxGeometry y="26" width="167" height="154" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-92" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="-2Y2omNcPgbmkeUkjKXX-90" vertex="1">
+          <mxGeometry y="180" width="167" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-93" value="+ register()&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ login()&lt;br&gt;+ Bookslots()&lt;br&gt;+ Buy membership()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="-2Y2omNcPgbmkeUkjKXX-90" vertex="1">
+          <mxGeometry y="188" width="167" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-94" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="-2Y2omNcPgbmkeUkjKXX-90" target="-2Y2omNcPgbmkeUkjKXX-15" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1456" y="560" as="sourcePoint" />
+            <mxPoint x="1321" y="436" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1471" y="392" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-96" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;entryX=-0.025;entryY=0.824;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="-2Y2omNcPgbmkeUkjKXX-93" target="oxNrvazo7EBIHtgZNPgB-2" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1488" y="783" as="sourcePoint" />
+            <mxPoint x="1818.746" y="961.0799999999999" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1467" y="798" />
+              <mxPoint x="1717" y="794" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-1" value="TRainer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="1777" y="583" width="188" height="379" as="geometry" />
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-2" value="+ Name: John Smith (string)&lt;br/&gt;+ Specialization: Personal Training (string)&lt;br/&gt;+ Experience: 10 (integer)&lt;br/&gt;+ Certifications: ACE Certified Personal Trainer (string)&lt;br/&gt;+ Contact Information:&lt;br/&gt;    - Email: john.smith@example.com (string)&lt;br/&gt;    - Phone: +1 (555) 123-4567 (string)&lt;br/&gt;    - LinkedIn: linkedin.com/in/johnsmith (string)&lt;br/&gt;+ Trainer ID: 1001 (int)&lt;br/&gt;+ Users: &lt;br/&gt;    - User ID 1&lt;br/&gt;    - User ID 2&lt;br/&gt;    - User ID 3" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="oxNrvazo7EBIHtgZNPgB-1">
+          <mxGeometry y="26" width="188" height="302" as="geometry" />
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="oxNrvazo7EBIHtgZNPgB-1">
+          <mxGeometry y="328" width="188" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-4" value="+Createplans/memberships()&lt;br&gt;+allocatefacility()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="oxNrvazo7EBIHtgZNPgB-1">
+          <mxGeometry y="336" width="188" height="43" as="geometry" />
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-6" value="Service" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="1791" y="1009" width="161" height="262" as="geometry" />
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-7" value="+ Plan ID: 1001 (int)&lt;br&gt;+ Name: Beginner&#39;s Fitness Program (string)&lt;br&gt;+ Category: Fitness Training (string)&lt;br&gt;+ Description: (string)&lt;br&gt;+ Trainer ID: 2002 (int)&lt;br&gt;+ Availability: Monday to Friday, 8:00 AM - 6:00 PM (string)&lt;br&gt;+ Service Rates: $50 per session (float)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="oxNrvazo7EBIHtgZNPgB-6">
+          <mxGeometry y="26" width="161" height="185" as="geometry" />
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-8" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="oxNrvazo7EBIHtgZNPgB-6">
+          <mxGeometry y="211" width="161" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-9" value="+bookservice()&lt;br&gt;+customiseservice()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="oxNrvazo7EBIHtgZNPgB-6">
+          <mxGeometry y="219" width="161" height="43" as="geometry" />
+        </mxCell>
+        <mxCell id="-2Y2omNcPgbmkeUkjKXX-84" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;exitX=0.006;exitY=0.258;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.743;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="-2Y2omNcPgbmkeUkjKXX-14" target="oxNrvazo7EBIHtgZNPgB-2" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="2135.2664670658683" y="1009.21" as="sourcePoint" />
+            <mxPoint x="1982" y="771.0041176470588" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="2055" y="773" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-10" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;exitX=0.427;exitY=0.012;exitDx=0;exitDy=0;entryX=0.453;entryY=1.008;entryDx=0;entryDy=0;entryPerimeter=0;exitPerimeter=0;" edge="1" parent="1" source="oxNrvazo7EBIHtgZNPgB-6" target="oxNrvazo7EBIHtgZNPgB-4">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="2184" y="570" as="sourcePoint" />
+            <mxPoint x="1992" y="435" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-11" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;exitX=0.427;exitY=0.012;exitDx=0;exitDy=0;entryX=0.453;entryY=1.008;entryDx=0;entryDy=0;entryPerimeter=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1863" y="1297" as="sourcePoint" />
+            <mxPoint x="1862" y="1223" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oxNrvazo7EBIHtgZNPgB-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.449;entryY=-0.014;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="oxNrvazo7EBIHtgZNPgB-1" target="oxNrvazo7EBIHtgZNPgB-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
