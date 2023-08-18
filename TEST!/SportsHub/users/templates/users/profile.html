@@ -1,0 +1,179 @@
+{% comment %} 
+
+{% block content %}
+<div class="container">
+  <h2>Edit Profile</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form.first_name.label_tag }}
+      {{ form.first_name }}
+    </div>
+    <div class="form-group">
+      {{ form.last_name.label_tag }}
+      {{ form.last_name }}
+    </div>
+    <div class="form-group">
+      {{ form.email.label_tag }}
+      {{ form.email }}
+    </div>
+    <div class="form-group">
+      {{ form.description.label_tag }}
+      {{ form.description }}
+    </div>
+    <div class="form-group">
+      {{ form.role.label_tag }}
+      {{ form.role }}
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+</div>
+{% endblock %}
+<form>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Email</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Password</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputAddress">Address</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+  </div>
+  <div class="form-group">
+    <label for="inputAddress2">Address 2</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputCity">City</label>
+      <input type="text" class="form-control" id="inputCity">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">State</label>
+      <select id="inputState" class="form-control">
+        <option selected>Choose...</option>
+        <option>...</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="inputZip">Zip</label>
+      <input type="text" class="form-control" id="inputZip">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        Check me out
+      </label>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Sign in</button>
+</form> {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f2f2f2; /* Light ash color */
+    }
+    /* Custom styles for the form container */
+    .container {
+      max-width: 600px;
+      margin: 10px auto;
+      padding: 20px;
+      background-color: #333;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      color: #fff;
+    }
+
+    /* Custom styles for the form */
+    form {
+      margin-top: 20px;
+    }
+
+    /* Style form labels */
+    label {
+      font-weight: bold;
+      color: #fff;
+    }
+
+    /* Style form fields */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    /* Style input fields */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      background-color: #444;
+      color: #fff;
+      border: 1px solid #555;
+      width: 100%; /* Make input fields longer */
+      padding: 10px; /* Add some padding for better appearance */
+      box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    /* Style submit button */
+    .btn-primary {
+      background-color: #4285F4;
+      border-color: #4285F4;
+    }
+
+    /* Additional styles for the second form section */
+    .form-row {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  
+    {% block content %}
+      <!-- Your Django form content goes here -->
+      <div class="container">
+        <h2>Edit Profile</h2>
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="{{ form.first_name.id_for_label }}">First Name</label>
+            {{ form.first_name }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+            {{ form.last_name }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.description.id_for_label }}">Description</label>
+            {{ form.description }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.role.id_for_label }}">Role</label>
+            {{ form.role }}
+          </div>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+    {% endblock %}
+  
+
+  <!-- Include Bootstrap JS (optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
