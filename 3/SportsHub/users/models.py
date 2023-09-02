@@ -51,11 +51,42 @@ class Role(models.Model):
     def __str__(self):
         return self.name
 
+
+
+
+class CommonChoice(models.Model):
+    FITNESS_GOAL_CHOICES = [
+        ('weight_loss', 'Weight Loss'),
+        ('weight_gain', 'Weight Gain'),
+        ('calisthenics', 'Calisthenics'),
+        ('crossfit', 'Crossfit'),
+        ('bodybuilding', 'Bodybuilding'),
+    ]
+
+    name = models.CharField(max_length=255, choices=FITNESS_GOAL_CHOICES)
+    choice_type = models.CharField(
+        max_length=25,  # Updated max_length to accommodate the longest choice
+        choices=[('fitness_goal', 'Fitness Goal'), ('trainer_specialization', 'Trainer Specialization')],
+    )
+
+    def __str__(self):
+        return self.get_name_display()
+
+    
+from django.db import models
+from .models import CustomUser,CommonChoice
+
+
 class RoleApplication(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     specialization_details = models.TextField(blank=True, null=True)
     is_approved = models.BooleanField(default=False)
+
+    # New fields for fitness application
+    fitness_goal = models.ForeignKey(CommonChoice, on_delete=models.CASCADE, blank=True, null=True, related_name="fitness_applications")
+    height = models.FloatField(blank=True, null=True)
+    weight = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.username} - {self.role.name} Application"

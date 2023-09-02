@@ -121,15 +121,24 @@ def password_reset_form(request):
 
 
 
-
 from django.shortcuts import render, redirect
 from .forms import RoleApplicationForm
 
 def role_application_view(request):
+    # Check if the user already has one of the three roles
+    has_role = CustomUser.objects.filter(
+        username=request.user.username,
+        role__in=['FitnessUser', 'FitnessTrainer', 'SportsTrainer']
+    ).exists()
+
+    # Check if the user already has a pending application
     existing_application = RoleApplication.objects.filter(user=request.user, is_approved=False).first()
 
+    if has_role:
+        return render(request, 'users/has_role.html')
+    
     if existing_application:
-        return render(request, 'application_pending.html')
+        return render(request, 'users/application_pending.html')
     
     if request.method == 'POST':
         form = RoleApplicationForm(request.user, request.POST)
@@ -140,6 +149,9 @@ def role_application_view(request):
         form = RoleApplicationForm(request.user)
     
     return render(request, 'users/role_application.html', {'form': form})
+
+
+
 
 
 from django.contrib.auth.decorators import user_passes_test

@@ -59,14 +59,14 @@ class UserUpdateForm(forms.ModelForm):
     
 from django import forms
 from .models import RoleApplication
-
 from django import forms
 from .models import RoleApplication
+from .models import CommonChoice  # Import the CommonChoice model
 
 class RoleApplicationForm(forms.ModelForm):
     class Meta:
         model = RoleApplication
-        fields = ['role', 'specialization_details']
+        fields = ['role', 'specialization_details', 'fitness_goal', 'height', 'weight']
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -1,0 +1,23 @@
+
+
+{% block content %}
+<div class="container">
+  <h2>Role Application</h2>
+  <form method="post" class="mt-4">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="{{ form.role.id_for_label }}">Role</label>
+      {{ form.role }}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.specialization_details.id_for_label }}">Specialization Details</label>
+      {{ form.specialization_details }}
+    </div>
+    <div class="form-group">
+      <label for="user_role">Your Current Role</label>
+      <input type="text" id="user_role" class="form-control" value="{{ user.role }}" readonly>
+    </div>
+    <button type="submit" class="btn btn-primary">Apply</button>
+  </form>
+</div>
+{% endblock %}
