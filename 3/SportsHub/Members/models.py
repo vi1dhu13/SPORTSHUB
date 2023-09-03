@@ -25,3 +25,5 @@ class SportsTrainer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     specialization = models.CharField(max_length=255)
     # Add other fields specific to SportsTrainer
+
+

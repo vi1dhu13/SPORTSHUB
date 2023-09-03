@@ -1,0 +1,20 @@
+<!-- members/templates/members/view_fitness_trainers.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Trainers</title>
+</head>
+<body>
+    <h1>Fitness Trainers</h1>
+    <ul>
+        {% for trainer in fitness_trainers %}
+            <li>{{ trainer.user.username }} - {{ trainer.experience }} years of experience</li>
+        {% empty %}
+            <li>No fitness trainers available</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

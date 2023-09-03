@@ -65,8 +65,11 @@
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 
                 {% if user.is_authenticated %}
+<!-- Include this button in a template where sports users can access it -->
+<a href="{% url 'Members:view_fitness_trainers' %}" class="btn btn-primary">View Fitness Trainers</a>
 
                 <li><a href="{% url 'users:profile' user.username %}" class="nav-link"> MYprofile</a></li>
+                <a href="{% url 'Members:all_users' %}" class="btn btn-primary">View All Users</a>
                 <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
               </ul>
             </nav>
