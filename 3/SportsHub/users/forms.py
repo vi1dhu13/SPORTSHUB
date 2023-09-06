@@ -63,6 +63,8 @@ from django import forms
 from .models import RoleApplication
 from .models import CommonChoice  # Import the CommonChoice model
 
+from django import forms
+
 class RoleApplicationForm(forms.ModelForm):
     class Meta:
         model = RoleApplication
@@ -72,6 +74,15 @@ class RoleApplicationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['role'].queryset = Role.objects.all()
         self.user = user
+
+        # Adding Bootstrap classes to form fields
+        bootstrap_class = 'form-control'  # Bootstrap class for form fields
+
+        self.fields['role'].widget.attrs.update({'class': bootstrap_class})
+        self.fields['specialization_details'].widget.attrs.update({'class': bootstrap_class, 'rows': '4'})
+        self.fields['fitness_goal'].widget.attrs.update({'class': bootstrap_class})
+        self.fields['height'].widget.attrs.update({'class': bootstrap_class})
+        self.fields['weight'].widget.attrs.update({'class': bootstrap_class})
 
     def save(self, commit=True):
         instance = super().save(commit=False)

@@ -165,16 +165,25 @@ def role_approval_view(request):
     if request.method == 'POST':
         application_id = request.POST.get('application_id')
         application = RoleApplication.objects.get(id=application_id)
-        application.is_approved = True
-        application.save()
 
-        # Update the user's role to the approved role
-        user = application.user
-        user.role = application.role.name
-        user.save()
+        # Check which action button was clicked (Approve or Reject)
+        action = request.POST.get('action')
+
+        if action == 'approve':
+            application.is_approved = True
+            application.save()
+
+            # Update the user's role to the approved role
+            user = application.user
+            user.role = application.role.name
+            user.save()
+
+        elif action == 'reject':
+            application.delete()  # Delete the rejected application
 
         return redirect('index')  # Replace with the appropriate URL name
 
     return render(request, 'users/role_approval.html', {'applications_pending_approval': applications_pending_approval})
+
 
 
