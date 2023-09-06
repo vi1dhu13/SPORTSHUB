@@ -158,6 +158,11 @@ from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
 from .models import RoleApplication
 
+from django.shortcuts import render, redirect
+from .models import RoleApplication, CustomUser
+from Members.models import FitnessUser
+
+
 @admin_user_required
 def role_approval_view(request):
     applications_pending_approval = RoleApplication.objects.filter(is_approved=False)
@@ -178,12 +183,23 @@ def role_approval_view(request):
             user.role = application.role.name
             user.save()
 
+            # If the user's role is 'FitnessUser', create a FitnessUser instance
+            if user.role == 'FitnessUser':
+                fitness_user = FitnessUser(
+                    user=user,
+                    fitness_goal=application.fitness_goal,
+                    height=application.height,
+                    weight=application.weight,
+                )
+                fitness_user.save()
+
         elif action == 'reject':
             application.delete()  # Delete the rejected application
 
         return redirect('index')  # Replace with the appropriate URL name
 
     return render(request, 'users/role_approval.html', {'applications_pending_approval': applications_pending_approval})
+
 
 
 

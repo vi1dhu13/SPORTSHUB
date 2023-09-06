@@ -58,21 +58,30 @@ class UserUpdateForm(forms.ModelForm):
         return email 
     
 from django import forms
-from .models import RoleApplication
-from django import forms
-from .models import RoleApplication
-from .models import CommonChoice  # Import the CommonChoice model
-
-from django import forms
+from .models import RoleApplication, Role, CommonChoice
 
 class RoleApplicationForm(forms.ModelForm):
+    # Define Role choices from queryset
+    role = forms.ModelChoiceField(queryset=Role.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
+    
+    # Define fitness_goal choices from CommonChoice model
+    fitness_goal = forms.ModelChoiceField(
+        queryset=CommonChoice.objects.filter(choice_type='fitness_goal'),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    # Define specialization_details choices from CommonChoice model
+    specialization_details = forms.ModelChoiceField(
+        queryset=CommonChoice.objects.filter(choice_type='trainer_specialization'),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
     class Meta:
         model = RoleApplication
         fields = ['role', 'specialization_details', 'fitness_goal', 'height', 'weight']
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['role'].queryset = Role.objects.all()
         self.user = user
 
         # Adding Bootstrap classes to form fields

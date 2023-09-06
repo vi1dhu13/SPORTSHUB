@@ -9,3 +9,11 @@ class RoleAdmin(admin.ModelAdmin):
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Role, RoleAdmin)
+
+from django.contrib import admin
+from .models import CommonChoice
+
+class CommonChoiceAdmin(admin.ModelAdmin):
+    list_display = ['name', 'choice_type']
+
+admin.site.register(CommonChoice, CommonChoiceAdmin)
