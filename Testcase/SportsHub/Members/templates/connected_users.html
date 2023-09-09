@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Connected Users</title>
+</head>
+<body>
+    <h1>Connected Users</h1>
+
+    <ul>
+        {% for user in connected_users %}
+            <li>
+                <strong>{{ user.user.username }}</strong>
+                <br>
+                Fitness Goal: {{ user.fitness_goal }}
+                <br>
+                Height: {{ user.height }} cm
+                <br>
+                Weight: {{ user.weight }} kg
+                <!-- Add more user-specific information here -->
+            </li>
+            <br>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'Members:fitness_trainer_dashboard' %}">Back to Trainer Dashboard</a>
+</body>
+</html>
