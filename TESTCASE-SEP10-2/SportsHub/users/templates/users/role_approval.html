@@ -1,0 +1,135 @@
+{% comment %} 
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Pending Role Applications</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="list-group">
+      {% for application in applications_pending_approval %}
+        <div class="list-group-item">
+          <div class="d-flex justify-content-between align-items-center">
+            <span>{{ application.user.username }} - {{ application.role.name }}</span>
+            <div class="btn-group">
+              <input type="hidden" name="application_id" value="{{ application.id }}">
+              <button type="submit" class="btn btn-success">Approve</button>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </form>
+</div>
+{% endblock %} {% endcomment %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f2f2f2; /* Light ash color */
+    }
+    /* Custom styles for the form container */
+    .container {
+      max-width: 600px;
+      margin: 10px auto;
+      padding: 20px;
+      background-color: #333;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      color: #fff;
+    }
+
+    /* Custom styles for the form */
+    form {
+      margin-top: 20px;
+    }
+
+    /* Style form labels */
+    label {
+      font-weight: bold;
+      color: #fff;
+    }
+
+    /* Style form fields */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    /* Style input fields */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      background-color: #444;
+      color: #fff;
+      border: 1px solid #555;
+      width: 100%; /* Make input fields longer */
+      padding: 10px; /* Add some padding for better appearance */
+      box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    /* Style submit button */
+    .btn-primary {
+      background-color: #4285F4;
+      border-color: #4285F4;
+    }
+
+    /* Additional styles for the second form section */
+    .form-row {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <a href="{% url 'users:role_approval' %}">Approve Role Applications</a>
+  <a href="{% url 'users:role_application' %}">Apply for a Role</a>
+
+  {% block content %}
+  <!-- Your Django form content goes here -->
+  <div class="container">
+      <form method="post">
+          {% csrf_token %}
+          <div class="list-group">
+              {% if applications_pending_approval %}
+                  {% for application in applications_pending_approval %}
+                      <div class="list-group-item">
+                          <div class="d-flex justify-content-between align-items-center">
+                              <span>{{ application.user.username }} - {{ application.role.name }}</span>
+                              <div class="btn-group">
+                                  <input type="hidden" name="application_id" value="{{ application.id }}">
+                                  <button type="submit" class="btn btn-success" name="action" value="approve">Approve</button>
+                                  <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
+                              </div>
+                          </div>
+                          <!-- Display all fields here -->
+                          <ul>
+                              <li><strong>Specialization Details:</strong> {{ application.specialization_details }}</li>
+                              <li><strong>Is Approved:</strong> {{ application.is_approved }}</li>
+                              <li><strong>Fitness Goal:</strong> {{ application.fitness_goal }}</li>
+                              <li><strong>Height:</strong> {{ application.height }}</li>
+                              <li><strong>Weight:</strong> {{ application.weight }}</li>
+                              <!-- Add more fields as needed -->
+                          </ul>
+                      </div>
+                  {% endfor %}
+              {% else %}
+                  <div class="list-group-item">
+                      <p>No role applications pending approval.</p>
+                  </div>
+              {% endif %}
+          </div>
+      </form>
+  </div>
+  {% endblock %}
+  <!-- Include Bootstrap JS (optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

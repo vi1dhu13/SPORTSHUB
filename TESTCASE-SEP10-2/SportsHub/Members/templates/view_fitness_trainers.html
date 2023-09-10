@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Trainers</title>
+    <style>
+        body {
+            background-color: #f2f2f2; /* Light ash color */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+
+        /* Container for the entire page */
+        .page-container {
+            max-width: 1200px; /* Set a maximum width for the content */
+            margin: 0 auto; /* Center the content horizontally */
+            padding: 20px; /* Add some padding to the page */
+        }
+
+        /* Container for the header */
+        .header-container {
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            padding: 20px; /* Add padding to the header */
+        }
+
+        /* Container for the list of fitness trainers */
+        .trainers-container {
+            margin-top: 20px; /* Add some space between the header and the list */
+        }
+
+        /* Style form labels */
+        label {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Style form fields */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Style input fields */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            background-color: #444;
+            color: #fff;
+            border: 1px solid #555;
+            width: 100%; /* Make input fields longer */
+            padding: 10px; /* Add some padding for better appearance */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+
+        /* Style submit button */
+        .btn-primary {
+            background-color: #4285F4;
+            border-color: #4285F4;
+        }
+
+        /* Additional styles for the second form section */
+        .form-row {
+            margin-top: 20px;
+        }
+
+        /* Card styles */
+        .card {
+            background-color: #fff; /* White background for cards */
+            border: 1px solid #ccc; /* Gray border for cards */
+            border-radius: 10px; /* Rounded corners for cards */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect for cards */
+            margin-bottom: 20px; /* Add space between cards */
+        }
+
+        /* Card title styles */
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Card text styles */
+        .card-text {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="header-container">
+            <h1>Fitness Trainers</h1>
+        </div>
+        <div class="trainers-container">
+            {% for trainer in fitness_trainers %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ trainer.user.username }}</h5>
+                    <p class="card-text"><strong>Email:</strong> {{ trainer.user.email }}</p>
+                    <p class="card-text"><strong>Role:</strong> {{ trainer.user.role }}</p>
+                    {% if trainer.user.role == 'FitnessUser' %}
+                    <p class="card-text"><strong>Fitness Goal:</strong> {{ trainer.user.fitnessuser.fitness_goal }}</p>
+                    <p class="card-text"><strong>Height:</strong> {{ trainer.user.fitnessuser.height }}</p>
+                    <p class="card-text"><strong>Weight:</strong> {{ trainer.user.fitnessuser.weight }}</p>
+                    {% elif trainer.user.role == 'FitnessTrainer' %}
+                    <p class="card-text"><strong>Experience:</strong> {{ trainer.user.fitnesstrainer.experience }} years</p>
+                    <p class="card-text"><strong>Certification:</strong> {{ trainer.user.fitnesstrainer.certification }}</p>
+                    <p class="card-text"><strong>Training Goal:</strong> {{ trainer.user.fitnesstrainer.training_goal }}</p>
+                    {% elif trainer.user.role == 'SportsTrainer' %}
+                    <p class="card-text"><strong>Specialization:</strong> {{ trainer.user.sportstrainer.specialization }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
