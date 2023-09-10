@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Suggest Training Plans</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Gym Trainer Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+               
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:view_pending_requests' %}">View Pending Requests</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:connected_users' %}" >Clients</a>
+                </li>
+                
+                {% comment %} <a href="{% url 'Members:connected_users' %}" class="btn btn-primary">View Connected Users</a> {% endcomment %}
+                {% comment %} <li class="nav-item">
+                    <form method="post" action="{% url 'Members:suggest_training_plans' %}">
+                        {% csrf_token %}
+                        <button type="submit">Create Training Plan</button>
+                    </form>
+            
+                </li> {% endcomment %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:suggest_training_plans' %}" >Clients</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Container for the header -->
+    <div class="container mt-5">
+        <h1>Suggested Training Plans</h1>
+    </div>
+
+    <!-- Container for the form -->
+    <div class="container mt-3">
+        <form method="post" action="{% url 'Members:suggest_training_plans' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="selected_user" class="form-label">Select a User:</label>
+                <select name="selected_user" id="selected_user" class="form-select">
+                    <option value="" selected disabled>Select a User</option>
+                    {% for user in connected_users %}
+                        <option value="{{ user.id }}">{{ user.user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="selected_plan" class="form-label">Select a Plan:</label>
+                <select name="selected_plan" id="selected_plan" class="form-select">
+                    <option value="" selected disabled>Select a Plan</option>
+                    {% for plan in available_plans %}
+                        <option value="{{ plan.id }}">{{ plan.plan_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Assign Plan</button>
+        </form>
+    </div>
+
+    <!-- Include Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
