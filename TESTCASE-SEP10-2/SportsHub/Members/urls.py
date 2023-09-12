@@ -16,13 +16,20 @@ urlpatterns = [
     path('approve_reject_request/<int:request_id>/', views.approve_reject_request, name='approve_reject_request'),
     path('select_trainer/', views.select_trainer, name='select_trainer'),
     path('connection_success/', views.connection_success, name='connection_success'),
-    # path('create_training_plan/', views.create_training_plan, name='create_training_plan'),
+    path('create_training_plan/', views.create_training_plan, name='create_training_plan'),
     path('connected_users/', views.show_connected_users, name='connected_users'),
-
+    path('training_plan_list/', views.training_plan_list, name='training_plan_list'),
     path('suggest_training_plans/', views.suggest_training_plans, name='suggest_training_plans'),
     path('view_assigned_training_plans/<int:user_id>/', views.view_assigned_training_plans, name='view_assigned_training_plans'),
 
     path('accept_training_plan/<int:user_id>/', views.accept_training_plan, name='accept_training_plan'),
     path('reject_training_plan/<int:user_id>/', views.reject_training_plan, name='reject_training_plan'),
+   
+#    path('create_weekly_workout_plan/', CreateWeeklyWorkoutPlanView.as_view(), name='create_weekly_workout_plan'),
+
+
+
+   
+
 
 ]

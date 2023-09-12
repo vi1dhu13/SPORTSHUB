@@ -110,8 +110,9 @@ def select_trainer(request):
     ).first()
 
     if existing_connection:
-        # If an existing connection is found, handle it here (e.g., show a message)
-        return render(request, 'already_connected.html', {'connection': existing_connection})
+        # If an existing connection is found, retrieve the connected trainer's details
+        connected_trainer = existing_connection.fitness_trainer
+        return render(request, 'connected_trainer.html', {'connected_trainer': connected_trainer})
 
     if request.method == "POST":
         selected_trainer_id = request.POST.get("trainer_id")
@@ -204,8 +205,9 @@ def show_connected_users(request):
 
 
 
-from django.shortcuts import render, redirect
-from .models import FitnessUser, TrainingPlan, TrainerUserConnection, TrainingPlanAssignment
+
+
+
 
 def suggest_training_plans(request):
     trainer = request.user.fitnesstrainer
@@ -213,8 +215,8 @@ def suggest_training_plans(request):
     # Use the TrainerUserConnection model to get connected users for this trainer
     connected_users = FitnessUser.objects.filter(traineruserconnection__fitness_trainer=trainer)
 
-    # Get a list of available training plans (you can customize this logic)
-    available_plans = TrainingPlan.objects.all()
+    # Get available training plans created by the logged-in trainer
+    available_plans = TrainingPlan.objects.filter(created_by_trainer=trainer)
 
     if request.method == 'POST':
         selected_user_id = request.POST.get('selected_user')
@@ -235,6 +237,7 @@ def suggest_training_plans(request):
 
     context = {'connected_users': connected_users, 'available_plans': available_plans}
     return render(request, 'suggest_training_plans.html', context)
+1
 
 
 
@@ -332,3 +335,36 @@ def reject_training_plan(request, user_id):
 
     return redirect('Members:view_assigned_training_plans', user_id=user_id)
 
+
+from django.shortcuts import render, redirect
+from .models import TrainingPlan
+from .forms import TrainingPlanForm
+
+def create_training_plan(request):
+    if request.method == 'POST':
+        form = TrainingPlanForm(request.POST)
+        if form.is_valid():
+            # Automatically set the created_by_trainer field to the logged-in trainer
+            form.instance.created_by_trainer = request.user.fitnesstrainer
+            form.save()
+            return redirect('Members:training_plan_list')  # Redirect to a list view of training plans
+    else:
+        form = TrainingPlanForm()
+    
+    context = {'form': form}
+    return render(request, 'create_training_plan.html', context)
+
+
+from django.shortcuts import render
+from .models import TrainingPlan
+
+def training_plan_list(request):
+    # Assuming you have a way to determine the logged-in user, for example, through authentication
+    # Replace this line with your logic to get the logged-in user
+    logged_in_user = request.user  # Replace with your logic
+
+    # Filter training plans based on the logged-in user (assuming the user is a trainer)
+    training_plans = TrainingPlan.objects.filter(created_by_trainer=logged_in_user.fitnesstrainer)
+
+    context = {'training_plans': training_plans}
+    return render(request, 'training_plan_list.html', context)

@@ -24,8 +24,13 @@
                         <a class="nav-link" href="#">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'Members:select_trainer' %}">Select Trainer</a>
+                       
+                            <a class="nav-link" href="{% url 'Members:select_trainer' %}">Select Trainer</a>
+                        
                     </li>
+                    
+                    
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'Members:view_assigned_training_plans' user.id %}">My Plan</a>
                     </li>
@@ -62,7 +67,7 @@
                     {% with assignment=training_plan_assignments.0.plan %}
                         <p><strong>Plan Name:</strong> {{ assignment.plan_name }}</p>
                         <p><strong>Description:</strong> {{ assignment.description }}</p>
-                        <p><strong>Duration:</strong> {{ assignment.duration }} weeks</p>
+                        <p><strong>Duration:</strong> {{ assignment.duration }} months</p>
                         <!-- Add more workout plan details as needed -->
                     {% endwith %}
                 {% else %}

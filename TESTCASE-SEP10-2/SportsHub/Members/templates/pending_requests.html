@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pending Connection Requests</title>
-    <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/css/bootstrap.min.css">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Trainer Dashboard</title>
+    <!-- Add Bootstrap CSS link -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Gym Trainer Dashboard</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,8 +26,13 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link"  href="{% url 'Members:create_training_plan' %}" class="btn btn-primary">Creat</a>
+                    
                 </li>
+                
+                {% comment %} <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:create_weekly_workout_plan' %}" class="btn btn-primary">Create Weekly Workout Plan</a>
+                </li> {% endcomment %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Members:connected_users' %}" >Clients</a>
                 </li>
@@ -40,6 +45,10 @@
                     </form>
             
                 </li> {% endcomment %}
+                
+                {% comment %} <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:create_training_plan' %}" >plans</a>
+                </li> {% endcomment %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Members:suggest_training_plans' %}" >Clients</a>
                 </li>
@@ -49,6 +58,7 @@
             </ul>
         </div>
     </nav>
+
     <div class="container mt-5">
         <h1 class="display-4">Pending Connection Requests</h1>
 

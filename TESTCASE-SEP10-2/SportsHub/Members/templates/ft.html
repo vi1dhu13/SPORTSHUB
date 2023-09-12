@@ -26,8 +26,13 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link"  href="{% url 'Members:create_training_plan' %}" class="btn btn-primary">Creat</a>
+                    
                 </li>
+                
+                {% comment %} <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:create_weekly_workout_plan' %}" class="btn btn-primary">Create Weekly Workout Plan</a>
+                </li> {% endcomment %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Members:connected_users' %}" >Clients</a>
                 </li>
@@ -150,7 +155,7 @@
                     {{ fitness_user.user.username }}
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Fitness User Details</h5>
+                    <h5 class="card-title">Client Details</h5>
                     <p class="card-text">
                         Fitness Goal: {{ fitness_user.fitness_goal }}<br>
                         Height: {{ fitness_user.height }}<br>
