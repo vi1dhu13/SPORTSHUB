@@ -22,6 +22,29 @@ class TrainerSelectionForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'}),
     )
 
+from django import forms
+from .models import EquipmentReservation
+
+class EquipmentReservationForm(forms.ModelForm):
+    connected_users = forms.ModelMultipleChoiceField(
+        queryset=None,  # You'll set this queryset in the form constructor
+        widget=forms.Select,  # Use SelectMultiple widget for a dropdown box
+        required=False,  # Set to False if you want to make it optional
+    )
+    
+
+    class Meta:
+        model = EquipmentReservation
+        fields = ['trainer', 'equipment', 'timeslot', 'date']
+
+    def __init__(self, *args, **kwargs):
+        connected_users_queryset = kwargs.pop('connected_users_queryset', None)
+        super(EquipmentReservationForm, self).__init__(*args, **kwargs)
+
+        # Set the queryset for connected_users field
+        if connected_users_queryset is not None:
+            self.fields['connected_users'].queryset = connected_users_queryset
+
 
 
 

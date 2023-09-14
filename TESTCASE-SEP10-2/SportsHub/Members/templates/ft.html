@@ -51,7 +51,20 @@
                 </li> {% endcomment %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Members:suggest_training_plans' %}" >Clients</a>
+
+                   
+
                 </li>
+                <li class="nav-item">
+                   
+                    <a href="{% url 'Members:make_reservation' %}" class="btn btn-primary">REserve Equipment</a>
+                </li>
+                <li class="nav-item">
+                   
+                    <a href="{% url 'Members:trainer_reservations' %}" class="btn btn-primary">Reservations</a>
+                </li>
+               
+                
                 <li class="nav-item">
                     <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
                 </li>

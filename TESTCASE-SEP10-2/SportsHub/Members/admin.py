@@ -41,3 +41,23 @@ class TrainingPlanAssignmentAdmin(admin.ModelAdmin):
     list_display = ('user', 'plan', 'assigned_by', 'assigned_date', 'is_accepted')
     list_filter = ('is_accepted', 'assigned_date')
     search_fields = ('user__user__username', 'plan__plan_name', 'assigned_by__user__username')
+
+from django.contrib import admin
+from .models import Equipment, TimeSlot, EquipmentReservation
+
+@admin.register(Equipment)
+class EquipmentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')
+    # Add any other desired configurations
+
+@admin.register(TimeSlot)
+class TimeSlotAdmin(admin.ModelAdmin):
+    list_display = ('slot_number', 'start_time', 'end_time')
+    # Add any other desired configurations
+
+@admin.register(EquipmentReservation)
+class EquipmentReservationAdmin(admin.ModelAdmin):
+    list_display = ('equipment', 'fitness_user', 'timeslot', 'date')
+    # Add any other desired configurations
+
+# Register your models here

@@ -21,9 +21,14 @@ urlpatterns = [
     path('training_plan_list/', views.training_plan_list, name='training_plan_list'),
     path('suggest_training_plans/', views.suggest_training_plans, name='suggest_training_plans'),
     path('view_assigned_training_plans/<int:user_id>/', views.view_assigned_training_plans, name='view_assigned_training_plans'),
-
+    path('ajax/get_available_slots/', views.ajax_get_available_slots, name='ajax_get_available_slots'),
     path('accept_training_plan/<int:user_id>/', views.accept_training_plan, name='accept_training_plan'),
     path('reject_training_plan/<int:user_id>/', views.reject_training_plan, name='reject_training_plan'),
+     path('equipment/', views.available_equipment, name='available_equipment'),
+    path('make-reservation/', views.make_reservation, name='make_reservation'),
+    path('list-reservations/', views.list_reservations, name='list_reservations'),
+    path('trainer-reservations/', views.trainer_reservations, name='trainer_reservations'),
+]
    
 #    path('create_weekly_workout_plan/', CreateWeeklyWorkoutPlanView.as_view(), name='create_weekly_workout_plan'),
 
@@ -32,4 +37,3 @@ urlpatterns = [
    
 
 
-]

@@ -31,6 +31,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Members:suggest_training_plans' %}">Training Plans</a>
                 </li>
+            </li>
+            <li class="nav-item">
+               
+                <a href="{% url 'Members:make_reservation' %}" class="nav-link">View Available Equipment</a>
+            </li>
+            <li class="nav-item">
+               
+                <a href="{% url 'Members:trainer_reservations' %}"class="nav-link" >Reservations</a>
+            </li>
                 <li class="nav-item">
                     <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
                 </li>

@@ -13,7 +13,9 @@ class FitnessUser(models.Model):
     height = models.FloatField()
     weight = models.FloatField()
     # Add other fields specific to FitnessUser
-
+    def __str__(self):
+        return self.user.username
+         
 class FitnessTrainer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     experience = models.IntegerField()
@@ -21,6 +23,8 @@ class FitnessTrainer(models.Model):
     training_goal = models.CharField(max_length=255)
     certification_link = models.CharField(max_length=255, blank=True, null=True)  # Add this field
     # Add other fields specific to FitnessTrainer
+    def __str__(self):
+        return self.user.username
 
 class SportsTrainer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -75,51 +79,34 @@ class TrainingPlanAssignment(models.Model):
     def __str__(self):
         return f"Assignment for {self.user.user.username}"
 
+from django.db import models
 
+class Equipment(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
 
+    def __str__(self):
+        return self.name
 
-# # Define a model for exercises
-# class Exercise(models.Model):
-#     name = models.CharField(max_length=255)
+from django.db import models
 
-#     def __str__(self):
-#         return self.name
+class TimeSlot(models.Model):
+    slot_number = models.PositiveIntegerField(unique=True,default=1)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
 
-# # Define a model for workout days, which can contain multiple exercises
-# class WorkoutDay(models.Model):
-#     day_number = models.PositiveIntegerField()
-#     exercises = models.ManyToManyField(Exercise, through='ExerciseSet')
+    def __str__(self):
+        return f"Slot {self.slot_number}: {self.start_time.strftime('%H:%M')} - {self.end_time.strftime('%H:%M')}"
 
-#     def __str__(self):
-#         return f"Day {self.day_number}"
+from django.db import models
+from django.utils import timezone
 
-# # Define a model to represent sets and repetitions for each exercise on a workout day
-# class ExerciseSet(models.Model):
-#     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
-#     workout_day = models.ForeignKey(WorkoutDay, on_delete=models.CASCADE)
-#     sets = models.PositiveIntegerField()
-#     repetitions = models.PositiveIntegerField()
-
-#     def __str__(self):
-#         return f"Set {self.sets}, Repetitions {self.repetitions} - {self.exercise.name}"
-
-# # Define a model for workout plans, which consist of workout days
-# class WorkoutPlan(models.Model):
-#     trainer = models.ForeignKey(FitnessTrainer, on_delete=models.CASCADE)
-#     client = models.ForeignKey(FitnessUser, on_delete=models.CASCADE)
-#     week_number = models.PositiveIntegerField()
-#     date = models.DateField()
-#     workout_days = models.ManyToManyField(WorkoutDay)
-
-#     def __str__(self):
-#         return f"Week {self.week_number} Workout Plan for {self.client.user.username}"
-
-# # Define a model to represent workout plan assignments
-# class WorkoutPlanAssignment(models.Model):
-#     user = models.ForeignKey(FitnessUser, on_delete=models.CASCADE)
-#     plan = models.ForeignKey(WorkoutPlan, on_delete=models.CASCADE)
-#     assigned_by = models.ForeignKey(FitnessTrainer, on_delete=models.CASCADE)
-#     assigned_date = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return f"Assignment for {self.user.user.username}"
+class EquipmentReservation(models.Model):
+    trainer = models.ForeignKey(FitnessTrainer, on_delete=models.CASCADE,default=1)
+    fitness_user = models.ForeignKey(FitnessUser, on_delete=models.CASCADE,default=1)
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+    timeslot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE,default=1)
+    date = models.DateField(default=timezone.now)
+    
+    def __str__(self):
+        return f"Reservation for {self.equipment.name} on {self.date} by {self.fitness_user.user.username}"

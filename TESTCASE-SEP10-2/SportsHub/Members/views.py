@@ -368,3 +368,164 @@ def training_plan_list(request):
 
     context = {'training_plans': training_plans}
     return render(request, 'training_plan_list.html', context)
+
+
+from django.shortcuts import render, redirect
+from .models import Equipment, TimeSlot, EquipmentReservation
+from .forms import EquipmentReservationForm
+
+def available_equipment(request):
+    print("View is called")  # Check if this message appears in the console
+    equipment = Equipment.objects.all()
+    # You can filter equipment by availability here
+    return render(request, 'list_equipment.html', {'equipment': equipment})
+from django.shortcuts import render, redirect
+from .models import EquipmentReservation
+ # Import your form
+from django.utils import timezone
+from django.shortcuts import render, redirect
+from .models import EquipmentReservation
+from .forms import EquipmentReservationForm  # Import the form if needed
+from django.utils import timezone
+
+
+
+
+
+
+from datetime import date, timedelta
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Equipment, TimeSlot, EquipmentReservation, FitnessUser
+from datetime import datetime
+
+# Now you can use the datetime module and its functions
+
+
+from datetime import date, timedelta
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Equipment, TimeSlot, EquipmentReservation, FitnessUser
+from django.utils.dateparse import parse_date
+
+
+@login_required
+def make_reservation(request):
+    # Get the logged-in trainer
+    trainer = request.user.fitnesstrainer
+
+    # Get the list of connected users for the logged-in trainer
+    connected_users = FitnessUser.objects.filter(traineruserconnection__fitness_trainer=trainer)
+
+    # Get the list of equipment
+    equipment_list = Equipment.objects.all()
+
+    # Create a dictionary to store available slots for each equipment and day
+    available_slots = {}
+
+    # Define the number of days to show (including today)
+    num_days = 7
+
+    # Get the current date
+    current_date = date.today()
+
+    if request.method == 'POST':
+        # Retrieve form data such as equipment, time slot, user, and date
+        selected_slot_id = request.POST.get('selected_slot')
+        selected_user_id = request.POST.get('selected_user')
+        selected_date = request.POST.get('datee')
+        parsed_date = datetime.strptime(selected_date, '%bt. %d, %Y')
+        print(parsed_date)
+    # Format the parsed date as "YYYY-MM-DD"
+        formatted_date = parsed_date.strftime('%Y-%m-%d')
+
+        print(formatted_date)
+        print(selected_slot_id)
+        print(selected_user_id)
+
+
+            # Get the equipment ID from the selected radio input
+        selected_equipment_id = request.POST.get('equipment_input')
+        print(selected_equipment_id)
+        selected_equipment = Equipment.objects.get(id=selected_equipment_id)
+
+            # Create a new EquipmentReservation instance without checking availability
+        reservation = EquipmentReservation.objects.create(
+            trainer=trainer,
+            equipment=selected_equipment,
+            timeslot=TimeSlot.objects.get(pk=selected_slot_id),
+            date=formatted_date,
+            fitness_user=FitnessUser.objects.get(pk=selected_user_id),
+        )
+
+        return redirect('Members:fitness_trainer_dashboard')
+
+        
+
+    # Iterate through each equipment and sort the slots by start time
+    for equipment in equipment_list:
+        equipment_slots = {}  # Dictionary to store slots for this equipment
+
+        # Iterate through the next num_days to find available slots for each day
+        for i in range(num_days):
+            # Calculate the date for the current iteration
+            day = current_date + timedelta(days=i)
+            # Query to get available slots for this equipment and day, sorted by start time
+            slots = TimeSlot.objects.exclude(
+                id__in=EquipmentReservation.objects.filter(
+                    equipment=equipment,
+                    date=day,
+                ).values('timeslot')
+            ).order_by('start_time')
+            equipment_slots[day] = slots
+
+        available_slots[equipment] = equipment_slots
+
+    context = {
+        'available_slots': available_slots,
+        'connected_users': connected_users,
+    }
+
+    return render(request, 'make_reservation.html', context)
+
+
+
+
+
+from django.http import HttpResponse
+from .models import TimeSlot  # Import your TimeSlot model
+from django.template.loader import render_to_string
+
+def ajax_get_available_slots(request):
+    selected_date = request.GET.get('selected_date')
+    selected_equipment = request.GET.get('selected_equipment')  # Add this line to get the selected equipment
+    
+    # Query the database to retrieve available time slots for the selected date and equipment
+    available_slots = TimeSlot.objects.filter(date=selected_date, equipment_id=selected_equipment, is_available=True)
+
+    # Render the available slots as HTML using a template
+    html_content = render_to_string('available_slots_template.html', {'available_slots': available_slots})
+
+    return HttpResponse(html_content)
+
+
+
+def list_reservations(request):
+    reservations = EquipmentReservation.objects.all()
+    return render(request, 'list_reservations.html', {'reservations': reservations})
+
+
+
+from django.shortcuts import render
+from .models import EquipmentReservation
+
+def trainer_reservations(request):
+    # Retrieve reservations made by the logged-in trainer
+    trainer = request.user.fitnesstrainer
+    reservations = EquipmentReservation.objects.filter(trainer=trainer)
+
+    context = {
+        'reservations': reservations,
+    }
+
+    return render(request, 'trainer_reservations.html', context)
