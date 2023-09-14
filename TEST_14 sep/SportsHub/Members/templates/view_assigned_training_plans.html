@@ -1,0 +1,42 @@
+{% extends "Navbar2.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Assigned Training Plans</h1>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            {% for assignment in assignments %}
+                <div class="col-md-6 mb-4">
+                    <div class="card bg-gray">
+                        <div class="card-body">
+                            <h4 class="card-title">Plan Name: {{ assignment.plan.plan_name }}</h4>
+                            <p class="card-text">Assigned by: {{ assignment.assigned_by.user.username }}</p>
+                            <p class="card-text">Assigned Date: {{ assignment.assigned_date }}</p>
+                            <p class="card-text">Plan Description: {{ assignment.plan.description }}</p>
+                            <p class="card-text"><span class="badge badge-warning">Price: ${{ assignment.plan.amount }}</span></p>
+                            <p class="card-text mt-3">Status: {% if assignment.is_accepted %}<span class="badge badge-success">Accepted</span>{% else %}<span class="badge badge-warning">Pending</span>{% endif %}</p>
+                        </div>
+                        <div class="card-footer text-center" style="">
+                            {% if not assignment.is_accepted %}
+                                <form method="post" action="{% url 'Members:accept_training_plan' user_id=fitness_user.user.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="assignment_id" value="{{ assignment.id }}">
+                                    <button type="submit" class="btn btn-success btn-lg btn-block mb-2">Accept</button>
+                                </form>
+
+                                <form method="post" action="{% url 'Members:reject_training_plan' user_id=fitness_user.user.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="assignment_id" value="{{ assignment.id }}">
+                                    <button type="submit" class="btn btn-danger btn-lg btn-block">Reject</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

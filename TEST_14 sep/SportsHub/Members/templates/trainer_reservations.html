@@ -1,0 +1,29 @@
+{% extends 'Navbar.html' %}
+
+{% block content %}
+    <h1>Trainer's Reservations</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Equipment</th>
+                <th>Date</th>
+                <th>Time Slot</th>
+                <th>Fitness User</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.equipment.name }}</td>
+                    <td>{{ reservation.date }}</td>
+                    <td>{{ reservation.timeslot }}</td>
+                    <td>{{ reservation.fitness_user.user.username }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No reservations found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

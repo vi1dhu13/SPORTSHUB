@@ -1,0 +1,13 @@
+{% extends 'Navbar.html' %}
+
+{% block content %}
+    <h1>Available Equipment</h1>
+    <ul>
+        {% for item in equipment %}
+            <li>
+                <strong>{{ item.name }}</strong> - {{ item.description }}
+                <a href="{% url 'Members:make_reservation' %}">Make Reservation</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
