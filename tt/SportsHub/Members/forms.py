@@ -123,3 +123,23 @@ class WeeklyFitnessPlanForm(forms.ModelForm):
     class Meta:
         model = WeeklyFitnessPlan
         fields = ['fitness_user', 'start_date', 'end_date', 'day1details', 'day2details', 'day3details', 'day4details', 'day5details', 'day6details', 'day7details']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Define which fields need special attributes
+        custom_attrs = {
+            'fitness_user': {'class': 'form-control'},
+            'start_date': {'class': 'form-control datepicker'},
+            'end_date': {'class': 'form-control datepicker'},
+        }
+
+        # Apply custom attributes to form fields
+        for field_name, attrs in custom_attrs.items():
+            self.fields[field_name].widget.attrs.update(attrs)
+
+        # Apply custom CSS classes and textarea attributes to day details fields
+        textarea_attrs = {'class': 'form-control expandable-textarea', 'rows': 1}
+        day_details_fields = ['day1details', 'day2details', 'day3details', 'day4details', 'day5details', 'day6details', 'day7details']
+        for field_name in day_details_fields:
+            self.fields[field_name].widget = forms.Textarea(attrs=textarea_attrs)

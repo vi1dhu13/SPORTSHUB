@@ -30,6 +30,10 @@ urlpatterns = [
     path('trainer-reservations/', views.trainer_reservations, name='trainer_reservations'),
     path('future-reservations/', views.user_reservations, name='user_reservations'),
      path('create_weekly_plan/', views.create_weekly_plan, name='create_weekly_plan'),
+     path('get_available_slots/', views.get_available_slots, name='get_available_slots'),
+    path('reservation/', views.reservation_page, name='reservation_page'),
+     path('this_weeks_plan/', views.this_weeks_plan, name='this_weeks_plan'),
+     path('c_reservation/', views.c_reservation, name='c_reservation'),
     # path('success_page/', views.success_page, name='success_page'),  # You can create a success page view as needed.
 ]
    

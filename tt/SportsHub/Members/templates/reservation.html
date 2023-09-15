@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gym Trainer Dashboard{% endblock %}</title>
+    <!-- Add Bootstrap CSS link -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #available_slots {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        #available_slots p {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Gym Trainer Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:view_pending_requests' %}">View Pending Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:create_training_plan' %}">Create Plan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:reservation_page' %}">Pcclan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:connected_users' %}">Clients</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:suggest_training_plans' %}">Training Plans</a>
+                </li>
+            </li>
+            <li class="nav-item">
+               
+                <a href="{% url 'Members:make_reservation' %}" class="nav-link">View Available Equipment</a>
+            </li>
+            <li class="nav-item">
+               
+                <a href="{% url 'Members:trainer_reservations' %}"class="nav-link" >Reservations</a>
+            </li>
+                <li class="nav-item">
+                    <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Equipment Reservation -->
+    <form id="reservation-form">
+        {% csrf_token %}
+        <div class="container">
+            <select id="equipment" name="selected_equipment">
+                <!-- Populate equipment options from your database -->
+                {% for equipment in equipment_list %}
+                    <option value="{{ equipment.id }}">{{ equipment.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="date" id="reservation_date" name="reservation_date">
+            <button id="check_availability" type="button">Check Availability</button>
+        </div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+            {% endfor %}
+        </ul>
+    {% endif %}
+        <!-- Display Available Slots -->
+
+        <div class="form-group">
+            <label for="selected_user">Select User:</label>
+            <select class="form-control" name="selected_user" id="selected_user">
+                <option value="" selected disabled>Select User</option>
+                {% for user in connected_users %}
+                    <option value="{{ user.id }}">{{ user.user.username }}</option>
+                {% endfor %}
+            </select>
+        </div>
+<!-- Available Slots -->
+<div class="container" id="available_slots">
+    <!-- Available slots will be displayed here -->
+</div>
+
+<!-- Selected Slot Input -->
+<div class="container">
+    <label for="selected_slot">Selected Slot ID:</label>
+    <input type="text" id="selected_slot_id" name="selected_slot_id" readonly>
+</div>
+
+        <input type="hidden" name="selected_slot" id="selected_slot">
+        <input type="hidden" name="selected_equipment" id="selected_equipment">
+        <button type="submit" id="make_reservation">Make Reservation</button>
+    </form>
+
+<!-- AJAX Script -->
+<script>
+    $(document).ready(function() {
+        // Variable to store the selected slot
+        var selectedSlotText = "";
+        var selectedSlotId = null; // Variable to store the selected slot ID
+    
+        // AJAX request when the "Check Availability" button is clicked
+        $('#check_availability').click(function() {
+            var equipment_id = $('#equipment').val();
+            var date = $('#reservation_date').val();
+    
+            $.ajax({
+                url: '/members/get_available_slots/',
+                data: {
+                    equipment_id: equipment_id,
+                    date: date
+                },
+                dataType: 'json',
+                success: function(data) {
+                    // Clear previous results
+                    $('#available_slots').empty();
+    
+                    if (data.available_slots.length === 0) {
+                        $('#available_slots').append('<p>No available slots</p>');
+                    } else {
+                        $.each(data.available_slots, function(index, slot) {
+                            // Display each available slot and make it selectable
+                            var slotElement = $('<p class="selectable-slot" data-slot-id="' + slot.slot_id + '">' + slot.start_time + ' - ' + slot.end_time + '</p>');
+                            slotElement.click(function() {
+                                // Set the selected slot text and update the input field
+                                selectedSlotText = slot.start_time + ' - ' + slot.end_time;
+                                selectedSlotId = slot.slot_id; // Store the selected slot ID
+                                $('#selected_slot').val(selectedSlotText);
+                                $('#selected_slot_id').val(selectedSlotId); 
+                            });
+                            $('#available_slots').append(slotElement);
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                }
+            });
+        });
+    
+        // AJAX request when the "Make Reservation" button is clicked
+        $('#make_reservation').click(function() {
+            // Your code to retrieve form data goes here
+            var selected_slot_id = $('#selected_slot_id').val();
+            var selected_user_id = $('#selected_user').val();
+            var selected_date = $('#reservation_date').val();
+            var selected_equipment_id = $('#equipment').val();
+    
+            // Send a POST request to create the reservation
+            $.ajax({
+                url: '/members/c_reservation/',
+                method: 'POST',
+                data: {
+                    selected_slot: selected_slot_id,
+                    selected_user: selected_user_id,
+                    reservation_date: selected_date,
+                    selected_equipment: selected_equipment_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}', // Include the CSRF token
+                },
+                dataType: 'json',
+                success: function(data) {
+                    // Handle the success response as needed
+                    console.log('Reservation created successfully!');
+                    // You can display a success message or perform other actions here
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                    // Handle the error response if needed
+                }
+            });
+        });
+    });
+    
+</script>
+
+</body>
+</html>
