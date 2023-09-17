@@ -1,0 +1,31 @@
+{% extends 'Navbar2.html' %}
+
+{% block content %}
+  <h1>My Future Reservations</h1>
+
+  {% if reservations %}
+  <table class="table table-striped table-dark">
+      <thead>
+        <tr>
+          <th>Equipment</th>
+          <th>Date</th>
+          <th>Time Slot</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reservation in reservations %}
+          <tr>
+            <td>{{ reservation.equipment.name }}</td>
+            <td>{{ reservation.date }}</td>
+            <td>{{ reservation.timeslot.start_time }} - {{ reservation.timeslot.end_time }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No future reservations found.</p>
+  {% endif %}
+
+  <
+</div>
+{% endblock %}

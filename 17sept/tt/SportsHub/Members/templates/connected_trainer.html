@@ -1,0 +1,21 @@
+{% extends "Navbar2.html" %}
+
+{% block title %}Connected Trainer{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Connected Trainer Details</h1>
+    
+    <div class="card" style="background-color: #264653; color: #FFFFA5; width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title" style="font-size: 1.25rem; font-weight: bold;">{{ connected_trainer.user.username }}</h5>
+            <p class="card-text"><strong>Specialty:</strong> {{ connected_trainer.specialty }}</p>
+            <p class="card-text"><strong>Experience:</strong> {{ connected_trainer.experience }} years</p>
+            <p class="card-text"><strong>Location:</strong> {{ connected_trainer.location }}</p>
+            
+            <!-- You can add more trainer-specific details here -->
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

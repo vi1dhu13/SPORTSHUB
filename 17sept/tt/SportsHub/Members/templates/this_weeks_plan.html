@@ -1,0 +1,49 @@
+{% extends 'Navbar2.html' %}
+
+{% block content %}
+    <h1>This Week's Fitness Plan</h1>
+
+
+    {% if this_weeks_plan %}
+        <p><strong>User:</strong> {{ this_weeks_plan.fitness_user.user.username }}</p>
+        <p><strong>Trainer:</strong> {{ this_weeks_plan.trainer.user.username }}</p>
+        <p><strong>Start Date:</strong> {{ this_weeks_plan.start_date }}</p>
+        <p><strong>End Date:</strong> {{ this_weeks_plan.end_date }}</p>
+        <table class="table table-striped table-dark">
+            <tr>
+                <th>Day</th>
+                <th>Details</th>
+            </tr>
+            <tr>
+                <td>Day 1</td>
+                <td>{{ this_weeks_plan.day1details }}</td>
+            </tr>
+            <tr>
+                <td>Day 2</td>
+                <td>{{ this_weeks_plan.day2details }}</td>
+            </tr>
+            <tr>
+                <td>Day 3</td>
+                <td>{{ this_weeks_plan.day3details }}</td>
+            </tr>
+            <tr>
+                <td>Day 4</td>
+                <td>{{ this_weeks_plan.day4details }}</td>
+            </tr>
+            <tr>
+                <td>Day 5</td>
+                <td>{{ this_weeks_plan.day5details }}</td>
+            </tr>
+            <tr>
+                <td>Day 6</td>
+                <td>{{ this_weeks_plan.day6details }}</td>
+            </tr>
+            <tr>
+                <td>Day 7</td>
+                <td>{{ this_weeks_plan.day7details }}</td>
+            </tr>
+        </table>
+    {% else %}
+        <p>No fitness plan available for this week.</p>
+    {% endif %}
+{% endblock %}
