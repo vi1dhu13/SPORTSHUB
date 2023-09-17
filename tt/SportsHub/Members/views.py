@@ -209,11 +209,25 @@ def show_connected_users(request):
 
 
 
+from django.db.models import Subquery, OuterRef
+
+# ...
+
 def suggest_training_plans(request):
     trainer = request.user.fitnesstrainer
 
+    # Subquery to get IDs of users with accepted plans created by the logged-in trainer
+    accepted_plan_user_ids = TrainingPlanAssignment.objects.filter(
+        plan__created_by_trainer=trainer,
+        is_accepted=True,
+    ).values('user_id')
+
     # Use the TrainerUserConnection model to get connected users for this trainer
-    connected_users = FitnessUser.objects.filter(traineruserconnection__fitness_trainer=trainer)
+    connected_users = FitnessUser.objects.filter(
+        traineruserconnection__fitness_trainer=trainer,
+    ).exclude(
+        id__in=Subquery(accepted_plan_user_ids)
+    )
 
     # Get available training plans created by the logged-in trainer
     available_plans = TrainingPlan.objects.filter(created_by_trainer=trainer)
@@ -226,14 +240,22 @@ def suggest_training_plans(request):
             selected_user = FitnessUser.objects.get(pk=selected_user_id)
             selected_plan = TrainingPlan.objects.get(pk=selected_plan_id)
 
-            # Create a new TrainingPlanAssignment instance
-            assignment = TrainingPlanAssignment.objects.create(
+            # Check if the selected user already has plans assigned and if they are accepted
+            existing_assignment = TrainingPlanAssignment.objects.filter(
                 user=selected_user,
                 plan=selected_plan,
-                assigned_by=trainer,
-            )
+                is_accepted=True,
+            ).exists()
 
-            return redirect('index')  # Redirect to the index page upon successful assignment
+            if not existing_assignment:
+                # Create a new TrainingPlanAssignment instance
+                assignment = TrainingPlanAssignment.objects.create(
+                    user=selected_user,
+                    plan=selected_plan,
+                    assigned_by=trainer,
+                )
+
+                return redirect('index')  # Redirect to the index page upon successful assignment
 
     context = {'connected_users': connected_users, 'available_plans': available_plans}
     return render(request, 'suggest_training_plans.html', context)
@@ -747,6 +769,7 @@ def this_weeks_plan(request):
 
     return render(request, 'this_weeks_plan.html', {'this_weeks_plan': this_weeks_plan})
 
+from django.contrib import messages
 from django.http import JsonResponse
 
 def c_reservation(request):
@@ -773,6 +796,9 @@ def c_reservation(request):
             fitness_user=FitnessUser.objects.get(pk=selected_user_id),
         )
 
+        # Add a success message
+        messages.success(request, 'Reservation created successfully')
+
         # You can perform additional actions here if needed
 
         # Return a JSON response to indicate success
@@ -780,3 +806,4 @@ def c_reservation(request):
 
     # Handle other HTTP methods if necessary
     return JsonResponse({'error': 'Invalid request method'}, status=400)
+

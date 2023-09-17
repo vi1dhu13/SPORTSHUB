@@ -125,3 +125,60 @@ class RoleApplicationForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+
+from django import forms
+from .models import CustomUser
+
+# forms.py
+from django import forms
+from Members.models import CustomUser, FitnessUser, FitnessTrainer, SportsTrainer
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'first_name', 'last_name', 'description', 'profile_picture', 'address', 'contact_number', 'second_contact_number')
+        widgets = {
+           'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username', 'readonly': 'readonly', 'style': 'background-color: #e9967a;'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'readonly': 'readonly', 'style': 'background-color: #e9967a;'}),
+
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description', 'style': 'background-color: #90ee90; color: #264653!important; resize: none; overflow-y: hidden;'}),
+
+            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Address', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Contact Number', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'second_contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Second Contact Number', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+
+
+        }
+
+class FitnessUserForm(forms.ModelForm):
+    class Meta:
+        model = FitnessUser
+        fields = ('fitness_goal', 'height', 'weight')
+        widgets = {
+            'fitness_goal': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Fitness Goal', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'height': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Height', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'weight': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Weight', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+        }
+
+class FitnessTrainerForm(forms.ModelForm):
+    class Meta:
+        model = FitnessTrainer
+        fields = ('experience', 'certification', 'training_goal', 'certification_link')
+        widgets = {
+            'experience': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Experience', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'certification': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Certification', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'training_goal': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Training Goal', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'certification_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Certification Link', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+        }
+
+class SportsTrainerForm(forms.ModelForm):
+    class Meta:
+        model = SportsTrainer
+        fields = ('specialization',)
+        widgets = {
+            'specialization': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Specialization', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+        }
+

@@ -8,6 +8,166 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
+        .navbar {
+            background-color: #264653!important; /* Deep teal background color */
+        }
+      
+        .navbar-dark .navbar-nav .nav-link {
+            color: #F4A261!important; /* Light orange text color for navbar items */
+        }
+      
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #E76F51!important; /* Coral color for the navbar toggler icon */
+        }
+      
+        /* Body Styles */
+        body {
+            background-color: #2A9D8F!important; /* Teal background color for the body */
+        }
+      
+        /* Container Styles */
+        .container {
+            background-color: #E9C46A!important; /* Yellow background color for containers */
+            padding: 20px; /* Add some padding to the containers */
+            border-radius: 10px; /* Add rounded corners to the containers */
+        }
+      
+        .alert-label {
+          display: none;
+          color: #0000AA; /* Dark blue text color */
+          font-size: 14px;
+      }
+      
+      input:required + .alert-label {
+          display: block;
+      }
+         
+          /* Custom styles for the form container */
+          .container {
+            max-width: 1400px;
+            margin: 10px auto;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #fff;
+          }
+      
+          /* Custom styles for the form */
+          form {
+            margin-top: 20px;
+          }
+      
+          /* Style form labels */
+          label {
+            font-weight: bold;
+            color: #264653!important; ;
+          }
+      
+          /* Style form fields */
+          .form-group {
+            margin-bottom: 20px;
+          }
+      
+          /* Style input fields */
+          input[type="text"],
+          input[type="email"],
+          input[type="password"],
+          select {
+            background-color: #444;
+            color: #fff;
+            border: 1px solid #555;
+            width: 100%; /* Make input fields longer */
+            padding: 10px; /* Add some padding for better appearance */
+            box-sizing: border-box; /* Include padding in width calculation */
+          }
+      
+          /* Style submit button */
+          .btn-primary {
+            background-color: #4285F4;
+            border-color: #4285F4;
+          }
+      
+          /* Additional styles for the second form section */
+          .form-row {
+            margin-top: 20px;
+          }
+          .card {
+              
+              background-color: 	#d3d3d3
+              padding: 1em;
+              
+              box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+              border-radius: 10px;
+              
+              transition: 200ms ease-in-out;
+            }
+            
+            .username {
+              color: #C6E1ED;
+              font-size: 0.85em;
+              font-weight: 600;
+            }
+            
+            .body {
+              display: flex;
+              flex-direction: column;
+            }
+            
+            .body .text {
+              margin: 0 10px 0 0;
+              white-space: pre-line;
+              color: #264653!important; 
+              font-weight: 400;
+              line-height: 1.5;
+              margin-bottom: 4px;
+            }
+            
+            .footer {
+              position: relative;
+              width: 100%;
+              color: #9fa4aa;
+              font-size: 12px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              border: none;
+              margin-top: 10px;
+            }
+            
+            .footer div {
+              margin-right: 1rem;
+              height: 20px;
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+            }
+            
+            .footer svg {
+              margin-right: 5px;
+              height: 100%;
+              stroke: #9fa4aa;
+            }
+            
+            .viewer span {
+              height: 20px;
+              width: 20px;
+              background-color: rgb(28, 117, 219);
+              margin-right: -6px;
+              border-radius: 50%;
+              border: 1px solid #fff;
+              display: grid;
+              align-items: center;
+              text-align: center;
+              font-weight: bold;
+              font-size: 8px;
+              color: #fff;
+              padding: 2px;
+            }
+            
+            .viewer span svg {
+              stroke: #fff;
+            }
         #available_slots {
             margin-top: 20px;
             padding: 10px;
@@ -40,13 +200,14 @@
                     <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Members:view_pending_requests' %}">View Pending Requests</a>
+                    <a class="nav-link" href="{% url 'Members:view_pending_requests' %}">View Requests</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Members:create_training_plan' %}">Create Plan</a>
                 </li>
+  
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Members:reservation_page' %}">Pcclan</a>
+                    <a class="nav-link" href="{% url 'Members:reservation_page'  %}">Make Reservations</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Members:connected_users' %}">Clients</a>
@@ -54,15 +215,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Members:suggest_training_plans' %}">Training Plans</a>
                 </li>
-            </li>
-            <li class="nav-item">
-               
-                <a href="{% url 'Members:make_reservation' %}" class="nav-link">View Available Equipment</a>
-            </li>
-            <li class="nav-item">
-               
-                <a href="{% url 'Members:trainer_reservations' %}"class="nav-link" >Reservations</a>
-            </li>
                 <li class="nav-item">
                     <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
                 </li>
@@ -71,52 +223,72 @@
     </nav>
 
     <!-- Equipment Reservation -->
-    <form id="reservation-form">
-        {% csrf_token %}
-        <div class="container">
-            <select id="equipment" name="selected_equipment">
-                <!-- Populate equipment options from your database -->
-                {% for equipment in equipment_list %}
-                    <option value="{{ equipment.id }}">{{ equipment.name }}</option>
-                {% endfor %}
-            </select>
-            <input type="date" id="reservation_date" name="reservation_date">
-            <button id="check_availability" type="button">Check Availability</button>
-        </div>
+    <div class="container mt-4">
+        <!-- Display Messages -->
         {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
-            {% endfor %}
-        </ul>
-    {% endif %}
-        <!-- Display Available Slots -->
-
-        <div class="form-group">
-            <label for="selected_user">Select User:</label>
-            <select class="form-control" name="selected_user" id="selected_user">
-                <option value="" selected disabled>Select User</option>
-                {% for user in connected_users %}
-                    <option value="{{ user.id }}">{{ user.user.username }}</option>
-                {% endfor %}
-            </select>
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <div id="success-message" class="alert alert-success" style="display: none;">
+            Reservation created successfully!
         </div>
-<!-- Available Slots -->
-<div class="container" id="available_slots">
-    <!-- Available slots will be displayed here -->
-</div>
 
-<!-- Selected Slot Input -->
-<div class="container">
-    <label for="selected_slot">Selected Slot ID:</label>
-    <input type="text" id="selected_slot_id" name="selected_slot_id" readonly>
-</div>
+        <!-- Equipment Reservation Form -->
+        <form id="reservation-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="equipment">Select Equipment:</label>
+                <select id="equipment" name="selected_equipment" class="form-control">
+                    <!-- Populate equipment options from your database -->
+                    {% for equipment in equipment_list %}
+                        <option value="{{ equipment.id }}">{{ equipment.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="reservation_date">Reservation Date:</label>
+                <input type="date" id="reservation_date" name="reservation_date" class="form-control">
+            </div>
+            <button id="check_availability" type="button" class="btn btn-primary">Check Availability</button>
 
-        <input type="hidden" name="selected_slot" id="selected_slot">
-        <input type="hidden" name="selected_equipment" id="selected_equipment">
-        <button type="submit" id="make_reservation">Make Reservation</button>
-    </form>
+            <!-- Display Available Slots -->
+            <div class="form-group mt-4">
+                <label for="selected_user">Select User:</label>
+                <select class="form-control" name="selected_user" id="selected_user">
+                    <option value="" selected disabled>Select User</option>
+                    {% for user in connected_users %}
+                        <option value="{{ user.id }}">{{ user.user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
+            <!-- Available Slots -->
+            <div class="form-group" id="available_slots">
+                <!-- Available slots will be displayed here -->
+            </div>
+
+            <!-- Selected Slot Input -->
+            <div class="form-group">
+                <label for="selected_slot_id">Selected </label>
+                <input type="text" id="selected_slot_id" name="selected_slot_id" readonly class="form-control">
+            </div>
+
+            <!-- Hidden Input Fields -->
+            <input type="hidden" name="selected_slot" id="selected_slot">
+            <input type="hidden" name="selected_equipment" id="selected_equipment">
+
+            <!-- Make Reservation Button -->
+            <button type="submit" id="make_reservation" class="btn btn-success">Make Reservation</button>
+        </form>
+    </div>
+
+<!-- AJAX Script -->
 <!-- AJAX Script -->
 <script>
     $(document).ready(function() {
@@ -184,19 +356,32 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    // Handle the success response as needed
                     console.log('Reservation created successfully!');
-                    // You can display a success message or perform other actions here
+                    
+                    // Display the success message
+                    $('#success-message').fadeIn(); // Show the success message
+                
+                    // Set a timer to hide the success message after 3 seconds
+                    setTimeout(function() {
+                        $('#success-message').fadeOut(); // Hide the success message
+                    }, 3000); // 3000 milliseconds = 3 seconds
+                
+                    // You can also hide the form or perform other actions
+                    // For example, you can hide the form after a successful reservation
+                    $('#reservation-form').hide();
                 },
                 error: function(xhr, status, error) {
                     console.error('AJAX Error:', status, error);
                     // Handle the error response if needed
+                    showErrorMessage('Error: Unable to make reservation');
                 }
             });
         });
+        
     });
     
 </script>
+
 
 </body>
 </html>

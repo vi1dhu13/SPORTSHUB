@@ -67,6 +67,11 @@ def custom_logout(request):
     messages.info(request, "Logged out successfully!")
     return redirect("/")
 
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render, redirect
+
 @user_not_authenticated
 def custom_login(request):
     if request.user.is_authenticated:
@@ -81,7 +86,9 @@ def custom_login(request):
             )
             if user is not None:
                 login(request, user)
-                messages.success(request, f"Hello <b>{user.username}</b>! You have been logged in")
+                messages.success(request, f"Hello <b>{user.username}</b>! You have been logged in ")
+                # Add a message to indicate that fields are empty (no explicit check)
+                messages.warning(request, 'All fields in your profile are empty. Please update your profile.')
                 return redirect("/")
 
         else:
@@ -94,29 +101,30 @@ def custom_login(request):
         request=request,
         template_name="users/login.html",
         context={"form": form}
-        )
-
-
-
-
-def profile(request, username):
-    if request.method == "POST":
-        form = UserUpdateForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Your profile has been updated!')
-            return redirect("/")   # Redirect to the index (homepage)
-        else:
-            messages.error(request, 'There was an error updating your profile.')
-
-    form = UserUpdateForm(instance=request.user)
-    return render(
-        request=request,
-        template_name="users/profile.html",
-        context={"form": form}
     )
-def password_reset_form(request):
-    return redirect("") 
+
+
+
+
+
+# def profile(request, username):
+#     if request.method == "POST":
+#         form = UserUpdateForm(request.POST, instance=request.user)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Your profile has been updated!')
+#             return redirect("/")   # Redirect to the index (homepage)
+#         else:
+#             messages.error(request, 'There was an error updating your profile.')
+
+#     form = UserUpdateForm(instance=request.user)
+#     return render(
+#         request=request,
+#         template_name="users/profile.html",
+#         context={"form": form}
+#     )
+# def password_reset_form(request):
+#     return redirect("") 
 
 
 
@@ -156,6 +164,58 @@ def role_application_view(request):
 
 
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.views import View
+from .models import CustomUser
+from Members.models import FitnessUser, FitnessTrainer, SportsTrainer
+from django.http import HttpResponse
+from .forms import UserProfileForm, FitnessUserForm, FitnessTrainerForm, SportsTrainerForm
+
+@login_required
+def profile(request):
+    user = request.user
+
+    if request.method == "POST":
+        user_form = UserProfileForm(request.POST, instance=user)
+        role = user.role
+
+        if role == "FitnessUser":
+            role_form = FitnessUserForm(request.POST, instance=user.fitnessuser)
+        elif role == "FitnessTrainer":
+            role_form = FitnessTrainerForm(request.POST, instance=user.fitnesstrainer)
+        elif role == "SportsTrainer":
+            role_form = SportsTrainerForm(request.POST, instance=user.sportstrainer)
+        else:
+             role_form = None
+             role_title = None
+
+        if user_form.is_valid() and (role_form is None or role_form.is_valid()):
+            user_form.save()
+            if role_form:
+                role_form.save()
+            return redirect('users:profile')
+
+    else:
+        user_form = UserProfileForm(instance=user)
+        role = user.role
+
+        if role == "FitnessUser":
+            role_form = FitnessUserForm(instance=user.fitnessuser)
+        elif role == "FitnessTrainer":
+            role_form = FitnessTrainerForm(instance=user.fitnesstrainer)
+        elif role == "SportsTrainer":
+            role_form = SportsTrainerForm(instance=user.sportstrainer)
+        else:
+            role_form = None
+            role_title = None
+
+    context = {
+        'user_form': user_form,
+        'role_form': role_form,
+    }
+
+    return render(request, 'users/profile.html', context)
 
 
 

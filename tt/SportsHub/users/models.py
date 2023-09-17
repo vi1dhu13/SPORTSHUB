@@ -28,7 +28,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     role = models.CharField(max_length=20)  # Define roles (e.g., "FitnessUser", "FitnessTrainer", "SportsTrainer")
-    description = models.TextField(blank=True, null=True)  # Add the description field
+    description = models.TextField(blank=True, null=True) 
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    contact_number = models.CharField(max_length=15, blank=True, null=True)
+    second_contact_number = models.CharField(max_length=15, blank=True, null=True)# Add the description field
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -88,7 +92,7 @@ class RoleApplication(models.Model):
     height = models.FloatField(blank=True, null=True)
     weight = models.FloatField(blank=True, null=True)
     
-    experience = models.IntegerField()
+    experience = models.IntegerField(blank=True, null=True)
    
     # Other fields...
 

@@ -4,26 +4,46 @@
 
     <div class="container mt-5">
         <h1 class="display-4">Pending Connection Requests</h1>
-
         {% if pending_requests %}
-            <ul class="list-group mt-4">
+        <table class="table table-bordered mt-4" style="border: 1px solid #000;">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Fitness Goal</th>
+                    <th>Height</th>
+                    <th>Weight</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody style="border: 1px solid #000;">
                 {% for request in pending_requests %}
-                    <li class="list-group-item">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>User: {{ request.fitness_user.user.username }}</span>
-                            <form method="post" action="{% url 'Members:approve_reject_request' request.id %}" class="d-flex">
+                    <tr style="background-color: #264653; color: #F4A261;">
+                        <td>{{ request.fitness_user.user.username }}</td>
+                        <td>{{ request.fitness_user.user.email }}</td>
+                        <td>{{ request.fitness_user.user.first_name }}</td>
+                        <td>{{ request.fitness_user.user.last_name }}</td>
+                        <td>{{ request.fitness_user.fitness_goal }}</td>
+                        <td>{{ request.fitness_user.height }}</td>
+                        <td>{{ request.fitness_user.weight }}</td>
+                        <td>
+                            <form method="post" action="{% url 'Members:approve_reject_request' request.id %}">
                                 {% csrf_token %}
-                                <button type="submit" name="action" value="approve" class="btn btn-success me-2">Approve</button>
-                                <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+                                <button type="submit" name="action" value="approve" class="btn btn-success me-2" style="background-color: #F4A261;">Approve</button>
+                                <button type="submit" name="action" value="reject" class="btn btn-danger" style="background-color: #F4A261;">Reject</button>
                             </form>
-                        </div>
-                    </li>
+                        </td>
+                    </tr>
                 {% endfor %}
-            </ul>
-        {% else %}
-            <p class="mt-4">No pending requests.</p>
-        {% endif %}
-    </div>
+            </tbody>
+        </table>
+    {% else %}
+        <p class="mt-4" style="background-color: #264653; color: #F4A261;">No pending requests.</p>
+    {% endif %}
+    
+    
 
     <!-- Include Bootstrap JS (optional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/js/bootstrap.min.js"></script>

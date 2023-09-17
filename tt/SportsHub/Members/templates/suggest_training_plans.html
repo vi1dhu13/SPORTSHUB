@@ -11,22 +11,23 @@
         
         <h3>Select a Plan:</h3>
         {% for plan in available_plans %}
-            <div class="card mb-3" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">{{ plan.plan_name }}</h5>
-                    <p class="card-text">{{ plan.description }}</p>
-                    <input type="radio" name="selected_plan" value="{{ plan.id }}" id="plan_{{ plan.id }}">
-                    <label for="plan_{{ plan.id }}">Select</label>
-                </div>
+        <div class="card mb-3 custom-card">
+            <div class="card-body">
+                <h5 class="card-title custom-card-title">{{ plan.plan_name }}</h5>
+                <p class="card-text custom-card-text">{{ plan.description }}</p>
+                <input type="radio" name="selected_plan" value="{{ plan.id }}" id="plan_{{ plan.id }}" class="custom-radio-input">
+                <label for="plan_{{ plan.id }}" class="custom-radio-label">Select</label>
             </div>
+        </div>
+        
         {% endfor %}
 
         <h3>Select a User:</h3>
         {% for user in connected_users %}
             <div class="card mb-3" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ user.user.username }}</h5>
-                    <p class="card-text">{{ user.user.email }}</p>
+                    <h5 class="card-title custom-card-title">{{ user.user.username }}</h5>
+                    <p class="card-text custom-card-text">{{ user.user.email }}</p>
                     <input type="radio" name="selected_user" value="{{ user.id }}" id="user_{{ user.id }}">
                     <label for="user_{{ user.id }}">Select</label>
                 </div>
@@ -35,7 +36,7 @@
 
         <button type="submit" class="btn btn-primary">Assign Plan</button>
     </form>
-</div>
+</div> 
 {% endblock %}
 
 

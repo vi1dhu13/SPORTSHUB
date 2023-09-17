@@ -66,7 +66,20 @@
 
 
 
-
+                {% if messages %}
+                <div class="container mt-4">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            
 
 
 
@@ -82,7 +95,7 @@
                                           {% if user.role == 'FitnessUser' %}
                                           <a href="{% url 'Members:fitness_user_dashboard' %}" class="btn btn-primary"> Dashboard</a>
                                          
-                                          <a href="{% url 'users:profile' user.username %}" class="nav-link"> MYprofile</a>
+                                          <a href="{% url 'users:profile'  %}" class="nav-link"> MYprofile</a>
                                           
                                           <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
                                         </ul>
@@ -117,7 +130,7 @@
                                           <!-- Button to go to the Fitness User Dashboard -->
                               
                                           <a href="{% url 'Members:fitness_trainer_dashboard' %}" class="btn btn-primary"> Dashboard</a>
-                              <a href="{% url 'users:profile' user.username %}" class="nav-link"> MYprofile</a>
+                                          <a href="{% url 'users:profile'  %}" class="nav-link"> MYprofile</a>
                               
                               <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
                             </ul>
@@ -150,7 +163,7 @@
                       {% elif user.role == 'SportsTrainer' %}
                                         
                                           
-                      <a href="{% url 'users:profile' user.username %}" class="nav-link"> MYprofile</a>
+                      <a href="{% url 'users:profile'  %}" class="nav-link"> MYprofile</a>
                       <a href="{% url 'Members:sports_user_dashboard' %}" class="btn btn-primary"> Dashboard</a>
                       <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
                       </ul>
@@ -187,7 +200,7 @@
                      
                       <a href="{% url 'Members:all_users' %}" class="btn btn-primary">View All Users</a>
                      
-                      
+                      <a href="{% url 'users:profile'  %}" class="nav-link"> MYprofile</a>
                       <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
                     </ul>
                   </nav>
@@ -223,7 +236,7 @@
 
                 <a href="{% url 'users:role_application' %}" class="btn btn-primary">Apply for a Role</a>
                 
-                <a href="{% url 'users:profile' user.username %}" class="nav-link"> MYprofile</a>
+                <a href="{% url 'users:profile'  %}" class="nav-link"> MYprofile</a>
                 
                 <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
               </ul>
