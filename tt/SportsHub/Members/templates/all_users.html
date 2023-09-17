@@ -1,44 +1,85 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Users</title>
-    <!-- Add Bootstrap CSS link here -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
-</head>
+{% extends 'sadmin.html' %}
 
-<body>
-    <div class="container mt-4">
-        <h1>All Users</h1>
-        <div class="row">
-            {% for user in users %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 d-flex flex-column">
-                    {% comment %} <img src="{% static 'path_to_user_image.jpg' %}" class="card-img-top" alt="User Image"> {% endcomment %}
-                    <div class="card-body d-flex flex-column"  background="gr">
-                        <h5 class="card-title">{{ user.username }}</h5>
-                        <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
-                        <p class="card-text"><strong>Role:</strong> {{ user.role }}</p>
-                        {% if user.role == 'FitnessUser' %}
-                        <p class="card-text"><strong>Fitness Goal:</strong> {{ user.fitnessuser.fitness_goal }}</p>
-                        <p class="card-text"><strong>Height:</strong> {{ user.fitnessuser.height }}</p>
-                        <p class="card-text"><strong>Weight:</strong> {{ user.fitnessuser.weight }}</p>
-                        {% elif user.role == 'FitnessTrainer' %}
-                        <p class="card-text"><strong>Experience:</strong> {{ user.fitnesstrainer.experience }}</p>
-                        <p class="card-text"><strong>Certification:</strong> {{ user.fitnesstrainer.certification }}</p>
-                        <p class="card-text"><strong>Training Goal:</strong> {{ user.fitnesstrainer.training_goal }}</p>
-                        {% elif user.role == 'SportsTrainer' %}
-                        <p class="card-text"><strong>Specialization:</strong> {{ user.sportstrainer.specialization }}</p>
-                        {% endif %}
-                    </div>
+
+{% block title %}All Users{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>All Users</h1>
+    <div class="row">
+        {% for user in users %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <!-- Card Header with Teal Background -->
+                <div class="card-header" style="background-color: #264653; color: #fff;">
+                    <h5 class="card-title mb-0">{{ user.username }}</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td><strong>Email:</strong></td>
+                                <td>{{ user.email }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Role:</strong></td>
+                                <td>{{ user.role }}</td>
+                            </tr>
+                            {% if user.role == 'FitnessUser' %}
+                            <tr>
+                                <td><strong>Fitness Goal:</strong></td>
+                                <td>{{ user.fitnessuser.fitness_goal }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Height:</strong></td>
+                                <td>{{ user.fitnessuser.height }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Weight:</strong></td>
+                                <td>{{ user.fitnessuser.weight }}</td>
+                            </tr>
+                            {% elif user.role == 'FitnessTrainer' %}
+                            <tr>
+                                <td><strong>Experience:</strong></td>
+                                <td>{{ user.fitnesstrainer.experience }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Certification:</strong></td>
+                                <td>{{ user.fitnesstrainer.certification }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Training Goal:</strong></td>
+                                <td>{{ user.fitnesstrainer.training_goal }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Height:</strong></td>
+                                <td>{{ user.fitnesstrainer.height }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Weight:</strong></td>
+                                <td>{{ user.fitnesstrainer.weight }}</td>
+                            </tr>
+                            {% elif user.role == 'SportsTrainer' %}
+                            <tr>
+                                <td><strong>Specialization:</strong></td>
+                                <td>{{ user.sportstrainer.specialization }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Height:</strong></td>
+                                <td>{{ user.sportstrainer.height }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Weight:</strong></td>
+                                <td>{{ user.sportstrainer.weight }}</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            {% endfor %}
         </div>
         
-    <!-- Add Bootstrap JS and jQuery links here if needed -->
-</body>
-</html>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

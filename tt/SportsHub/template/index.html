@@ -194,11 +194,9 @@
                       </div>
                       </div>
                       {% elif user.is_superuser %}
-                      <a href="{% url 'Members:view_fitness_trainers' %}" class="btn btn-primary">View Fitness Trainers</a>
 
-                      <a href="{% url 'users:role_approval' %} " class="btn btn-primary">Approve Role Applications</a>
-                     
-                      <a href="{% url 'Members:all_users' %}" class="btn btn-primary">View All Users</a>
+                      <a href="{% url 'Members:admin_dashboard' %}" class="btn btn-primary"> Dashboard</a>
+
                      
                       <a href="{% url 'users:profile'  %}" class="nav-link"> MYprofile</a>
                       <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>

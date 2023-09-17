@@ -188,7 +188,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Members:view_pending_requests' %}">View Requests</a>
@@ -264,14 +264,20 @@
 
     <!-- Manage Training Sessions Section -->
     <div class="container mt-4">
-        <h3>Manage Training Sessions</h3>
-        <ul class="list-group">
-            <li class="list-group-item">Client 1 - Session on 2023-09-20, 10:00 AM - 11:00 AM <button class="btn btn-primary float-right">Edit</button></li>
-            <li class="list-group-item">Client 2 - Session on 2023-09-21, 3:00 PM - 4:00 PM <button class="btn btn-primary float-right">Edit</button></li>
+        <h3 style="color: #FFA500; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Manage Training Sessions</h3>
+        <ul style="background-color: #1E90FF; border: 2px solid #FFA500;" class="list-group">
+            <li style="background-color: #F0E68C; color: #1E90FF; font-size: 16px; margin-bottom: 10px; border: 1px solid #FFA500; border-radius: 5px;" class="list-group-item">
+                Client 1 - Session on 2023-09-20, 10:00 AM - 11:00 AM
+                <button style="background-color: #FFA500; border: none;" class="btn btn-primary float-right">Edit</button>
+            </li>
+            <li style="background-color: #F0E68C; color: #1E90FF; font-size: 16px; margin-bottom: 10px; border: 1px solid #FFA500; border-radius: 5px;" class="list-group-item">
+                Client 2 - Session on 2023-09-21, 3:00 PM - 4:00 PM
+                <button style="background-color: #FFA500; border: none;" class="btn btn-primary float-right">Edit</button>
+            </li>
             <!-- Add more training sessions here -->
         </ul>
     </div>
-
+    
     <!-- Book Equipment Section -->
     <div class="container mt-4">
         <h3>Book Equipment</h3>

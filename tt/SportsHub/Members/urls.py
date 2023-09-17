@@ -24,7 +24,6 @@ urlpatterns = [
     path('ajax/get_available_slots/', views.ajax_get_available_slots, name='ajax_get_available_slots'),
     path('accept_training_plan/<int:user_id>/', views.accept_training_plan, name='accept_training_plan'),
     path('reject_training_plan/<int:user_id>/', views.reject_training_plan, name='reject_training_plan'),
-     path('equipment/', views.available_equipment, name='available_equipment'),
     path('make-reservation/', views.make_reservation, name='make_reservation'),
     path('list-reservations/', views.list_reservations, name='list_reservations'),
     path('trainer-reservations/', views.trainer_reservations, name='trainer_reservations'),
@@ -34,6 +33,9 @@ urlpatterns = [
     path('reservation/', views.reservation_page, name='reservation_page'),
      path('this_weeks_plan/', views.this_weeks_plan, name='this_weeks_plan'),
      path('c_reservation/', views.c_reservation, name='c_reservation'),
+     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('fitness_users/', views.view_fitness_users, name='view_fitness_users'),
+    path('equipment/', views.equipment_list, name='equipment_list'),
     # path('success_page/', views.success_page, name='success_page'),  # You can create a success page view as needed.
 ]
    

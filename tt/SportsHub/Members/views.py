@@ -4,7 +4,82 @@ from django.shortcuts import render
 def landing_page(request):
     return render(request, 'landing.html')
 
-# Create your views here.
+from django.shortcuts import render
+from .models import EquipmentReservation, TrainingPlanAssignment, TrainerUserConnection
+from .models import CustomUser, FitnessUser, FitnessTrainer, SportsTrainer, Equipment
+
+
+
+def admin_dashboard(request):
+    # Retrieve the last 5 equipment reservations
+    last_5_reservations = EquipmentReservation.objects.order_by('-id')[:5]
+
+    # Retrieve the last 3 plans accepted
+    last_3_accepted_plans = TrainingPlanAssignment.objects.filter(is_accepted=True).order_by('-assigned_date')[:3]
+
+    # Retrieve the last 5 connections made
+    last_5_connections = TrainerUserConnection.objects.order_by('-id')[:5]
+    
+    
+    total_custom_users = CustomUser.objects.count()
+    total_fitness_users = FitnessUser.objects.count()
+    total_fitness_trainers = FitnessTrainer.objects.count()
+    total_sports_trainers = SportsTrainer.objects.count()
+
+    # Calculate the count of equipment
+    total_equipment = Equipment.objects.count()
+
+    # Create a list containing all the counts
+    counts_list = [
+        ('Custom Users', total_custom_users),
+        ('Fitness Users', total_fitness_users),
+        ('Fitness Trainers', total_fitness_trainers),
+        ('Sports Trainers', total_sports_trainers),
+        ('Equipment', total_equipment),
+    ]
+    
+    context = {
+        'last_5_reservations': last_5_reservations,
+        'last_3_accepted_plans': last_3_accepted_plans,
+        'last_5_connections': last_5_connections,
+        'total_custom_users': total_custom_users,
+        'total_fitness_users': total_fitness_users,
+        'total_fitness_trainers': total_fitness_trainers,
+        'total_sports_trainers': total_sports_trainers,
+        'total_equipment': total_equipment,
+        'counts_list': counts_list
+    }
+
+    return render(request, 'sadmin.html', context)
+
+from django.shortcuts import render
+from .models import Equipment
+
+from django.shortcuts import render, redirect
+from .models import Equipment
+from .forms import EquipmentForm  # Import the EquipmentForm
+
+def equipment_list(request):
+    if request.method == 'POST':
+        form = EquipmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Members:equipment_list')
+    else:
+        form = EquipmentForm()
+
+    equipments = Equipment.objects.all()
+    return render(request, 'equipment_list.html', {'equipments': equipments, 'form': form})
+
+
+
+from django.shortcuts import render
+from .models import FitnessUser  # Import your FitnessUser model
+
+def view_fitness_users(request):
+    fitness_users = FitnessUser.objects.all()  # Retrieve all Fitness Users
+    context = {'fitness_users': fitness_users}
+    return render(request, 'view_fitness_users.html', context)
 
 
 from django.shortcuts import render
@@ -392,23 +467,8 @@ def training_plan_list(request):
     return render(request, 'training_plan_list.html', context)
 
 
-from django.shortcuts import render, redirect
-from .models import Equipment, TimeSlot, EquipmentReservation
-from .forms import EquipmentReservationForm
 
-def available_equipment(request):
-    print("View is called")  # Check if this message appears in the console
-    equipment = Equipment.objects.all()
-    # You can filter equipment by availability here
-    return render(request, 'list_equipment.html', {'equipment': equipment})
-from django.shortcuts import render, redirect
-from .models import EquipmentReservation
- # Import your form
-from django.utils import timezone
-from django.shortcuts import render, redirect
-from .models import EquipmentReservation
-from .forms import EquipmentReservationForm  # Import the form if needed
-from django.utils import timezone
+
 
 
 
@@ -532,25 +592,40 @@ def ajax_get_available_slots(request):
 
 
 
+from django.shortcuts import render
+from .models import EquipmentReservation
+from django.utils import timezone
+
 def list_reservations(request):
-    reservations = EquipmentReservation.objects.all()
-    return render(request, 'list_reservations.html', {'reservations': reservations})
+    # Retrieve reservations for future dates
+    current_date = timezone.now()
+    future_reservations = EquipmentReservation.objects.filter(date__gt=current_date)
+    
+    return render(request, 'list_reservations.html', {'reservations': future_reservations})
+
 
 
 
 from django.shortcuts import render
 from .models import EquipmentReservation
+from django.utils import timezone
 
 def trainer_reservations(request):
-    # Retrieve reservations made by the logged-in trainer
+    # Retrieve reservations made by the logged-in trainer and sort by date
     trainer = request.user.fitnesstrainer
-    reservations = EquipmentReservation.objects.filter(trainer=trainer)
+    current_date = timezone.now()
+    reservations = EquipmentReservation.objects.filter(trainer=trainer, date__gte=current_date).order_by('date')
 
     context = {
         'reservations': reservations,
     }
 
     return render(request, 'trainer_reservations.html', context)
+
+
+
+
+
 from django.shortcuts import render
 from .models import EquipmentReservation
 from django.utils import timezone
@@ -644,48 +719,6 @@ def create_weekly_plan(request):
 
 
 
-# Create views for updating and deleting plans as well.
-
-
-
-
-
-
-
-
-
-
-# views.py
-
-# from django.http import JsonResponse
-# from .models import EquipmentReservation
-
-# def get_available_slots(request):
-#     selected_equipment_id = request.GET.get('equipment_id')
-#     selected_date = request.GET.get('date')
-    
-#     # Query the database to find reservations for the selected equipment and date
-#     reservations = EquipmentReservation.objects.filter(
-#         equipment_id=selected_equipment_id,
-#         date=selected_date
-#     )
-
-#     # Calculate available slots based on reservations
-#     # You may need to define your own logic for this
-
-#     # Convert available slots to a list
-#     available_slots = []
-
-#     for reservation in reservations:
-#         # Append each available slot to the list
-#         # You can customize the data you want to send to the client here
-#         available_slots.append({
-#             'time': reservation.timeslot.start_time.strftime('%H:%M'),
-#             'user': reservation.fitness_user.user.username
-#         })
-
-#     return JsonResponse({'available_slots': available_slots})
-# views.py
 from django.http import JsonResponse
 from .models import EquipmentReservation, TimeSlot
 

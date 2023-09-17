@@ -88,7 +88,7 @@ def custom_login(request):
                 login(request, user)
                 messages.success(request, f"Hello <b>{user.username}</b>! You have been logged in ")
                 # Add a message to indicate that fields are empty (no explicit check)
-                messages.warning(request, 'All fields in your profile are empty. Please update your profile.')
+                messages.warning(request, 'complete your profile if you havent')
                 return redirect("/")
 
         else:

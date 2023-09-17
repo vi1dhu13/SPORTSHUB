@@ -143,3 +143,31 @@ class WeeklyFitnessPlanForm(forms.ModelForm):
         day_details_fields = ['day1details', 'day2details', 'day3details', 'day4details', 'day5details', 'day6details', 'day7details']
         for field_name in day_details_fields:
             self.fields[field_name].widget = forms.Textarea(attrs=textarea_attrs)
+
+
+from django import forms
+from .models import Equipment
+
+class EquipmentForm(forms.ModelForm):
+    class Meta:
+        model = Equipment
+        fields = ['name', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super(EquipmentForm, self).__init__(*args, **kwargs)
+        
+        # Add Bootstrap classes to form fields
+        for field_name in self.fields:
+            self.fields[field_name].widget.attrs.update({
+                'class': 'form-control',
+            })
+
+        # Add placeholders and labels if desired
+        self.fields['name'].widget.attrs.update({
+            'placeholder': 'Equipment Name',
+            'label': 'Name',
+        })
+        self.fields['description'].widget.attrs.update({
+            'placeholder': 'Equipment Description',
+            'label': 'Description',
+        })

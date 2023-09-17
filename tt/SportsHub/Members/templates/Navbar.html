@@ -236,7 +236,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                  <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="{% url 'index' %}">Home</a>>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'Members:view_pending_requests' %}">View Requests</a>
@@ -254,6 +254,10 @@
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'Members:suggest_training_plans' %}">Training Plans</a>
               </li>
+              <li class="nav-item">
+                   
+                <a href="{% url 'Members:trainer_reservations' %}" class="nav-link">Reservations</a>
+            </li>
               <li class="nav-item">
                   <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
               </li>

@@ -163,22 +163,62 @@ class FitnessUserForm(forms.ModelForm):
             'weight': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Weight', 'style': 'background-color: #90ee90; color: #264653!important;'}),
         }
 
+        def clean_height(self):
+            height = self.cleaned_data.get('height')
+            if height < 0 or height > 300:
+                raise forms.ValidationError("Height must be greater than zero and less than or equal to 300.")
+            return height
+
+        def clean_weight(self):
+            weight = self.cleaned_data.get('weight')
+            if weight < 0 or weight > 300:
+                raise forms.ValidationError("Weight must be greater than zero and less than or equal to 300.")
+            return weight
+
 class FitnessTrainerForm(forms.ModelForm):
     class Meta:
         model = FitnessTrainer
-        fields = ('experience', 'certification', 'training_goal', 'certification_link')
+        fields = ('experience', 'certification', 'training_goal', 'certification_link','height', 'weight')
         widgets = {
             'experience': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Experience', 'style': 'background-color: #90ee90; color: #264653!important;'}),
             'certification': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Certification', 'style': 'background-color: #90ee90; color: #264653!important;'}),
             'training_goal': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Training Goal', 'style': 'background-color: #90ee90; color: #264653!important;'}),
             'certification_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Certification Link', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'height': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Height', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'weight': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Weight', 'style': 'background-color: #90ee90; color: #264653!important;'}),
         }
+
+        def clean_height(self):
+            height = self.cleaned_data.get('height')
+            if height < 0 or height > 300:
+                raise forms.ValidationError("Height must be greater than zero and less than or equal to 300.")
+            return height
+
+        def clean_weight(self):
+            weight = self.cleaned_data.get('weight')
+            if weight < 0 or weight > 300:
+                raise forms.ValidationError("Weight must be greater than zero and less than or equal to 300.")
+            return weight
 
 class SportsTrainerForm(forms.ModelForm):
     class Meta:
         model = SportsTrainer
-        fields = ('specialization',)
+        fields = ('specialization','height', 'weight')
         widgets = {
             'specialization': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Specialization', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'height': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Height', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'weight': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Weight', 'style': 'background-color: #90ee90; color: #264653!important;'}),
         }
+
+    def clean_height(self):
+        height = self.cleaned_data.get('height')
+        if height < 0 or height > 300:
+            raise forms.ValidationError("Height must be greater than zero and less than or equal to 300.")
+        return height
+
+    def clean_weight(self):
+        weight = self.cleaned_data.get('weight')
+        if weight < 0 or weight > 300:
+            raise forms.ValidationError("Weight must be greater than zero and less than or equal to 300.")
+        return weight
 

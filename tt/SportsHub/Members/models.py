@@ -21,7 +21,9 @@ class FitnessTrainer(models.Model):
     experience = models.IntegerField()
     certification = models.CharField(max_length=255, null=True, blank=True)
     training_goal = models.CharField(max_length=255)
-    certification_link = models.CharField(max_length=255, blank=True, null=True)  # Add this field
+    certification_link = models.CharField(max_length=255, blank=True, null=True)
+    height = models.FloatField(blank=True, null=True)
+    weight = models.FloatField(blank=True, null=True)# Add this field
     # Add other fields specific to FitnessTrainer
     def __str__(self):
         return self.user.username
@@ -29,6 +31,8 @@ class FitnessTrainer(models.Model):
 class SportsTrainer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     specialization = models.CharField(max_length=255)
+    height = models.FloatField(blank=True, null=True)
+    weight = models.FloatField(blank=True, null=True)
     # Add other fields specific to SportsTrainer
 
 

@@ -213,6 +213,10 @@
                     <a class="nav-link" href="{% url 'Members:connected_users' %}">Clients</a>
                 </li>
                 <li class="nav-item">
+                   
+                    <a href="{% url 'Members:trainer_reservations' %}" class="nav-link">Reservations</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'Members:suggest_training_plans' %}">Training Plans</a>
                 </li>
                 <li class="nav-item">
@@ -269,9 +273,10 @@
             </div>
 
             <!-- Available Slots -->
-            <div class="form-group" id="available_slots">
+            <div class="form-group" id="available_slots" style="color: #FFA500; background-color: #2A9D8F;">
                 <!-- Available slots will be displayed here -->
             </div>
+            
 
             <!-- Selected Slot Input -->
             <div class="form-group">
@@ -290,6 +295,7 @@
 
 <!-- AJAX Script -->
 <!-- AJAX Script -->
+
 <script>
     $(document).ready(function() {
         // Variable to store the selected slot
