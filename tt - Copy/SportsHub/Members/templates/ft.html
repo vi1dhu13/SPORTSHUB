@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Trainer Dashboard</title>
+    <!-- Add Bootstrap CSS link -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+          background-color: #264653!important; /* Deep teal background color */
+          height: 100px; /* Adjust the height as needed */
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Gym Trainer Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:view_pending_requests' %}">View Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:create_training_plan' %}">Create Plan</a>
+                </li>
+  
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:reservation_page'  %}">Make Reservations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:connected_users' %}">Clients</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:suggest_training_plans' %}">Training Plans</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+   <!-- User Profile Section -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                
+                <div class="card-body">
+                    <h5 class="card-title">{{ request.user.username }}</h5>
+                    <p class="card-text">{{ request.user.role }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h2>Welcome, {{ request.user.first_name }} {{ request.user.last_name }}</h2>
+            <p>{{ request.user.description }}</p>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Approve Client Schedules Section -->
+
+
+    <div class="container mt-4">
+        <h3>Clients</h3>
+        {% for fitness_user in fitness_users %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    {{ fitness_user.user.username }}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Client Details</h5>
+                    <p class="card-text">
+                        Fitness Goal: {{ fitness_user.fitness_goal }}<br>
+                        Height: {{ fitness_user.height }}<br>
+                        Weight: {{ fitness_user.weight }}<br>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <h5 class="card-title">Training Plans</h5>
+                    <ul>
+                        {% for assignment in fitness_user.trainingplanassignment_set.all %}
+                            <li>
+                                Plan Name: {{ assignment.plan.plan_name }}<br>
+                                Description: {{ assignment.plan.description }}<br>
+                                Duration: {{ assignment.plan.duration }} Months<br>
+                                Assigned By: {{ assignment.assigned_by.user.username }}<br>
+                                Assigned Date: {{ assignment.assigned_date }}<br>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% empty %}
+            <p>No connected fitness users found.</p>
+        {% endfor %}
+    </div>
+   
+    <!-- Add Bootstrap JS and jQuery links -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

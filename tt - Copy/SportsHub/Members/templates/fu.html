@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Fitness User Dashboard{% endblock %}</title>
+    <!-- Add Bootstrap CSS link -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+      /* Custom styles for card headers */
+      .card-title {
+          font-size: 24px;
+          color: #333;
+          margin-bottom: 10px;
+      }
+  
+      /* Custom styles for table headers */
+      table th {
+          font-weight: bold;
+          background-color: #f2f2f2;
+      }
+  
+      /* Custom styles for table cells */
+      table td {
+          vertical-align: middle;
+      }
+  
+      /* Custom styles for buttons */
+      .btn-primary {
+          background-color: #007bff;
+          border-color: #007bff;
+      }
+  
+      .btn-primary:hover {
+          background-color: #0056b3;
+          border-color: #0056b3;
+      }
+  
+      /* Custom styles for the container */
+      .container {
+          background-color: #f9f9f9;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+  
+      /* Custom styles for the page title */
+      .display-4 {
+          color: #333;
+      }
+  </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        
+      <a class="navbar-brand" href="{% url 'Members:fitness_user_dashboard' %}">Fitness User Dashboard</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'Members:user_reservations' %}" >View Future Reservations</a>
+              </li>
+
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'Members:select_trainer' %}">Select Trainer</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'Members:view_assigned_training_plans' user.id %}">My Plan</a>
+              </li>
+              
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'Members:this_weeks_plan' %}">This Week's Plan</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'Members:this_weeks_plan' %}">Train with ZIZU</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
+              </li>
+              
+          </ul>
+      </div>
+ 
+</nav>
+
+    <!-- Main Content Container -->
+    <div class="container mt-5">
+      <h1 class="display-4">Welcome</h1>
+  
+      <!-- User Profile Section -->
+      <div class="card mb-4">
+          <div class="card-body">
+              <h2 class="card-title">Profile Information</h2>
+              <!-- Display user-specific information here -->
+              <table class="table">
+                  <tr>
+                      <th>UserName:</th>
+                      <td>{{ fitness_user.user.username }}</td>
+                  </tr>
+                  <tr>
+                      <th>Email:</th>
+                      <td>{{ fitness_user.user.email }}</td>
+                  </tr>
+
+                  <tr>
+                      <th>Height:</th>
+                      <td>{{ fitness_user.height }} cm</td>
+                  </tr>
+                  <tr>
+                      <th>Weight:</th>
+                      <td>{{ fitness_user.weight }} kg</td>
+                  </tr>
+              </table>
+          </div>
+      </div>
+  
+      <!-- Workout Plan Section -->
+      <div class="card mb-4">
+          <div class="card-body">
+              <h2 class="card-title">Your Workout Plan</h2>
+              <!-- Display user-specific workout plan details here -->
+              <table class="table">
+                  {% if training_plan_assignments %}
+                      {% with assignment=training_plan_assignments.0.plan %}
+                          <tr>
+                              <th>Plan Name:</th>
+                              <td>{{ assignment.plan_name }}</td>
+                          </tr>
+                          <tr>
+                              <th>Description:</th>
+                              <td>{{ assignment.description }}</td>
+                          </tr>
+                          <tr>
+                              <th>Duration:</th>
+                              <td>{{ assignment.duration }} months</td>
+                          </tr>
+                          <!-- Add more workout plan details as needed -->
+                      {% endwith %}
+                  {% else %}
+                      <tr>
+                          <td colspan="2">You do not have an assigned workout plan at the moment.</td>
+                      </tr>
+                  {% endif %}
+              </table>
+              <a href="#" class="btn btn-primary">View Workout Plan</a>
+          </div>
+      </div>
+  
+      <!-- Nutrition Plan Section -->
+      <div class="card">
+          <div class="card-body">
+              <h2 class="card-title">Your Nutrition Plan</h2>
+              <!-- Display user-specific nutrition plan details here -->
+              <table class="table">
+                  <tr>
+                      <th>Plan Name:</th>
+                      <td>Balanced Diet</td>
+                  </tr>
+                  <tr>
+                      <th>Caloric Intake:</th>
+                      <td>2000 calories/day</td>
+                  </tr>
+                  <!-- Add more nutrition plan details as needed -->
+              </table>
+              <a href="#" class="btn btn-primary">View Nutrition Plan</a>
+          </div>
+      </div>
+      <BR>
+      <!-- Trainer Section -->
+      <div class="card mb-4">
+          <div class="card-body">
+              <h2 class="card-title">Trainer Information</h2>
+              {% if trainer %}
+                  <!-- Display trainer-specific information here -->
+                  <table class="table ">
+                      <tr>
+                          <th>Name:</th>
+                          <td>{{ trainer.user.get_full_name }}</td>
+                      </tr>
+                      <tr>
+                          <th>Email:</th>
+                          <td>{{ trainer.user.email }}</td>
+                      </tr>
+                      <tr>
+                          <th>Experience:</th>
+                          <td>{{ trainer.experience }} years</td>
+                      </tr>
+                      <!-- Add more trainer details as needed -->
+                  </table>
+              {% else %}
+                  <p><em>You do not have a connected trainer at the moment.</em></p>
+              {% endif %}
+          </div>
+      </div>
+  </div>
+  
+
+    <!-- Include Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

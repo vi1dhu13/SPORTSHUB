@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gym Trainer Dashboard{% endblock %}</title>
+    <!-- Add Bootstrap CSS link -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .navbar {
+            background-color: #264653!important; /* Deep teal background color */
+            height: 100px; /* Adjust the height as needed */
+        }
+      
+        .navbar-dark .navbar-nav .nav-link {
+            color: #F4A261!important; /* Light orange text color for navbar items */
+        }
+      
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #E76F51!important; /* Coral color for the navbar toggler icon */
+        }
+      
+        /* Body Styles */
+        body {
+            background-color: #ffffff!important; /* Teal background color for the body */
+        }
+      
+        /* Container Styles */
+        .container {
+            background-color: #ffffff!important; /* Yellow background color for containers */
+            padding: 20px; /* Add some padding to the containers */
+            border-radius: 10px; /* Add rounded corners to the containers */
+        }
+      
+        .alert-label {
+          display: none;
+          color: #0000AA; /* Dark blue text color */
+          font-size: 14px;
+      }
+      
+      input:required + .alert-label {
+          display: block;
+      }
+         
+          /* Custom styles for the form container */
+          .container {
+            max-width: 1400px;
+            margin: 10px auto;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #fff;
+          }
+      
+          /* Custom styles for the form */
+          form {
+            margin-top: 20px;
+          }
+      
+          /* Style form labels */
+          label {
+            font-weight: bold;
+            color: #264653!important; ;
+          }
+      
+          /* Style form fields */
+          .form-group {
+            margin-bottom: 20px;
+          }
+      
+          /* Style input fields */
+          input[type="text"],
+          input[type="email"],
+          input[type="password"],
+          select {
+            background-color: #444;
+            color: #fff;
+            border: 1px solid #555;
+            width: 100%; /* Make input fields longer */
+            padding: 10px; /* Add some padding for better appearance */
+            box-sizing: border-box; /* Include padding in width calculation */
+          }
+      
+          /* Style submit button */
+          .btn-primary {
+            background-color: #4285F4;
+            border-color: #4285F4;
+          }
+      
+          /* Additional styles for the second form section */
+          .form-row {
+            margin-top: 20px;
+          }
+          .card {
+              
+              background-color: 	#d3d3d3
+              padding: 1em;
+              
+              box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+              border-radius: 10px;
+              
+              transition: 200ms ease-in-out;
+            }
+            
+            .username {
+              color: #C6E1ED;
+              font-size: 0.85em;
+              font-weight: 600;
+            }
+            
+            .body {
+              display: flex;
+              flex-direction: column;
+            }
+            
+            .body .text {
+              margin: 0 10px 0 0;
+              white-space: pre-line;
+              color: #264653!important; 
+              font-weight: 400;
+              line-height: 1.5;
+              margin-bottom: 4px;
+            }
+            
+            .footer {
+              position: relative;
+              width: 100%;
+              color: #9fa4aa;
+              font-size: 12px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              border: none;
+              margin-top: 10px;
+            }
+            
+            .footer div {
+              margin-right: 1rem;
+              height: 20px;
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+            }
+            
+            .footer svg {
+              margin-right: 5px;
+              height: 100%;
+              stroke: #9fa4aa;
+            }
+            
+            .viewer span {
+              height: 20px;
+              width: 20px;
+              background-color: rgb(28, 117, 219);
+              margin-right: -6px;
+              border-radius: 50%;
+              border: 1px solid #fff;
+              display: grid;
+              align-items: center;
+              text-align: center;
+              font-weight: bold;
+              font-size: 8px;
+              color: #fff;
+              padding: 2px;
+            }
+            
+            .viewer span svg {
+              stroke: #fff;
+            }
+        #available_slots {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        #available_slots p {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Gym Trainer Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:view_pending_requests' %}">View Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:create_training_plan' %}">Create Plan</a>
+                </li>
+  
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:reservation_page'  %}">Make Reservations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:connected_users' %}">Clients</a>
+                </li>
+                <li class="nav-item">
+                   
+                    <a href="{% url 'Members:trainer_reservations' %}" class="nav-link">Reservations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:suggest_training_plans' %}">Training Plans</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Equipment Reservation -->
+    <div class="container" style="background-color: #264653!important; margin-top: 70px; margin-bottom: 50px;">
+        <center><h1 style="color: rgb(241, 241, 241); font-weight: bold; text-transform: uppercase;">Make Reservation</h1></center>
+      </div>
+      <div id="success-message" class="alert alert-success" style="display: none;">
+        Reservation created successfully!
+    </div>
+    <center>   <!-- Display Messages -->
+    <div  style="max-width: 800px;">
+   
+  
+    <div class="container" style="margin-top: 90px;">
+
+
+        <!-- Equipment Reservation Form -->
+        <form id="reservation-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="equipment">Select Equipment:</label>
+                <select id="equipment" name="selected_equipment" class="form-control">
+                    <!-- Populate equipment options from your database -->
+                    {% for equipment in equipment_list %}
+                        <option value="{{ equipment.id }}">{{ equipment.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="reservation_date">Reservation Date:</label>
+                <input type="date" id="reservation_date" name="reservation_date" class="form-control">
+            </div>
+            <button id="check_availability" type="button" class="btn btn-primary">Check Availability</button>
+
+            <!-- Display Available Slots -->
+            <div class="form-group mt-4">
+                <label for="selected_user">Select User:</label>
+                <select class="form-control" name="selected_user" id="selected_user">
+                    <option value="" selected disabled>Select User</option>
+                    {% for user in connected_users %}
+                        <option value="{{ user.id }}">{{ user.user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Available Slots -->
+            <div class="form-group" id="available_slots" style="color: #a60000; background-color: #fcfcfc;">
+                <!-- Available slots will be displayed here -->
+            </div>
+            
+
+            <!-- Selected Slot Input -->
+            <div class="form-group" >
+                <label for="selected_slot_id">Selected </label>
+                <input type="text"name="selected_slot" id="selected_slot" style="color: #a60000; background-color: #fcfcfc;">
+                <input type="hidden" id="selected_slot_id" name="selected_slot_id" readonly class="form-control " style="color: #a60000; background-color: #fcfcfc;">
+            </div>
+
+            <!-- Hidden Input Fields -->
+            <input type="hidden" name="selected_slot" id="selected_slot">
+            <input type="hidden" name="selected_equipment" id="selected_equipment">
+
+            <!-- Make Reservation Button -->
+            <button type="submit" id="make_reservation" class="btn btn-success">Make Reservation</button>
+        </form>
+    </div>
+</center>
+    </div>
+
+<!-- AJAX Script -->
+<!-- AJAX Script -->
+
+<script>
+    $(document).ready(function() {
+        // Variable to store the selected slot
+        var selectedSlotText = "";
+        var selectedSlotId = null; // Variable to store the selected slot ID
+    
+        // AJAX request when the "Check Availability" button is clicked
+        $('#check_availability').click(function() {
+            var equipment_id = $('#equipment').val();
+            var date = $('#reservation_date').val();
+    
+            $.ajax({
+                url: '/members/get_available_slots/',
+                data: {
+                    equipment_id: equipment_id,
+                    date: date
+                },
+                dataType: 'json',
+                success: function(data) {
+                    // Clear previous results
+                    $('#available_slots').empty();
+    
+                    if (data.available_slots.length === 0) {
+                        $('#available_slots').append('<p>No available slots</p>');
+                    } else {
+                        $.each(data.available_slots, function(index, slot) {
+                            // Display each available slot and make it selectable
+                            var slotElement = $('<p class="selectable-slot" data-slot-id="' + slot.slot_id + '">' + slot.start_time + ' - ' + slot.end_time + '</p>');
+                            slotElement.click(function() {
+                                // Set the selected slot text and update the input field
+                                selectedSlotText = slot.start_time + ' - ' + slot.end_time;
+                                selectedSlotId = slot.slot_id; // Store the selected slot ID
+                                $('#selected_slot').val(selectedSlotText);
+                                $('#selected_slot_id').val(selectedSlotId); 
+                            });
+                            $('#available_slots').append(slotElement);
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                }
+            });
+        });
+    
+        // AJAX request when the "Make Reservation" button is clicked
+        $('#make_reservation').click(function() {
+            // Your code to retrieve form data goes here
+            var selected_slot_id = $('#selected_slot_id').val();
+            var selected_user_id = $('#selected_user').val();
+            var selected_date = $('#reservation_date').val();
+            var selected_equipment_id = $('#equipment').val();
+    
+            // Send a POST request to create the reservation
+            $.ajax({
+                url: '/members/c_reservation/',
+                method: 'POST',
+                data: {
+                    selected_slot: selected_slot_id,
+                    selected_user: selected_user_id,
+                    reservation_date: selected_date,
+                    selected_equipment: selected_equipment_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}', // Include the CSRF token
+                },
+                dataType: 'json',
+                success: function(data) {
+                    console.log('Reservation created successfully!');
+                    
+                    // Display the success message
+                    $('#success-message').fadeIn(); // Show the success message
+                
+                    // Set a timer to hide the success message after 3 seconds
+                    setTimeout(function() {
+                        $('#success-message').fadeOut(); // Hide the success message
+                    }, 3000); // 3000 milliseconds = 3 seconds
+                
+                    // You can also hide the form or perform other actions
+                    // For example, you can hide the form after a successful reservation
+                    $('#reservation-form').hide();
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                    // Handle the error response if needed
+                    showErrorMessage('Error: Unable to make reservation');
+                }
+            });
+        });
+        
+    });
+    
+</script>
+<script>
+    // Get the current date
+    var currentDate = new Date();
+
+    // Calculate the date for tomorrow
+    var tomorrow = new Date(currentDate);
+    tomorrow.setDate(currentDate.getDate() + 1);
+
+    // Calculate the date for 7 days from tomorrow
+    var nextWeekDate = new Date(tomorrow);
+    nextWeekDate.setDate(tomorrow.getDate() + 7);
+
+    // Create an array to store the next 7 days
+    var availableDates = [];
+    while (tomorrow <= nextWeekDate) {
+        var formattedDate = tomorrow.toISOString().split('T')[0];
+        availableDates.push(formattedDate);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+    }
+
+    // Set the min and max attributes of the input element
+    var dateInput = document.getElementById('reservation_date');
+    dateInput.min = availableDates[0]; // Set the minimum date
+    dateInput.max = availableDates[availableDates.length - 1]; // Set the maximum date
+
+    // Populate the list of available options
+    availableDates.forEach(function (date) {
+        var option = document.createElement('option');
+        option.value = date;
+        option.text = date;
+        dateInput.appendChild(option);
+    });
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>
