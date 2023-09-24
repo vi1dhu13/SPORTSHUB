@@ -11,19 +11,23 @@
         
         <h3>Select a Plan:</h3>
         {% for plan in available_plans %}
-        <div class="card mb-3 custom-card" style="background-color: teal; color: orange;">
+        <div class="card mb-4 custom-card" style="width:fit-content">
             <div class="card-body">
                 <h5 class="card-title custom-card-title">{{ plan.plan_name }}</h5>
-                <p class="card-text custom-card-text">{{ plan.description }}</p>
+                <p class="card-text custom-card-text display-5">{{ plan.description }}</p>
+                <p class="card-text custom-card-title"><strong>Duration:</strong> {{ plan.duration }} days</p>
+                <p class="card-text custom-card-title"><strong>Created By Trainer:</strong> {{ plan.created_by_trainer }}</p>
+                <p class="card-text custom-card-title"><strong>Amount:</strong> ${{ plan.amount }}</p>
                 <input type="radio" name="selected_plan" value="{{ plan.id }}" id="plan_{{ plan.id }}" class="custom-radio-input">
                 <label for="plan_{{ plan.id }}" class="custom-radio-label" style="color: darkblue;">Select</label>
             </div>
         </div>
+        
         {% endfor %}
         
         <h3>Select a User:</h3>
         {% for user in connected_users %}
-            <div class="card mb-3" style="background-color: teal; color: orange; width: 18rem;">
+            <div class="card mb-3" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title custom-card-title">{{ user.user.username }}</h5>
                     <p class="card-text custom-card-text">{{ user.user.email }}</p>

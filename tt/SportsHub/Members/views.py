@@ -634,7 +634,7 @@ def user_reservations(request):
     # Retrieve reservations made by the logged-in fitness user for future dates
     user = request.user.fitnessuser  # Assuming "fitnessuser" is the ForeignKey field to your FitnessUser model
     current_date = timezone.now().date()
-    reservations = EquipmentReservation.objects.filter(fitness_user=user, date__gte=current_date)
+    reservations = EquipmentReservation.objects.filter(fitness_user=user, date__gte=current_date).order_by('date')
 
     context = {
         'reservations': reservations,

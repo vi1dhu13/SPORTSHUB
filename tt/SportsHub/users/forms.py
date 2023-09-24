@@ -137,21 +137,18 @@ from Members.models import CustomUser, FitnessUser, FitnessTrainer, SportsTraine
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'first_name', 'last_name', 'description', 'profile_picture', 'address', 'contact_number', 'second_contact_number')
+        fields = ('username', 'email', 'first_name', 'last_name', 'profile_picture', 'address', 'contact_number', 'second_contact_number')
         widgets = {
-           'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username', 'readonly': 'readonly', 'style': 'background-color: #e9967a;'}),
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username', 'readonly': 'readonly', 'style': 'background-color: #e9967a;'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'readonly': 'readonly', 'style': 'background-color: #e9967a;'}),
-
-            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name', 'style': 'background-color: #90ee90; color: #264653!important;'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name', 'style': 'background-color: #90ee90; color: #264653!important;'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description', 'style': 'background-color: #90ee90; color: #264653!important; resize: none; overflow-y: hidden;'}),
-
-            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Address', 'style': 'background-color: #90ee90; color: #264653!important;'}),
-            'contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Contact Number', 'style': 'background-color: #90ee90; color: #264653!important;'}),
-            'second_contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Second Contact Number', 'style': 'background-color: #90ee90; color: #264653!important;'}),
-
-
+            'first_name': forms.TextInput(attrs={'class': 'form-control','id':'first-name', 'placeholder': 'First Name', 'style': 'background-color: #90ee90; color: #264653 !important;'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control','id':'last-name', 'placeholder': 'Last Name', 'style': 'background-color: #90ee90; color: #264653 !important;'}),
+            'profile_picture': forms.FileInput(attrs={'class': 'form-control','id':'images'}),
+            'address': forms.TextInput(attrs={'class': 'form-control','id':'adress', 'placeholder': 'Address', 'style': 'background-color: #90ee90; color: #264653 !important;'}),
+            'contact_number': forms.TextInput(attrs={'class': 'form-control','id':'phone', 'placeholder': 'Contact Number', 'style': 'background-color: #90ee90; color: #264653 !important;'}),
+            'second_contact_number': forms.TextInput(attrs={'class': 'form-control','id':'phone', 'placeholder': 'Second Contact Number', 'style': 'background-color: #90ee90; color: #264653 !important;'}),
         }
+
 
 class FitnessUserForm(forms.ModelForm):
     class Meta:

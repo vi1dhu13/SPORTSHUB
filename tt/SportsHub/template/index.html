@@ -63,229 +63,31 @@
           <div class="ml-auto">
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-
-
-
-                {% if messages %}
-                <div class="container mt-4">
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                            {{ message }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            
-            
-
-
-
-
-
-
-
-
-
-
-                
                 {% if user.is_authenticated %}
-                                          {% if user.role == 'FitnessUser' %}
-                                          <a href="{% url 'Members:fitness_user_dashboard' %}" class="btn btn-primary"> Dashboard</a>
-                                         
-                                          <a href="{% url 'users:profile'  %}" class="nav-link"> MYprofile</a>
-                                          
-                                          <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
-                                        </ul>
-                                      </nav>
-                                      <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </header>
-                          
-                              {% comment %} <a id="bgndVideo" class="player"
-                                data-property="{videoURL:'https://www.youtube.com/watch?v=w-cRWOjlk8c',showYTLogo:false, showAnnotations: false, showControls: false, cc_load_policy: false, containment:'#home-section',autoPlay:true, mute:true, startAt:255, stopAt: 271, opacity:1}">
-                              </a> {% endcomment %}
-                          
-                              <div class="intro-section" id="home-section" style="background-color: #ccc;">
-                                <div class="container">
-                          
-                                  <div class="row align-items-center">
-                                    <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
-                                      <h1 class="mb-3">We Believe Little Things Matter</h1>
-                                      <p class="lead mx-auto desc mb-5"> <a href="https://free-template.co/" target="_blank"></a></p>
-                                      <p class="text-center">
-                                        <a href="{% url 'users:register' %}"  class="btn btn-outline-white py-3 px-5">Get Started</a>
-                                      </p>
-                                    </div>
-                                  </div>
-                          
-                                </div>
-                              </div>
-                              {% elif user.role == 'FitnessTrainer' %}
-                                        
-                                          <!-- Button to go to the Fitness User Dashboard -->
-                              
-                                          <a href="{% url 'Members:fitness_trainer_dashboard' %}" class="btn btn-primary"> Dashboard</a>
-                                          <a href="{% url 'users:profile'  %}" class="nav-link"> MYprofile</a>
-                              
-                              <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
-                            </ul>
-                          </nav>
-                          <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
-                        </div>
-                      </div>
-                      </div>
-                      </header>
-
-                      {% comment %} <a id="bgndVideo" class="player"
-                      data-property="{videoURL:'https://www.youtube.com/watch?v=w-cRWOjlk8c',showYTLogo:false, showAnnotations: false, showControls: false, cc_load_policy: false, containment:'#home-section',autoPlay:true, mute:true, startAt:255, stopAt: 271, opacity:1}">
-                      </a> {% endcomment %}
-
-                      <div class="intro-section" id="home-section" style="background-color: #ccc;">
-                      <div class="container">
-
-                      <div class="row align-items-center">
-                        <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
-                          <h1 class="mb-3">We Believe Little Things Matter</h1>
-                          <p class="lead mx-auto desc mb-5"> <a href="https://free-template.co/" target="_blank"></a></p>
-                          <p class="text-center">
-                            <a href="{% url 'users:register' %}"  class="btn btn-outline-white py-3 px-5">Get Started</a>
-                          </p>
-                        </div>
-                      </div>
-
-                      </div>
-                      </div>
-                      {% elif user.role == 'SportsTrainer' %}
-                                        
-                                          
-                      <a href="{% url 'users:profile'  %}" class="nav-link"> MYprofile</a>
-                      <a href="{% url 'Members:sports_user_dashboard' %}" class="btn btn-primary"> Dashboard</a>
-                      <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
-                      </ul>
-                      </nav>
-                      <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
-                      </div>
-                      </div>
-                      </div>
-                      </header>
-
-                      {% comment %} <a id="bgndVideo" class="player"
-                      data-property="{videoURL:'https://www.youtube.com/watch?v=w-cRWOjlk8c',showYTLogo:false, showAnnotations: false, showControls: false, cc_load_policy: false, containment:'#home-section',autoPlay:true, mute:true, startAt:255, stopAt: 271, opacity:1}">
-                      </a> {% endcomment %}
-
-                      <div class="intro-section" id="home-section" style="background-color: #ccc;">
-                      <div class="container">
-
-                      <div class="row align-items-center">
-                      <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
-                      <h1 class="mb-3">We Believe Little Things Matter</h1>
-                      <p class="lead mx-auto desc mb-5"> <a href="https://free-template.co/" target="_blank"></a></p>
-                      <p class="text-center">
-                      <a href="{% url 'users:register' %}"  class="btn btn-outline-white py-3 px-5">Get Started</a>
-                      </p>
-                      </div>
-                      </div>2
-
-                      </div>
-                      </div>
-                      {% elif user.is_superuser %}
-
-                      <a href="{% url 'Members:admin_dashboard' %}" class="btn btn-primary"> Dashboard</a>
-
-                     
-                      <a href="{% url 'users:profile'  %}" class="nav-link"> MYprofile</a>
-                      <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
-                    </ul>
-                  </nav>
-                  <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
-                </div>
-              </div>
-            </div>
-          </header>
-      
-          {% comment %} <a id="bgndVideo" class="player"
-            data-property="{videoURL:'https://www.youtube.com/watch?v=w-cRWOjlk8c',showYTLogo:false, showAnnotations: false, showControls: false, cc_load_policy: false, containment:'#home-section',autoPlay:true, mute:true, startAt:255, stopAt: 271, opacity:1}">
-          </a> {% endcomment %}
-      
-          <div class="intro-section" id="home-section" style="background-color: #ccc;">
-            <div class="container">
-      
-              <div class="row align-items-center">
-                <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
-                  <h1 class="mb-3">We Believe Little Things Matter</h1>
-                  <p class="lead mx-auto desc mb-5"> <a href="https://free-template.co/" target="_blank"></a></p>
-                  <p class="text-center">
-                    <a href="{% url 'users:register' %}"  class="btn btn-outline-white py-3 px-5">Get Started</a>
-                  </p>
-                </div>
-              </div>
-      
-            </div>
-          </div>
-    
-                     {% endif %}
-                
-<!-- Include this button in a template where sports users can access it -->
-
-                <a href="{% url 'users:role_application' %}" class="btn btn-primary">Apply for a Role</a>
-                
-                <a href="{% url 'users:profile'  %}" class="nav-link"> MYprofile</a>
-                
-                <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
-              </ul>
-            </nav>
-            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    {% comment %} <a id="bgndVideo" class="player"
-      data-property="{videoURL:'https://www.youtube.com/watch?v=w-cRWOjlk8c',showYTLogo:false, showAnnotations: false, showControls: false, cc_load_policy: false, containment:'#home-section',autoPlay:true, mute:true, startAt:255, stopAt: 271, opacity:1}">
-    </a> {% endcomment %}
-
-    <div class="intro-section" id="home-section" style="background-color: #ccc;">
-      <div class="container">
-
-        <div class="row align-items-center">
-          <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
-            <h1 class="mb-3">We Believe Little Things Matter</h1>
-            <p class="lead mx-auto desc mb-5"> <a href="https://free-template.co/" target="_blank"></a></p>
-            <p class="text-center">
-              <a href="{% url 'users:register' %}"  class="btn btn-outline-white py-3 px-5">Get Started</a>
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    
-
-
-
-     
+                  {% if user.role == 'FitnessUser' %}
+                    <li><a href="{% url 'Members:fitness_user_dashboard' %}" class="btn btn-primary">Dashboard</a></li>
+                  {% elif user.role == 'FitnessTrainer' %}
+                    <li><a href="{% url 'Members:fitness_trainer_dashboard' %}" class="btn btn-primary">Dashboard</a></li>
+                  {% elif user.role == 'SportsTrainer' %}
+                    <li><a href="{% url 'Members:sports_user_dashboard' %}" class="btn btn-primary">Dashboard</a></li>
+                  {% elif user.is_superuser %}
+                    <li><a href="{% url 'Members:admin_dashboard' %}" class="btn btn-primary">Dashboard</a></li>
+                  {% else %}
+                    <li><a href="{% url 'users:role_application' %}" class="btn btn-primary">Apply for a Role</a></li>
+                  {% endif %}
+                  <li><a href="{% url 'users:profile' %}" class="nav-link">My Profile</a></li>
+                  <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
                 {% else %}
-                <li><a href="#home-section" class="nav-link">Home</a></li>
-                <li><a href="#classes-section" class="nav-link">Classes</a></li>
-                <li><a href="#schedule-section" class="nav-link">Schedule</a></li>
-                <li><a href="#trainer-section" class="nav-link">Trainer</a></li>
-                <a href="{% url 'services' %}">Services</a>
-
-                <li><a href="#contact-section" class="nav-link">Contact</a></li>
-                <li><a href="{% url 'users:login' %}" class="nav-link">Login</a></li>
-                <li><a href="{% url 'users:register' %}" class="nav-link">Register</a></li>
-                <!-- Example link in a template -->
-                      <a href="{% url 'Members:landing_page' %}">member</a>
-
-
-    
-              
+                  <li><a href="#home-section" class="nav-link">Home</a></li>
+                  <li><a href="#classes-section" class="nav-link">Classes</a></li>
+                  <li><a href="#schedule-section" class="nav-link">Schedule</a></li>
+                  <li><a href="#trainer-section" class="nav-link">Trainer</a></li>
+                  <li><a href="{% url 'services' %}">Services</a></li>
+                  <li><a href="#contact-section" class="nav-link">Contact</a></li>
+                  <li><a href="{% url 'users:login' %}" class="nav-link">Login</a></li>
+                  <li><a href="{% url 'users:register' %}" class="nav-link">Register</a></li>
+                  <li><a href="{% url 'Members:landing_page' %}">Member</a></li>
+                {% endif %}
               </ul>
             </nav>
             <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
@@ -293,10 +95,12 @@
         </div>
       </div>
     </header>
+    
 
-    <a id="bgndVideo" class="player"
-      data-property="{videoURL:'https://www.youtube.com/watch?v=w-cRWOjlk8c',showYTLogo:false, showAnnotations: false, showControls: false, cc_load_policy: false, containment:'#home-section',autoPlay:true, mute:true, startAt:255, stopAt: 271, opacity:1}">
-    </a> 
+    <!-- <a id="bgndVideo" class="player"
+    data-property="{videoURL:'https://youtu.be/HQfF5XRVXjU?feature=shared',showYTLogo:false, showAnnotations: false, showControls: false, cc_load_policy: false, containment:'#home-section',autoPlay:true, mute:true, startAt:255, stopAt: 271, opacity:1}">
+ </a>
+  -->
 
     <div class="intro-section" id="home-section" style="background-color: #ccc;">
       <div class="container">
@@ -575,7 +379,7 @@
          
       </div>
   </footer>
-  {% endif %}
+
 
   <!-- .site-wrap -->
 

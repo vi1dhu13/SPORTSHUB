@@ -175,9 +175,9 @@ from .forms import UserProfileForm, FitnessUserForm, FitnessTrainerForm, SportsT
 @login_required
 def profile(request):
     user = request.user
-
+    
     if request.method == "POST":
-        user_form = UserProfileForm(request.POST, instance=user)
+        user_form = UserProfileForm(request.POST, request.FILES, instance=user)
         role = user.role
 
         if role == "FitnessUser":
@@ -213,6 +213,7 @@ def profile(request):
     context = {
         'user_form': user_form,
         'role_form': role_form,
+        'user':user,
     }
 
     return render(request, 'users/profile.html', context)

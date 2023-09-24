@@ -6,13 +6,14 @@
     <title>Admin Dashboard</title>
     <!-- Add your CSS and Bootstrap links here -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
     <style>
         .navbar {
-          background-color: #264653!important; /* Deep teal background color */
+          background-color: #000000!important; /* Deep teal background color */
       }
     
       .navbar-dark .navbar-nav .nav-link {
-          color: #F4A261!important; /* Light orange text color for navbar items */
+          color: #be1b08!important; /* Light orange text color for navbar items */
       }
     
       .navbar-dark .navbar-toggler-icon {
@@ -21,12 +22,12 @@
     
       /* Body Styles */
       body {
-          background-color: #2A9D8F!important; /* Teal background color for the body */
+          background-color: #e1e1e1!important; /* Teal background color for the body */
       }
     
       /* Container Styles */
       .container {
-          background-color: #E9C46A!important; /* Yellow background color for containers */
+          background-color: #ffffff!important; /* Yellow background color for containers */
           padding: 20px; /* Add some padding to the containers */
           border-radius: 10px; /* Add rounded corners to the containers */
       }
@@ -236,7 +237,7 @@
             <!-- Add navigation links here -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                  <a href="{% url 'Members:admin_dashboard' %}" class="nav-link" > Dashboard</a>
+                  <a href="{% url 'Members:admin_dashboard' %}" class="nav-link" >Dashboard</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="usersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -280,15 +281,15 @@
 
          
         {% block content %}
-        <div class="container">
-            <h1>Admin Dashboard</h1>
+        <div class="container" style="background-color: #264653!important; margin-top: 70px; margin-bottom: 50px;">
+          <center><h1 style="color: rgb(241, 241, 241); font-weight: bold; text-transform: uppercase;">Admin Dashboard</h1></center>
         </div>
 
-        <div class="container" style="color: #FFA500;">
+        <div class="container mt-10" style="color: #ea0909;">
           <h2>Counts</h2>
           <table class="table table-striped table-bordered">
               <thead>
-                  <tr style="background-color: #264653; color: #F4A261;">
+                  <tr style="background-color: #264653; color: #ffffff;">
                       <th>Category</th>
                       <th>Count</th>
                   </tr>
@@ -296,8 +297,8 @@
               <tbody>
                   {% for count_item in counts_list %}
                       <tr background-color: #264653; color: #F4A261;>
-                          <td class="category-cell" style="background-color: #FF6347; color: #FFFFE0;">{{ count_item.0 }}</td>
-                          <td class="count-cell" style="background-color: #FF6347; color: #FFFFE0;">{{ count_item.1 }}</td>
+                          <td class="category-cell" style="background-color: #ffffff; color: #000000;">{{ count_item.0 }}</td>
+                          <td class="count-cell" style="background-color: #ffffff; color: #000000;">{{ count_item.1 }}</td>
                       </tr>
                   {% endfor %}
               </tbody>
@@ -311,7 +312,7 @@
         
             <table class="table table-striped table-bordered">
                 <thead>
-                    <tr style="background-color: #264653; color: #F4A261;">
+                    <tr style="background-color: #264653; color: #ffffff;">
                         <th>Assigned By (Username)</th>
                         <th>Assigned To (Username)</th>
                         <th>Equipment</th>
@@ -322,11 +323,11 @@
                 <tbody>
                     {% for reservation in last_5_reservations %}
                         <tr>
-                            <td style="background-color: #666362; color: #F4A261;">{{ reservation.trainer.user.username }}</td>
-                            <td style="background-color: #666362; color: #F4A261;">{{ reservation.fitness_user.user.username }}</td>
-                            <td style="background-color: #666362; color: #F4A261;">{{ reservation.equipment.name }}</td>
-                            <td style="background-color: #666362; color: #F4A261;">{{ reservation.timeslot }}</td>
-                            <td style="background-color: #666362; color: #F4A261;">{{ reservation.date }}</td>
+                            <td style="background-color: #ffffff; color: #000000;">{{ reservation.trainer.user.username }}</td>
+                            <td style="background-color: #ffffff; color: #000000;">{{ reservation.fitness_user.user.username }}</td>
+                            <td style="background-color:  #ffffff; color: #000000;">{{ reservation.equipment.name }}</td>
+                            <td style="background-color:  #ffffff; color: #000000;">{{ reservation.timeslot }}</td>
+                            <td style="background-color:  #ffffff; color: #000000;">{{ reservation.date }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -334,11 +335,11 @@
         </div>
         
         <div class="container">
-            <h1>Training Plan Assignments</h1>
+            <h1 style="color: black;" >Training Plan Assignments</h1>
         
             <table class="table table-striped table-bordered">
                 <thead>
-                    <tr style="background-color: #264653; color: #F4A261;">
+                    <tr style="background-color: #264653; color: #ffffff;">
                         <th>User</th>
                         <th>Plan</th>
                         <th>Assigned By</th>
@@ -349,14 +350,14 @@
                 <tbody>
                     {% for assignment in last_3_accepted_plans %}
                         <tr>
-                          <td style="background-color: #FF6347; color: #FFFFE0;">
+                          <td style="background-color: #ffffff; color: #000000;">
 
                             {{ assignment.user.user.username }}</td>
-                            <td style="background-color: #FF6347; color: #FFFFE0;">
+                            <td style="background-color: #ffffff; color: #000000;">
                               {{ assignment.plan.plan_name }}</td>
-                              <td style="background-color: #FF6347; color: #FFFFE0;">
+                              <td style="background-color:  #ffffff; color: #000000;">
                                 {{ assignment.assigned_by.user.username }}</td>
-                                <td style="background-color: #FF6347; color: #FFFFE0;">
+                                <td style="background-color: #ffffff; color: #000000;">
                                   {{ assignment.assigned_date }}</td>
                             
                         </tr>
@@ -366,11 +367,11 @@
         </div>
         
         <div class="container">
-            <h1>Last 5 Connections Made</h1>
+            <h1 style=" color: #c64918;">Last 5 Connections Made</h1>
         
             <table class="table table-striped table-bordered">
                 <thead>
-                    <tr style="background-color: #264653; color: #F4A261;">
+                    <tr style="background-color: #264653; color: #ffffff;">
                         <th>Fitness Trainer</th>
                         <th>Fitness User</th>
                     </tr>

@@ -8,24 +8,26 @@
     <style>
       .navbar {
         background-color: #264653!important; /* Deep teal background color */
+        height: 100px; /* Adjust the height as needed */
     }
+    
   
     .navbar-dark .navbar-nav .nav-link {
         color: #F4A261!important; /* Light orange text color for navbar items */
     }
   
     .navbar-dark .navbar-toggler-icon {
-        background-color: #E76F51!important; /* Coral color for the navbar toggler icon */
+        background-color: #E76F51; /* Coral color for the navbar toggler icon */
     }
   
     /* Body Styles */
     body {
-        background-color: #2A9D8F!important; /* Teal background color for the body */
+        background-color: #ffffff; /* Teal background color for the body */
     }
   
     /* Container Styles */
     .container {
-        background-color: #E9C46A!important; /* Yellow background color for containers */
+        background-color: #ffffff; /* Yellow background color for containers */
         padding: 20px; /* Add some padding to the containers */
         border-radius: 10px; /* Add rounded corners to the containers */
     }
@@ -92,7 +94,7 @@
       }
       .card {
           
-          background-color: 	#d3d3d3
+          background-color: 	#4a4848
           padding: 1em;
           
           box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
@@ -235,9 +237,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'index' %}">Home</a>>
-              </li>
+             
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'Members:fitness_trainer_dashboard' %}" >Home</a>
+            </li>
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'Members:view_pending_requests' %}">View Requests</a>
               </li>

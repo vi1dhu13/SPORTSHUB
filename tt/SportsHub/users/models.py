@@ -29,7 +29,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=100)
     role = models.CharField(max_length=20)  # Define roles (e.g., "FitnessUser", "FitnessTrainer", "SportsTrainer")
     description = models.TextField(blank=True, null=True) 
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    profile_picture = models.FileField(upload_to='profile_pics/', blank=True, null=True)
     address = models.TextField(blank=True, null=True)
     contact_number = models.CharField(max_length=15, blank=True, null=True)
     second_contact_number = models.CharField(max_length=15, blank=True, null=True)# Add the description field

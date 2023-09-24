@@ -7,9 +7,10 @@
     <title>{% block title %}Gym Trainer Dashboard{% endblock %}</title>
     <!-- Add Bootstrap CSS link -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-     <style>
+    <style>
         .navbar {
-          background-color: #264653!important; /* Deep teal background color */
+          background-color: #264653!important;
+          height: 100px;  /* Deep teal background color */
       }
     
       .navbar-dark .navbar-nav .nav-link {
@@ -22,15 +23,11 @@
     
       /* Body Styles */
       body {
-          background-color: #2A9D8F!important; /* Teal background color for the body */
+          background-color: #ffffff!important; /* Teal background color for the body */
       }
     
       /* Container Styles */
-      .container {
-          background-color: #E9C46A!important; /* Yellow background color for containers */
-          padding: 20px; /* Add some padding to the containers */
-          border-radius: 10px; /* Add rounded corners to the containers */
-      }
+      
     
       .alert-label {
         display: none;
@@ -183,7 +180,131 @@
     
     
         
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const imagesInput = document.getElementById('images');
+          const twonInput = document.getElementById('adress');
+          const firstNameInput = document.getElementById('first-name');
+          const lastNameInput = document.getElementById('last-name');
+          const phoneInput = document.getElementById('phone');
+          const form = document.getElementById('save');
+  
+          // Function to validate image files onchange
+          function validateImageFiles() {
+              const imagesInputValue = imagesInput.value.toLowerCase();
+              const imagesError = document.getElementById('images-error');
+              const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif']; // List of allowed image file extensions
+  
+              if (!imagesInputValue) {
+                  imagesError.innerText = 'Please select an image.';
+                  imagesInput.classList.remove('is-valid');
+                  imagesInput.classList.add('is-invalid');
+                  return false;
+              }
+  
+              const fileExtension = imagesInputValue.slice(((imagesInputValue.lastIndexOf(".") - 1) >>> 0) + 2);
+  
+              if (!allowedExtensions.includes(.${fileExtension})) {
+                  imagesInput.value = '';
+                  imagesError.innerText = 'Invalid image format. Supported formats: JPG, JPEG, PNG, GIF.';
+                  imagesInput.classList.remove('is-valid');
+                  imagesInput.classList.add('is-invalid');
+                  return false;
+              }
+  
+              imagesError.innerText = ''; // Clear the error message
+              imagesInput.classList.remove('is-invalid');
+              imagesInput.classList.add('is-valid');
+              return true;
+          }
+  
+          // Function to validate country onkeyup
+        
+  
+              function validateTwon() {
+                const twonInputValue = twonInput.value.trim(); // Get the city value
+                const twonError = document.getElementById('twon-error');
+            
+                // Regular expression to allow alphabetic characters and spaces
+                const alphaRegex = /^[A-Za-z\s]+$/;
+            
+                if (!twonInputValue) {
+                    twonError.innerText = 'Please enter a city.';
+                    return false;
+                } else if (!alphaRegex.test(twonInputValue)) {
+                  twonError.innerText = 'City name should contain only alphabetic characters and spaces.';
+                    return false;
+                } else {
+                  twonError.innerText = ''; // Clear the error message
+                    return true;
+                }
+            }
+  
+  function validateFirstName() {
+              const firstNameInputValue = firstNameInput.value.trim(); // Get the first name value
+              const firstNameError = document.getElementById('first-name-error');
+          
+              const alphaRegex = /^[A-Za-z]+$/;
+          
+              if (!firstNameInputValue) {
+                  firstNameError.innerText = 'Please enter your first name.';
+                  return false;
+              } else if (!alphaRegex.test(firstNameInputValue)) {
+                  firstNameError.innerText = 'First name should contain only alphabetic characters.';
+                  return false;
+              } else {
+                  firstNameError.innerText = '';
+                  return true; // Clear the error message
+              }
+          }
+          
+          // Function to validate last name
+          function validateLastName() {
+              const lastNameInputValue = lastNameInput.value.trim(); // Get the last name value
+              const lastNameError = document.getElementById('last-name-error');
+          
+              const alphaRegex = /^[A-Za-z]+$/;
+          
+              if (!lastNameInputValue) {
+                  lastNameError.innerText = 'Please enter your last name.';
+                  return false;
+              } else if (!alphaRegex.test(lastNameInputValue)) {
+                  lastNameError.innerText = 'Last name should contain only alphabetic characters.';
+                  return false;
+              } else {
+                  lastNameError.innerText = '';
+                  return true; // Clear the error message
+              }
+          }
+  
+          function validatePhone() {
+            const phoneInputValue = document.getElementById('phone').value.trim();
+            const phoneError = document.getElementById('phone-error');
+        
+            // Phone number validation regex (example for 10-digit numbers)
+            const phoneRegex = /^\d{10}$/;
+        
+            if (!phoneInputValue) {
+                phoneError.innerText = 'Please enter a phone number.';
+                return false;
+            } else if (!phoneRegex.test(phoneInputValue)) {
+                phoneError.innerText = 'Invalid phone number. It should be a 10-digit number.';
+                return false;
+            } else {
+                phoneError.innerText = '';
+                return true; // Clear the error message
+            }
+        }
     
+            // Add event listeners to the form elements
+            imagesInput.addEventListener('change', validateImageFiles);
+            firstNameInput.addEventListener('keyup', validateFirstName);
+            lastNameInput.addEventListener('keyup', validateLastName);
+            twonInput.addEventListener('keyup', validateTwon);
+            phoneInput.addEventListener('input', validatePhone);
+        });
+  
+  </script>
     
 </head>
 
@@ -212,7 +333,7 @@
     
         
     {% block content %}
-    <div class="container">
+    <div class="container" style="margin-top: 70px;">
         <h2 class="mt-4">Edit Profile</h2>
         <Br>
             
@@ -227,14 +348,28 @@
                             
                             {{ user_form.as_p }}
                         </div>
+                        <button type="submit" id="save" class="btn btn-primary mt-3">Save Changes</button>
                     </div>
+                    
                 </div>
-    
+                
                 <div class="col-md-6">
                     <!-- Additional Details Card -->
                     <h4 class="card-title text-white">Additional Data</h4>
                     <div class="card mb-3">
                         <div class="card-body" >
+                          {% if user.profile_picture  %}
+                                                           <center>     <img class="rounded-circle" src="{{ user.profile_picture.url }}" alt="Profile Picture" style="width: 200px; height: 200px;" />
+                                                                
+                                                            {% else %}
+                                                                <div class="rounded-circle no-file-message">
+                                                                    <img class="rounded-circle" src="{% static 'assets/img/pro_pic.png' %}" alt="Profile Picture" style="width: 200px; height: 200px;" />
+                                                                </div>
+                                                                
+                                                            {% endif %}
+                                                            <h4 class="card-title text-white"> {{ user.username}}</h4></center>
+                            
+                           
                             {% if user.role == "FitnessUser" %}
                             <h4 class="card-title text-white">Fitness User Details</h4>
                             {{ role_form.as_p }}
@@ -265,7 +400,7 @@
                 </div>
             </div>
     
-            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+            
         </form>
     </div>
     {% endblock %}
@@ -278,6 +413,11 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+  
+
+
 </body>
 </html>
 

@@ -71,7 +71,8 @@ class TrainingPlanForm(forms.ModelForm):
     )
 
     plan_name = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control'}),  # Add a class for styling
+       widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'background-color: white;'})
+  # Add a class for styling
     )
 
     description = forms.CharField(

@@ -5,9 +5,9 @@
     {% block title %}Create Training Plan{% endblock %}
     
     {% block content %}
-    <section class="vh-100">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
+    
+        
+            <div class="row d-flex justify-content-center align-items-center h-100 " style="background-color: #ffffff;">
                 <div class="col-md-6">
                     <div class="card" style="background-color: #ca484e;">
                         <div class="card-body p-4 p-lg-5 text-white">
@@ -31,23 +31,22 @@
                 </div>
                 
                 <div class="col-md-6">
-                    <div class="card" style="background-color: #5B7071;">
+                    <div class="card" style="background-color: #ffffff;">
                         <div class="card-body p-4 p-lg-5 text-black">
-                            <h2 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px; font-weight:bold; color:#0a415f;">Create Plan</h2>
+                            <h2 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px; font-weight:bold; color:#bc0505;">Create Plan</h2>
                             <form method="post" class="needs-validation" novalidate>
                                 {% csrf_token %}
                                 {{ form.as_p }}
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Create Plan</button>
+                                    <button type="submit" class="btn btn-danger">Create Plan</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    
+        
+   
     {% endblock %}
     
  </body>

@@ -102,24 +102,15 @@
                      <div class="d-flex align-items-center justify-content-center mb-3 pb-1">
                          <!-- Your logo here -->
                      </div>
-                     <h5 class="fw-normal mb-3 pb-3 text-center text-dark opacity-100" style="letter-spacing: 1px;">Your sanctuary for soulful healing and wellness</h5>
+                     <h5 class="fw-normal mb-3 pb-3 text-center text-dark opacity-100" style="letter-spacing: 1px;"></h5>
                  </div>
                  <div class="col">
                   <div class="card" style="border-radius: 5rem; background: #E9C46A; margin-top: 30px;">
                          <div class="card-body p-4 p-lg-5 text-black">
-                             <h2 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px; font-weight:bold; color:#858383;">register</h2>
+                             <h2 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px; font-weight:bold; color:#858383;">Login</h2>
                         <form method="POST">
                         {% csrf_token %}
-                        {% if messages %}
-                        <ul class="messages" style="list-style-type: none; padding: 0;">
-                            {% for message in messages %}
-                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}
-                                style="background-color: #f2f2f2; border-radius: 5px; padding: 10px; margin-bottom: 10px; color: red;">
-                                {{ message }}
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
+                       
                         
                         
                         <div class="form-outline mb-4">

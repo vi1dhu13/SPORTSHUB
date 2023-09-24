@@ -2,12 +2,12 @@
 
 {% block content %}
 
-    <div class="container mt-5">
+    <div class="container ">
         <h1 class="display-4">Pending Connection Requests</h1>
         {% if pending_requests %}
         <table class="table table-bordered mt-4" style="border: 1px solid #000;">
             <thead>
-                <tr>
+                <tr style="background-color: #eef5f8; color: #555aef;"">
                     <th>User</th>
                     <th>Email</th>
                     <th>First Name</th>
@@ -20,7 +20,7 @@
             </thead>
             <tbody style="border: 1px solid #000;">
                 {% for request in pending_requests %}
-                    <tr style="background-color: #264653; color: #F4A261;">
+                    <tr style="background-color: #eef5f8; color: #000000;">
                         <td>{{ request.fitness_user.user.username }}</td>
                         <td>{{ request.fitness_user.user.email }}</td>
                         <td>{{ request.fitness_user.user.first_name }}</td>
