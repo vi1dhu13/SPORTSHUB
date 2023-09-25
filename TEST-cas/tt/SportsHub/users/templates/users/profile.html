@@ -1,0 +1,424 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gym Trainer Dashboard{% endblock %}</title>
+    <!-- Add Bootstrap CSS link -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+          background-color: #264653!important;
+          height: 100px;  /* Deep teal background color */
+      }
+    
+      .navbar-dark .navbar-nav .nav-link {
+          color: #F4A261!important; /* Light orange text color for navbar items */
+      }
+    
+      .navbar-dark .navbar-toggler-icon {
+          background-color: #E76F51!important; /* Coral color for the navbar toggler icon */
+      }
+    
+      /* Body Styles */
+      body {
+          background-color: #ffffff!important; /* Teal background color for the body */
+      }
+    
+      /* Container Styles */
+      
+    
+      .alert-label {
+        display: none;
+        color: #0000AA; /* Dark blue text color */
+        font-size: 14px;
+    }
+    
+    input:required + .alert-label {
+        display: block;
+    }
+       
+        /* Custom styles for the form container */
+        .container {
+          max-width: 1400px;
+          margin: 10px auto;
+          padding: 20px;
+          background-color: #333;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          color: #fff;
+        }
+    
+        /* Custom styles for the form */
+        form {
+          margin-top: 20px;
+        }
+    
+        /* Style form labels */
+        label {
+          font-weight: bold;
+          color: #264653!important; ;
+        }
+    
+        /* Style form fields */
+        .form-group {
+          margin-bottom: 20px;
+        }
+    
+        /* Style input fields */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+          background-color: #444;
+          color: #fff;
+          border: 1px solid #555;
+          width: 100%; /* Make input fields longer */
+          padding: 10px; /* Add some padding for better appearance */
+          box-sizing: border-box; /* Include padding in width calculation */
+        }
+    
+        /* Style submit button */
+        .btn-primary {
+          background-color: #4285F4;
+          border-color: #4285F4;
+        }
+    
+        /* Additional styles for the second form section */
+        .form-row {
+          margin-top: 20px;
+        }
+        .card {
+            
+            background-color: 	#d3d3d3!important;
+            padding: 1em;
+            
+            box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            
+            transition: 200ms ease-in-out;
+          }
+          
+          .username {
+            color: #C6E1ED;
+            font-size: 0.85em;
+            font-weight: 600;
+          }
+          
+          .body {
+            display: flex;
+            flex-direction: column;
+          }
+          
+          .body .text {
+            margin: 0 10px 0 0;
+            white-space: pre-line;
+            color: #264653!important; 
+            font-weight: 400;
+            line-height: 1.5;
+            margin-bottom: 4px;
+          }
+          
+          .footer {
+            position: relative;
+            width: 100%;
+            color: #9fa4aa;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: none;
+            margin-top: 10px;
+          }
+          
+          .footer div {
+            margin-right: 1rem;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+          }
+          
+          .footer svg {
+            margin-right: 5px;
+            height: 100%;
+            stroke: #9fa4aa;
+          }
+          
+          .viewer span {
+            height: 20px;
+            width: 20px;
+            background-color: rgb(28, 117, 219);
+            margin-right: -6px;
+            border-radius: 50%;
+            border: 1px solid #fff;
+            display: grid;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+            font-size: 8px;
+            color: #fff;
+            padding: 2px;
+          }
+          
+          .viewer span svg {
+            stroke: #fff;
+          }
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+    </style> 
+     
+    
+    
+        
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const imagesInput = document.getElementById('images');
+          const twonInput = document.getElementById('adress');
+          const firstNameInput = document.getElementById('first-name');
+          const lastNameInput = document.getElementById('last-name');
+          const phoneInput = document.getElementById('phone');
+          const form = document.getElementById('save');
+  
+          // Function to validate image files onchange
+          function validateImageFiles() {
+              const imagesInputValue = imagesInput.value.toLowerCase();
+              const imagesError = document.getElementById('images-error');
+              const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif']; // List of allowed image file extensions
+  
+              if (!imagesInputValue) {
+                  imagesError.innerText = 'Please select an image.';
+                  imagesInput.classList.remove('is-valid');
+                  imagesInput.classList.add('is-invalid');
+                  return false;
+              }
+  
+              const fileExtension = imagesInputValue.slice(((imagesInputValue.lastIndexOf(".") - 1) >>> 0) + 2);
+  
+              if (!allowedExtensions.includes(.${fileExtension})) {
+                  imagesInput.value = '';
+                  imagesError.innerText = 'Invalid image format. Supported formats: JPG, JPEG, PNG, GIF.';
+                  imagesInput.classList.remove('is-valid');
+                  imagesInput.classList.add('is-invalid');
+                  return false;
+              }
+  
+              imagesError.innerText = ''; // Clear the error message
+              imagesInput.classList.remove('is-invalid');
+              imagesInput.classList.add('is-valid');
+              return true;
+          }
+  
+          // Function to validate country onkeyup
+        
+  
+              function validateTwon() {
+                const twonInputValue = twonInput.value.trim(); // Get the city value
+                const twonError = document.getElementById('twon-error');
+            
+                // Regular expression to allow alphabetic characters and spaces
+                const alphaRegex = /^[A-Za-z\s]+$/;
+            
+                if (!twonInputValue) {
+                    twonError.innerText = 'Please enter a city.';
+                    return false;
+                } else if (!alphaRegex.test(twonInputValue)) {
+                  twonError.innerText = 'City name should contain only alphabetic characters and spaces.';
+                    return false;
+                } else {
+                  twonError.innerText = ''; // Clear the error message
+                    return true;
+                }
+            }
+  
+  function validateFirstName() {
+              const firstNameInputValue = firstNameInput.value.trim(); // Get the first name value
+              const firstNameError = document.getElementById('first-name-error');
+          
+              const alphaRegex = /^[A-Za-z]+$/;
+          
+              if (!firstNameInputValue) {
+                  firstNameError.innerText = 'Please enter your first name.';
+                  return false;
+              } else if (!alphaRegex.test(firstNameInputValue)) {
+                  firstNameError.innerText = 'First name should contain only alphabetic characters.';
+                  return false;
+              } else {
+                  firstNameError.innerText = '';
+                  return true; // Clear the error message
+              }
+          }
+          
+          // Function to validate last name
+          function validateLastName() {
+              const lastNameInputValue = lastNameInput.value.trim(); // Get the last name value
+              const lastNameError = document.getElementById('last-name-error');
+          
+              const alphaRegex = /^[A-Za-z]+$/;
+          
+              if (!lastNameInputValue) {
+                  lastNameError.innerText = 'Please enter your last name.';
+                  return false;
+              } else if (!alphaRegex.test(lastNameInputValue)) {
+                  lastNameError.innerText = 'Last name should contain only alphabetic characters.';
+                  return false;
+              } else {
+                  lastNameError.innerText = '';
+                  return true; // Clear the error message
+              }
+          }
+  
+          function validatePhone() {
+            const phoneInputValue = document.getElementById('phone').value.trim();
+            const phoneError = document.getElementById('phone-error');
+        
+            // Phone number validation regex (example for 10-digit numbers)
+            const phoneRegex = /^\d{10}$/;
+        
+            if (!phoneInputValue) {
+                phoneError.innerText = 'Please enter a phone number.';
+                return false;
+            } else if (!phoneRegex.test(phoneInputValue)) {
+                phoneError.innerText = 'Invalid phone number. It should be a 10-digit number.';
+                return false;
+            } else {
+                phoneError.innerText = '';
+                return true; // Clear the error message
+            }
+        }
+    
+            // Add event listeners to the form elements
+            imagesInput.addEventListener('change', validateImageFiles);
+            firstNameInput.addEventListener('keyup', validateFirstName);
+            lastNameInput.addEventListener('keyup', validateLastName);
+            twonInput.addEventListener('keyup', validateTwon);
+            phoneInput.addEventListener('input', validatePhone);
+        });
+  
+  </script>
+    
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+
+                <li class="nav-item">
+                    <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Content Block -->
+    
+        
+    {% block content %}
+    <div class="container" style="margin-top: 70px;">
+        <h2 class="mt-4">Edit Profile</h2>
+        <Br>
+            
+        <form method="post" enctype="multipart/form-data" class="mt-3">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Basic Information Card -->
+                    <h4 class="card-title text-white">Basic Information</h4>
+                    <div class="card mb-3">
+                        <div class="card-body" >
+                            
+                            {{ user_form.as_p }}
+                        </div>
+                        <button type="submit" id="save" class="btn btn-primary mt-3">Save Changes</button>
+                    </div>
+                    
+                </div>
+                
+                <div class="col-md-6">
+                    <!-- Additional Details Card -->
+                    <h4 class="card-title text-white">Additional Data</h4>
+                    <div class="card mb-3">
+                        <div class="card-body" >
+                          {% if user.profile_picture  %}
+                                                           <center>     <img class="rounded-circle" src="{{ user.profile_picture.url }}" alt="Profile Picture" style="width: 200px; height: 200px;" />
+                                                                
+                                                            {% else %}
+                                                                <div class="rounded-circle no-file-message">
+                                                                    <img class="rounded-circle" src="{% static 'assets/img/pro_pic.png' %}" alt="Profile Picture" style="width: 200px; height: 200px;" />
+                                                                </div>
+                                                                
+                                                            {% endif %}
+                                                            <h4 class="card-title text-white"> {{ user.username}}</h4></center>
+                            
+                           
+                            {% if user.role == "FitnessUser" %}
+                            <h4 class="card-title text-white">Fitness User Details</h4>
+                            {{ role_form.as_p }}
+                            {{ role_form.errors }}
+                            {% endif %}
+                            
+                            {% if user.role == "FitnessTrainer" %}
+                            <h4 class="card-title text-white">Fitness Trainer Details</h4>
+                            {{ role_form.as_p }}
+                            {{ role_form.errors }}
+                            {% endif %}
+    
+                            {% if user.role == "SportsTrainer" %}
+                            <h4 class="card-title text-white">Sports Trainer Details</h4>
+                            {{ role_form.as_p }}
+                            {{ role_form.errors }}
+                            {% endif %}
+                            {% if role_title %}
+                            
+                            <h4 class="font-weight-bold">{{ role_title }}</h4>
+                                {{ role_form.as_p }}
+                                {{ role_form.errors }}
+                            </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            
+        </form>
+    </div>
+    {% endblock %}
+    
+    
+    
+
+
+    <!-- Bootstrap and JavaScript links (unchanged) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+  
+
+
+</body>
+</html>
+
+
