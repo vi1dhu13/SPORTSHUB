@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.shortcuts import render
-
+from Members.models import TrainingPlanAssignment
 
 from django.shortcuts import render
 from django.urls import reverse
@@ -141,11 +141,41 @@ class SportsCenterListView(ListView):
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import SportsCenter, SportscenterSlot, Reservation
 
+# def select_slot(request, sports_center_id):
+#     try:
+#         sportscenter = SportsCenter.objects.get(id=sports_center_id)
+#     except SportsCenter.DoesNotExist:
+#         return render(request, 'sportscenter_not_found.html')  
+
+#     if request.method == 'POST':
+#         selected_slot_id = request.POST.get('slot_id')
+#         reservation_date = request.POST.get('reservation_date')
+
+#         try:
+#             selected_slot = SportscenterSlot.objects.get(id=selected_slot_id)
+            
+#             reservation = Reservation(
+#                 reserver=request.user if request.user.is_authenticated else None,
+#                 sport=sportscenter,
+#                 slot=selected_slot,
+#                 reservation_date=reservation_date,
+#             )
+#             reservation.save()
+#             return redirect('payment',reservation_id=reservation.id)
+
+#         except SportscenterSlot.DoesNotExist:
+#             return HttpResponse('Selected slot not found', status=400)  # Return an error response
+
+#     return render(request, 'select_slot.html', {
+#         'sportscenter': sportscenter,
+#     })
+
+
 def select_slot(request, sports_center_id):
     try:
         sportscenter = SportsCenter.objects.get(id=sports_center_id)
     except SportsCenter.DoesNotExist:
-        return render(request, 'sportscenter_not_found.html')  
+        return render(request, 'sportscenter_not_found.html')
 
     if request.method == 'POST':
         selected_slot_id = request.POST.get('slot_id')
@@ -153,7 +183,7 @@ def select_slot(request, sports_center_id):
 
         try:
             selected_slot = SportscenterSlot.objects.get(id=selected_slot_id)
-            
+
             reservation = Reservation(
                 reserver=request.user if request.user.is_authenticated else None,
                 sport=sportscenter,
@@ -161,7 +191,9 @@ def select_slot(request, sports_center_id):
                 reservation_date=reservation_date,
             )
             reservation.save()
-            return redirect('payment',reservation_id=reservation.id)
+
+            # Redirect to the payment view with the reservation_id
+            return redirect('payment_reservation', reservation_id=reservation.id)
 
         except SportscenterSlot.DoesNotExist:
             return HttpResponse('Selected slot not found', status=400)  # Return an error response
@@ -169,9 +201,6 @@ def select_slot(request, sports_center_id):
     return render(request, 'select_slot.html', {
         'sportscenter': sportscenter,
     })
-
-
-   
 
 
 
@@ -202,54 +231,106 @@ def get_available_slots(request, sportscenter_id, selected_date):
 razorpay_client = razorpay.Client(
 auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
 
-def payment(request, reservation_id):
-    reservation = Reservation.objects.get(pk=reservation_id)
-    user = request.user
-    
+def payment(request, reservation_id=None, assignment_id=None):
+    # Determine whether to create a Reservation payment or a Subscription payment
+    if reservation_id:
+        # Handle payment for reservation
+        reservation = get_object_or_404(Reservation, pk=reservation_id)
+        amount = reservation.sport.price_per_slot
+        description = f"Payment for Reservation - {reservation.id}"
 
-    # For Razorpay integration
-    currency = 'INR'
-    amount = reservation.sport.price_per_slot
-    amount_in_paise = int(amount * 100)
+        # For Razorpay integration
+        currency = 'INR'
+        amount_in_paise = int(amount * 100)
 
-    # Create a Razorpay Order
-    razorpay_order = razorpay_client.order.create(dict(
-        amount=amount_in_paise,
-        currency=currency,
-        payment_capture='0'  # Capture payment manually after verifying it
-    ))
+        # Create a Razorpay Order
+        razorpay_order = razorpay_client.order.create(dict(
+            amount=amount_in_paise,
+            currency=currency,
+            payment_capture='0'  # Capture payment manually after verifying it
+        ))
 
-    # Order ID of the newly created order
-    razorpay_order_id = razorpay_order['id']
-    callback_url = reverse('paymenthandler', args=[reservation_id])
+        # Order ID of the newly created order
+        razorpay_order_id = razorpay_order['id']
+        callback_url = reverse('paymenthandler_reservation', args=[reservation_id])
 
-    # Create a Payment record
-    payment = Payment.objects.create(
-        user=request.user,
-        razorpay_order_id=razorpay_order_id,
-        amount=amount,
-        currency=currency,
-        payment_status=Payment.PaymentStatusChoices.PENDING,
-    )
-    payment.Reservation.add(reservation)
+        # Create a Payment record for reservation
+        payment = Payment.objects.create(
+            user=request.user,
+            razorpay_order_id=razorpay_order_id,
+            amount=amount,
+            currency=currency,
+            payment_status=Payment.PaymentStatusChoices.PENDING,
+            reservation=reservation  # Associate payment with reservation
+        )
 
-    # Prepare the context data
-    context = {
-        'user': request.user,
-        'order1': reservation,
-        'razorpay_order_id': razorpay_order_id,
-        'razorpay_merchant_key': settings.RAZOR_KEY_ID,
-        'razorpay_amount': amount,
-        'currency': currency,
-        'amount': reservation.sport.price_per_slot,
-        'callback_url': callback_url,
-        
-    }
+        # Prepare the context data
+        context = {
+            'user': request.user,
+            'order1': reservation,
+            'razorpay_order_id': razorpay_order_id,
+            'razorpay_merchant_key': settings.RAZOR_KEY_ID,
+            'razorpay_amount': amount,
+            'currency': currency,
+            'description': description,
+            'callback_url': callback_url,
+        }
 
-    return render(request, 'Payment.html', context)
+        return render(request, 'Payment.html', context)
+
+    elif assignment_id:
+        # Handle payment for assignment
+        assignment = get_object_or_404(TrainingPlanAssignment, pk=assignment_id)
+        amount = assignment.plan.amount
+        description = f"Payment for Assignment - {assignment.id}"
+
+        # For Razorpay integration
+        currency = 'INR'
+        amount_in_paise = int(amount * 100)
+
+        # Create a Razorpay Order
+        razorpay_order = razorpay_client.order.create(dict(
+            amount=amount_in_paise,
+            currency=currency,
+            payment_capture='0'  # Capture payment manually after verifying it
+        ))
+
+        # Order ID of the newly created order
+        razorpay_order_id = razorpay_order['id']
+        callback_url = reverse('paymenthandler_assignment', args=[assignment_id])
+
+        # Create a Payment record for assignment
+        payment = Payment.objects.create(
+            user=request.user,
+            razorpay_order_id=razorpay_order_id,
+            amount=amount,
+            currency=currency,
+            payment_status=Payment.PaymentStatusChoices.PENDING,
+            TrainingPlanAssignment=assignment  # Associate payment with assignment
+        )
+
+        # Prepare the context data
+        context = {
+            'user': request.user,
+            'order2': assignment,
+            'razorpay_order_id': razorpay_order_id,
+            'razorpay_merchant_key': settings.RAZOR_KEY_ID,
+            'razorpay_amount': amount,
+            'currency': currency,
+            'description': description,
+            'callback_url': callback_url,
+        }
+
+        return render(request, 'Payment.html', context)
+
+    else:
+        # Handle the case where neither reservation_id nor assignment_id is provided
+        return HttpResponse("Invalid request")
+
+
 
 @csrf_exempt
-def paymenthandler(request, reservation_id):
+def paymenthandler(request, reservation_id=None, assignment_id=None):
     # Only accept POST requests.
     if request.method == "POST":
         # Get the required parameters from the POST request.
@@ -266,22 +347,25 @@ def paymenthandler(request, reservation_id):
 
         payment = Payment.objects.get(razorpay_order_id=razorpay_order_id)
         amount = int(payment.amount * 100)  # Convert Decimal to paise
-        print(amount)
 
         # Capture the payment.
         razorpay_client.payment.capture(payment_id, amount)
-        print(amount)
-        payment = Payment.objects.get(razorpay_order_id=razorpay_order_id)
 
         # Update the order with payment ID and change status to "Successful."
         payment.payment_id = payment_id
         payment.payment_status = Payment.PaymentStatusChoices.SUCCESSFUL
         payment.save()
 
-        # Update the Order status to True.
-        reservation = Reservation.objects.get(id=reservation_id)
-        reservation.status = True
-        reservation.save()
+        if reservation_id:
+            # Update the Reservation status to True.
+            reservation = Reservation.objects.get(id=reservation_id)
+            reservation.status = True
+            reservation.save()
+        elif assignment_id:
+            # Update the Assignment status to True.
+            assignment = TrainingPlanAssignment.objects.get(id=assignment_id)
+            assignment.is_accepted = True
+            assignment.save()
 
         # Render the success page on successful capture of payment.
         return render(request, 'index.html')

@@ -411,6 +411,33 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import CustomUser, TrainingPlanAssignment, FitnessUser
 from django.contrib import messages
 
+# def accept_training_plan(request, user_id):
+#     if request.method == "POST":
+#         # Retrieve the custom user based on the provided user_id
+#         custom_user = get_object_or_404(CustomUser, pk=user_id)
+
+#         # Retrieve the associated fitness user if it exists
+#         fitness_user = None
+#         try:
+#             fitness_user = custom_user.fitnessuser
+#         except FitnessUser.DoesNotExist:
+#             pass
+
+#         if fitness_user:
+#             # Retrieve the TrainingPlanAssignment for this fitness user
+#             user_assignment = TrainingPlanAssignment.objects.filter(user=fitness_user).first()
+#             if user_assignment:
+#                 # Update the is_accepted field to True
+#                 user_assignment.is_accepted = True
+#                 user_assignment.save()
+#                 messages.success(request, 'Training plan accepted successfully.')
+#             else:
+#                 messages.error(request, 'Training plan not found.')
+#         else:
+#             messages.error(request, 'Fitness user not found.')
+
+#     return redirect('Members:view_assigned_training_plans', user_id=user_id)
+
 def accept_training_plan(request, user_id):
     if request.method == "POST":
         # Retrieve the custom user based on the provided user_id
@@ -431,12 +458,19 @@ def accept_training_plan(request, user_id):
                 user_assignment.is_accepted = True
                 user_assignment.save()
                 messages.success(request, 'Training plan accepted successfully.')
+
+                # Redirect to the payment view with the subscription_id
+                assignment_id = user_assignment.id 
+                return redirect('payment_assignment', assignment_id=assignment_id)
             else:
                 messages.error(request, 'Training plan not found.')
         else:
             messages.error(request, 'Fitness user not found.')
 
     return redirect('Members:view_assigned_training_plans', user_id=user_id)
+
+
+
 
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import CustomUser, TrainingPlanAssignment, FitnessUser
@@ -622,7 +656,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib import messages
 from django.http import JsonResponse
-from datetime import datetime  # Import datetime
+from datetime import datetime 
 
 def create_reservation(request):
     if request.method == 'POST':

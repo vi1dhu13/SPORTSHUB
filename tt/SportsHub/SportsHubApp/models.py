@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from tinymce.models import HTMLField
 from users.models import CustomUser
+from Members.models import TrainingPlanAssignment
 
 
 class SportsCenter(models.Model):
@@ -70,10 +71,11 @@ class Payment(models.Model):
     currency = models.CharField(max_length=3)  # Currency code (e.g., "INR")
     timestamp = models.DateTimeField(auto_now_add=True)  # Timestamp of the payment
     payment_status = models.CharField(max_length=20, choices=PaymentStatusChoices.choices, default=PaymentStatusChoices.PENDING)
-    Reservation = models.ManyToManyField(Reservation)
-
+    reservation = models.OneToOneField('Reservation', null=True, blank=True, on_delete=models.SET_NULL)
+    TrainingPlanAssignment = models.OneToOneField('Members.TrainingPlanAssignment', null=True, blank=True, on_delete=models.SET_NULL)
+ 
     def str(self):
-        return f"Order for {self.user.username}"
+        return f"Payment ID: {self.id}, Status: {self.payment_status}"
 
     class Meta:
         ordering = ['-timestamp']
