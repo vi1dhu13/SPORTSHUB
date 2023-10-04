@@ -50,34 +50,39 @@ https://templatemo.com/tm-548-training-studio
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">Sports<em>Hup</em></a>
+                        <a href="{% url 'index' %}" class="logo">Sports<em>Hup</em></a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="index.html" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'index' %}" class="active">Home</a></li>
                             <!-- <li class="scroll-to-section"><a href="{% url 'Training:render_my_template' %}">Capture Video</a></li> -->
                          
                             
-                            <button class="btn" id="pay-btn">Donate</button>
+                            <!-- <button class="btn" id="pay-btn">Donate</button> -->
                             <!-- Conditional Navigation Items -->
                             {% if user.is_authenticated %}
                             {% if user.role == 'FitnessUser' %}
                             <li  class="scroll-to-section"><a href="{% url 'Members:fitness_user_dashboard' %}">Dashboard</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'sports_center_list' %}" >Services</a></li>
                             {% elif user.role == 'FitnessTrainer' %}
                             <li  class="scroll-to-section"><a href="{% url 'Members:fitness_trainer_dashboard' %}" >Dashboard</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'sports_center_list' %}" >Services</a></li>
                             {% elif user.role == 'SportsTrainer' %}
                             <li  class="scroll-to-section"><a href="{% url 'Members:sports_user_dashboard' %}" >Dashboard</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'sports_center_list' %}" >Services</a></li>
                             {% elif user.is_superuser %}
                             <li  class="scroll-to-section"><a href="{% url 'Members:admin_dashboard' %}">Dashboard</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'sports_center_list' %}" >Services</a></li>
                             {% else %}
                             <li  class="scroll-to-section"><a href="{% url 'users:role_application' %}" >Apply for a Role</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'sports_center_list' %}" >Services</a></li>
                             {% endif %}
                             <li  class="scroll-to-section"><a href="{% url 'users:profile' %}" >My Profile</a></li>
                             <li  class="scroll-to-section"><a href="{% url 'users:logout' %}" >Logout</a></li>
                             {% else %}
                             
-                            
-                            <li class="scroll-to-section"><a href="{% url 'services' %}" >Services</a></li>
+                           
+                            <li class="scroll-to-section"><a href="{% url 'sports_center_list' %}" >Services</a></li>
                            
                             <li class="scroll-to-section"><a href="{% url 'users:login' %}" >Login</a></li>
                             
@@ -488,7 +493,7 @@ https://templatemo.com/tm-548-training-studio
     
     <!-- Global Init -->
     <script src="{% static 'assets/js/custom.js' %}"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <script>
         var options = {
@@ -518,7 +523,7 @@ https://templatemo.com/tm-548-training-studio
           rzp1.open();
           e.preventDefault();
         };
-      </script>
+      </script> -->
 
   </body>
 

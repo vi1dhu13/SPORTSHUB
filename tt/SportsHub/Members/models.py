@@ -1,9 +1,9 @@
 
 
-# Create your models here.
+
 from django.db import models
 from users.models import CustomUser
-# members/models.py
+
 
 
 
@@ -12,7 +12,7 @@ class FitnessUser(models.Model):
     fitness_goal = models.CharField(max_length=255)
     height = models.FloatField()
     weight = models.FloatField()
-    # Add other fields specific to FitnessUser
+   
     def __str__(self):
         return self.user.username
          
@@ -23,8 +23,8 @@ class FitnessTrainer(models.Model):
     training_goal = models.CharField(max_length=255)
     certification_link = models.CharField(max_length=255, blank=True, null=True)
     height = models.FloatField(blank=True, null=True)
-    weight = models.FloatField(blank=True, null=True)# Add this field
-    # Add other fields specific to FitnessTrainer
+    weight = models.FloatField(blank=True, null=True)
+  
     def __str__(self):
         return self.user.username
 
@@ -42,9 +42,9 @@ from django.db import models
 
 class TrainerUserConnection(models.Model):
     STATUS_CHOICES = (
-        ('pending', 'Pending'),  # Request is pending approval
-        ('approved', 'Approved'),  # Request has been approved
-        ('rejected', 'Rejected'),  # Request has been rejected
+        ('pending', 'Pending'), 
+        ('approved', 'Approved'),  
+        ('rejected', 'Rejected'),  
     )
 
     fitness_trainer = models.ForeignKey(FitnessTrainer, on_delete=models.CASCADE)
@@ -62,7 +62,7 @@ from .models import FitnessUser, FitnessTrainer
 class TrainingPlan(models.Model):
     plan_name = models.CharField(max_length=255)
     description = models.TextField()
-    duration = models.IntegerField()  # Duration in days, weeks, etc.
+    duration = models.IntegerField()  
     created_by_trainer = models.ForeignKey(FitnessTrainer, on_delete=models.CASCADE, null=True, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
@@ -89,7 +89,7 @@ from django.db import models
 
 class WeeklyPlan(models.Model):
     trainer_connection = models.ForeignKey(TrainerUserConnection, on_delete=models.CASCADE)
-    user = models.ForeignKey(FitnessUser, on_delete=models.CASCADE)  # User who receives the plan
+    user = models.ForeignKey(FitnessUser, on_delete=models.CASCADE)  
     plan_name = models.CharField(max_length=100)
     start_date = models.DateField()
     end_date = models.DateField()
@@ -99,7 +99,7 @@ class WeeklyPlan(models.Model):
 
 class DailyWorkout(models.Model):
     weekly_plan = models.ForeignKey(WeeklyPlan, on_delete=models.CASCADE)
-    day_of_week = models.PositiveIntegerField()  # 1 for Monday, 2 for Tuesday, etc.
+    day_of_week = models.PositiveIntegerField() 
     workout_details = models.TextField()
 
     def __str__(self):
@@ -119,7 +119,7 @@ class WeeklyFitnessPlan(models.Model):
         ('day7', 'Day 7'),
     )
 
-    trainer = models.ForeignKey('FitnessTrainer', on_delete=models.CASCADE)  # Replace 'YourApp.FitnessTrainer' with your actual FitnessTrainer model
+    trainer = models.ForeignKey('FitnessTrainer', on_delete=models.CASCADE) 
     fitness_user = models.ForeignKey('FitnessUser', on_delete=models.CASCADE) 
     day1details = models.TextField(null=True, blank=True)
     day2details = models.TextField(null=True, blank=True)
@@ -127,13 +127,13 @@ class WeeklyFitnessPlan(models.Model):
     day4details = models.TextField(null=True, blank=True)
     day5details = models.TextField(null=True, blank=True)
     day6details = models.TextField(null=True, blank=True)
-    day7details = models.TextField(null=True, blank=True)# Replace 'YourApp.FitnessUser' with your actual FitnessUser model
+    day7details = models.TextField(null=True, blank=True)
     start_date = models.DateField(default=date.today)
-    end_date = models.DateField(null=True, blank=True)  # Allow null and blank for now
+    end_date = models.DateField(null=True, blank=True)  
 
     def save(self, *args, **kwargs):
         if not self.end_date:
-            # Calculate the end date based on the start date
+            
             self.end_date = self.start_date + timedelta(days=6)
         super().save(*args, **kwargs)
 

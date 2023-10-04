@@ -155,7 +155,7 @@
                         </div>
                         <p style="color: #000000;"><a class="small text-muted" href="{% url 'reset_password' %}">Forgot password?</a></p>
                         <div class="d-flex justify-content-center mt-md-3">
-                           <button class="btn btn-dark btn-lg w-50" type="submit" style="background-color: #ed563b; color: #ffffff; border: none;">Login</button>
+                           <button class="btn btn-dark btn-lg w-50" id="submit" type="submit" style="background-color: #ed563b; color: #ffffff; border: none;">Login</button>
                         </div>
                         {% if error_message %}
                         <div class="d-flex justify-content-center"><p class="text-danger mt-2 fs-3">{{error_message}}</p></div>

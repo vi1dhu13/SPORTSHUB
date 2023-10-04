@@ -6,49 +6,74 @@ def landing_page(request):
 
 from django.shortcuts import render
 from .models import  TrainingPlanAssignment, TrainerUserConnection
-from .models import CustomUser, FitnessUser, FitnessTrainer, SportsTrainer
+from .models import CustomUser, FitnessUser, FitnessTrainer, SportsTrainer,WeeklyPlan,DailyWorkout
 
 
 
 def admin_dashboard(request):
-    # Retrieve the last 5 equipment reservations
-   
-    # Retrieve the last 3 plans accepted
+    # Retrieve the last 3 accepted plans
     last_3_accepted_plans = TrainingPlanAssignment.objects.filter(is_accepted=True).order_by('-assigned_date')[:3]
 
     # Retrieve the last 5 connections made
     last_5_connections = TrainerUserConnection.objects.order_by('-id')[:5]
-    
-    
+
+    # Retrieve the last 3 FitnessUser entries
+    last_3_fitness_users = FitnessUser.objects.order_by('-id')[:3]
+
+    # Retrieve the last 3 FitnessTrainer entries
+    last_3_fitness_trainers = FitnessTrainer.objects.order_by('-id')[:3]
+
+    # Retrieve the last 3 SportsTrainer entries
+    last_3_sports_trainers = SportsTrainer.objects.order_by('-id')[:3]
+
+    # Retrieve the last 3 WeeklyPlan entries
+    last_3_weekly_plans = WeeklyPlan.objects.order_by('-id')[:3]
+
+    # Retrieve the last 3 DailyWorkout entries
+    last_3_daily_workouts = DailyWorkout.objects.order_by('-id')[:3]
+
+    # Retrieve the last 3 WeeklyFitnessPlan entries
+    last_3_weekly_fitness_plans = WeeklyFitnessPlan.objects.order_by('-id')[:3]
+
+    # Retrieve the last 3 GymSlot entries
+    last_3_gym_slots = GymSlot.objects.order_by('-id')[:3]
+
+    # Retrieve the last 3 Reservation entries
+    last_3_reservations = Reservation.objects.order_by('-id')[:3]
+
     total_custom_users = CustomUser.objects.count()
     total_fitness_users = FitnessUser.objects.count()
     total_fitness_trainers = FitnessTrainer.objects.count()
     total_sports_trainers = SportsTrainer.objects.count()
 
-  
 
-    # Create a list containing all the counts
     counts_list = [
         ('Custom Users', total_custom_users),
         ('Fitness Users', total_fitness_users),
         ('Fitness Trainers', total_fitness_trainers),
         ('Sports Trainers', total_sports_trainers),
-       
     ]
-    
+
     context = {
-        
         'last_3_accepted_plans': last_3_accepted_plans,
         'last_5_connections': last_5_connections,
+        'last_3_fitness_users': last_3_fitness_users,
+        'last_3_fitness_trainers': last_3_fitness_trainers,
+        'last_3_sports_trainers': last_3_sports_trainers,
+        'last_3_weekly_plans': last_3_weekly_plans,
+        'last_3_daily_workouts': last_3_daily_workouts,
+        'last_3_weekly_fitness_plans': last_3_weekly_fitness_plans,
+        'last_3_gym_slots': last_3_gym_slots,
+        'last_3_reservations': last_3_reservations,
         'total_custom_users': total_custom_users,
         'total_fitness_users': total_fitness_users,
         'total_fitness_trainers': total_fitness_trainers,
         'total_sports_trainers': total_sports_trainers,
-        
         'counts_list': counts_list
     }
 
     return render(request, 'sadmin.html', context)
+
 
 
 
@@ -134,7 +159,7 @@ from .models import FitnessTrainer, TrainerUserConnection, TrainingPlanAssignmen
 def fitness_trainer_dashboard(request):
     # Assuming you have a way to determine the logged-in trainer, for example, through authentication
     # Replace this line with your logic to get the logged-in trainer
-    logged_in_trainer = request.user.fitnesstrainer # Replace with your logic
+    logged_in_trainer = FitnessTrainer.objects.get(user=request.user)
 
     # Get the approved connections for the logged-in trainer
     connections = TrainerUserConnection.objects.filter(fitness_trainer=logged_in_trainer, status='approved')
@@ -145,11 +170,39 @@ def fitness_trainer_dashboard(request):
     # Get the training plan assignments for the logged-in trainer
     training_plan_assignments = TrainingPlanAssignment.objects.filter(assigned_by=logged_in_trainer)
 
+    # Get recent reservations for this trainer
+    recent_reservations = Reservation.objects.filter(trainer=logged_in_trainer).order_by('-reservation_time')[:5]
+
+    # Retrieve all pending connection requests for the logged-in trainer
+    pending_requests = TrainerUserConnection.objects.filter(
+        fitness_trainer=logged_in_trainer,
+        status='pending',
+    )
+
+    if request.method == "POST":
+        request_id = request.POST.get("request_id")
+        action = request.POST.get("action")
+
+        if action == "approve":
+            # Approve the request
+            connection_request = TrainerUserConnection.objects.get(id=request_id)
+            connection_request.status = 'approved'
+            connection_request.save()
+        elif action == "reject":
+            # Reject the request
+            connection_request = TrainerUserConnection.objects.get(id=request_id)
+            connection_request.status = 'rejected'
+            connection_request.save()
+
     context = {
         'trainer': logged_in_trainer,
         'fitness_users': fitness_users,
         'training_plan_assignments': training_plan_assignments,
+        'recent_reservations': recent_reservations,
+        'pending_requests': pending_requests,
     }
+
+    
 
     return render(request, 'ft.html', context)
 
