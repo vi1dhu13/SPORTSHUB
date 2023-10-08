@@ -34,7 +34,10 @@ urlpatterns = [
     path('make-reservation/', views.make_reservation, name='make_reservation'),
      path('create-reservation/', views.create_reservation, name='create_reservation'),
     path('get_available_slots/', views.get_available_slots, name='get_available_slots'),
-    path('c_reservation/', views.c_reservation, name='c_reservation'),
+    path('eget_available_slots/', views.eget_available_slots, name='eget_available_slots'),
+    path('cereservation/', views.cereservation_page, name='cereservation_page'),
+    path('ce_reservation/', views.ce_reservation, name='ce_reservation'),
+   
 
 ]
    

@@ -3,6 +3,11 @@ from django.contrib import admin
 # Register your models here.
 from django.contrib import admin
 from .models import FitnessUser, FitnessTrainer, SportsTrainer
+# Register your models here.
+from django.contrib import admin
+from .models import FitnessUser, FitnessTrainer, SportsTrainer
+from django.contrib import admin
+from .models import TrainerUserConnection,TrainingPlan,TrainingPlanAssignment,Equipment,TimeSlot,EquipmentReservation
 from django.contrib import admin
 from .models import TrainerUserConnection,TrainingPlan,TrainingPlanAssignment
 
@@ -54,3 +59,18 @@ class GymSlotAdmin(admin.ModelAdmin):
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ('trainer', 'fitness_user', 'slot', 'reservation_date', 'reservation_time')
+
+@admin.register(Equipment)
+class EquipmentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')
+    # Add any other desired configurations
+
+@admin.register(TimeSlot)
+class TimeSlotAdmin(admin.ModelAdmin):
+    list_display = ('slot_number', 'start_time', 'end_time')
+    # Add any other desired configurations
+
+@admin.register(EquipmentReservation)
+class EquipmentReservationAdmin(admin.ModelAdmin):
+    list_display = ('equipment', 'fitness_user', 'timeslot', 'date')
+    # Add any other desired configurations

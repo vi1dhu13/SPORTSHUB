@@ -840,3 +840,177 @@ def c_reservation(request):
     # Handle other HTTP methods if necessary
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
+
+from django.http import JsonResponse
+from .models import TimeSlot, EquipmentReservation
+
+def get_available_slots(request):
+    selected_equipment_id = request.GET.get('equipment_id')
+    selected_date = request.GET.get('date')
+    
+    # Get all time slots for the selected equipment
+    all_time_slots = TimeSlot.objects.all()
+
+    # Query the database to find reservations for the selected equipment and date
+    reservations = EquipmentReservation.objects.filter(
+        equipment_id=selected_equipment_id,
+        date=selected_date
+    )
+
+    # Create a set of reserved time slot IDs
+    reserved_time_slots = set(reservations.values_list('timeslot_id', flat=True))
+
+    # Create a list to store available slots including slot ID
+    available_slots = []
+
+    for time_slot in all_time_slots:
+        if time_slot.id not in reserved_time_slots:
+            # This time slot is available
+            available_slots.append({
+                'slot_id': time_slot.id,  # Include slot ID
+                'start_time': time_slot.start_time.strftime('%H:%M'),
+                'end_time': time_slot.end_time.strftime('%H:%M')
+                # You can customize this if needed
+            })
+
+    return JsonResponse({'available_slots': available_slots})
+
+
+
+
+from django.shortcuts import render, redirect
+from datetime import datetime
+from .models import FitnessUser, Equipment, EquipmentReservation, TimeSlot
+from django.contrib.auth.decorators import login_required
+
+
+from django.shortcuts import render
+from .models import Equipment, FitnessUser
+
+def reservation_page(request):
+    # Retrieve the list of equipment and connected users from your database
+    equipment_list = Equipment.objects.all()
+    connected_users = FitnessUser.objects.filter(traineruserconnection__fitness_trainer=request.user.fitnesstrainer)
+
+    context = {
+        'equipment_list': equipment_list,
+        'connected_users': connected_users,
+    }
+
+    return render(request, 'reservation.html', context)
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from datetime import date
+from .models import WeeklyFitnessPlan
+
+
+def this_weeks_plan(request):
+    # Get the logged-in fitness user
+    fitness_user = request.user.fitnessuser
+
+    # Get this week's fitness plan for the user
+    this_weeks_plan = WeeklyFitnessPlan.objects.filter(
+        fitness_user=fitness_user,
+        start_date__lte=date.today(),
+        end_date__gte=date.today()
+    ).first()
+
+    return render(request, 'this_weeks_plan.html', {'this_weeks_plan': this_weeks_plan})
+
+from django.contrib import messages
+from django.http import JsonResponse
+
+def c_reservation(request):
+    if request.method == 'POST':
+        # Retrieve form data such as equipment, time slot, user, and date
+        selected_slot_id = request.POST.get('selected_slot')
+        selected_user_id = request.POST.get('selected_user')
+        selected_date = request.POST.get('reservation_date')  # Correct the form field name
+        parsed_date = datetime.strptime(selected_date, '%Y-%m-%d')
+        print(parsed_date)
+        print(selected_slot_id)
+        print(selected_user_id)
+
+        # Get the equipment ID from the selected equipment input
+        selected_equipment_id = request.POST.get('selected_equipment')
+        selected_equipment = Equipment.objects.get(id=selected_equipment_id)
+
+        # Create a new EquipmentReservation instance
+        reservation = EquipmentReservation.objects.create(
+            trainer=request.user.fitnesstrainer,
+            equipment=selected_equipment,
+            timeslot=TimeSlot.objects.get(pk=selected_slot_id),
+            date=parsed_date,
+            fitness_user=FitnessUser.objects.get(pk=selected_user_id),
+        )
+
+        # Add a success message
+        messages.success(request, 'Reservation created successfully')
+
+        # You can perform additional actions here if needed
+
+        # Return a JSON response to indicate success
+        return JsonResponse({'message': 'Reservation created successfully'})
+
+    # Handle other HTTP methods if necessary
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+from django.http import JsonResponse
+from .models import TimeSlot, EquipmentReservation
+
+def get_available_slots(request):
+    selected_equipment_id = request.GET.get('equipment_id')
+    selected_date = request.GET.get('date')
+    
+    # Get all time slots for the selected equipment
+    all_time_slots = TimeSlot.objects.all()
+
+    # Query the database to find reservations for the selected equipment and date
+    reservations = EquipmentReservation.objects.filter(
+        equipment_id=selected_equipment_id,
+        date=selected_date
+    )
+
+    # Create a set of reserved time slot IDs
+    reserved_time_slots = set(reservations.values_list('timeslot_id', flat=True))
+
+    # Create a list to store available slots including slot ID
+    available_slots = []
+
+    for time_slot in all_time_slots:
+        if time_slot.id not in reserved_time_slots:
+            # This time slot is available
+            available_slots.append({
+                'slot_id': time_slot.id,  # Include slot ID
+                'start_time': time_slot.start_time.strftime('%H:%M'),
+                'end_time': time_slot.end_time.strftime('%H:%M')
+                # You can customize this if needed
+            })
+
+    return JsonResponse({'available_slots': available_slots})
+
+
+
+
+from django.shortcuts import render, redirect
+from datetime import datetime
+from .models import FitnessUser, Equipment, EquipmentReservation, TimeSlot
+from django.contrib.auth.decorators import login_required
+
+
+from django.shortcuts import render
+from .models import Equipment, FitnessUser
+
+def reservation_page(request):
+    # Retrieve the list of equipment and connected users from your database
+    equipment_list = Equipment.objects.all()
+    connected_users = FitnessUser.objects.filter(traineruserconnection__fitness_trainer=request.user.fitnesstrainer)
+
+    context = {
+        'equipment_list': equipment_list,
+        'connected_users': connected_users,
+    }
+
+    return render(request, 'reservation.html', context)

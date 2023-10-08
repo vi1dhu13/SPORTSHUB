@@ -169,3 +169,35 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"Reservation for {self.fitness_user} with {self.trainer} on {self.reservation_date} {self.slot.start_time} - {self.slot.end_time}"
+
+from django.db import models
+
+class Equipment(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+from django.db import models
+
+class TimeSlot(models.Model):
+    slot_number = models.PositiveIntegerField(unique=True,default=1)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    def __str__(self):
+        return f"Slot {self.slot_number}: {self.start_time.strftime('%H:%M')} - {self.end_time.strftime('%H:%M')}"
+
+from django.db import models
+from django.utils import timezone
+
+class EquipmentReservation(models.Model):
+    trainer = models.ForeignKey(FitnessTrainer, on_delete=models.CASCADE,default=1)
+    fitness_user = models.ForeignKey(FitnessUser, on_delete=models.CASCADE,default=1)
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+    timeslot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE,default=1)
+    date = models.DateField(default=timezone.now)
+    
+    def __str__(self):
+        return f"Reservation for {self.equipment.name} on {self.date} by {self.fitness_user.user.username}"
