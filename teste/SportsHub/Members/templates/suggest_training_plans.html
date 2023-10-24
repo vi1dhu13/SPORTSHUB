@@ -1,0 +1,46 @@
+{% extends "Navbar.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Suggested Training Plans</h1>
+</div>
+
+<div class="container mt-3">
+    <form method="post" action="{% url 'Members:suggest_training_plans' %}">
+        {% csrf_token %}
+        
+        <h3>Select a Plan:</h3>
+        {% for plan in available_plans %}
+        <div class="card mb-4 custom-card" style="width:fit-content">
+            <div class="card-body">
+                <h5 class="card-title custom-card-title">{{ plan.plan_name }}</h5>
+                <p class="card-text custom-card-text ">{{ plan.description }}</p>
+                <p class="card-text custom-card-title"><strong>Duration:</strong> {{ plan.duration }} days</p>
+                <p class="card-text custom-card-title"><strong>Created By Trainer:</strong> {{ plan.created_by_trainer }}</p>
+                <p class="card-text custom-card-title"><strong>Amount:</strong> ${{ plan.amount }}</p>
+                <input type="radio" name="selected_plan" value="{{ plan.id }}" id="plan_{{ plan.id }}" class="custom-radio-input">
+                <label for="plan_{{ plan.id }}" class="custom-radio-label" style="color: darkblue;">Select</label>
+            </div>
+        </div>
+        
+        {% endfor %}
+        
+        <h3>Select a User:</h3>
+        {% for user in connected_users %}
+            <div class="card mb-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title custom-card-title">{{ user.user.username }}</h5>
+                    <p class="card-text custom-card-text">{{ user.user.email }}</p>
+                    <input type="radio" name="selected_user" value="{{ user.id }}" id="user_{{ user.id }}">
+                    <label for="user_{{ user.id }}" style="color: darkblue;">Select</label>
+                </div>
+            </div>
+        {% endfor %}
+        
+
+        <button type="submit" class="btn btn-primary">Assign Plan</button>
+    </form>
+</div> 
+{% endblock %}
+
+
