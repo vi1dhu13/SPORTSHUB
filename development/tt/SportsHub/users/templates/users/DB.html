@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gym Trainer Dashboard{% endblock %}</title>
+    <!-- Add Bootstrap CSS link -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    {% comment %} <style>
+        /* Navbar Styles */
+        .navbar {
+            background-color: #4169e1!important; /* Royal blue background color */
+        }
+    
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffec40!important; /* Pale yellow text color for navbar items */
+        }
+    
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #ffec40!important; /* Pale yellow color for the navbar toggler icon */
+        }
+    
+        /* Body Styles */
+        body {
+            background-color: #f0f0f0!important; /* Light gray background color for the body */
+        }
+    
+        /* Container Styles */
+        .container {
+            background-color: #ffffff!important; /* White background color for containers */
+            padding: 20px; /* Add some padding to the containers */
+            border-radius: 5px; /* Add slightly rounded corners to the containers */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow to the containers */
+        }
+    
+        label {
+            color: #4169e1 !important; /* Royal blue text color */
+        }
+    </style> {% endcomment %}
+     
+    
+    
+        
+    
+    
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Gym Trainer Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:view_pending_requests' %}">View Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:create_training_plan' %}">Create Plan</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:reservation_page'  %}">Make Reservations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:connected_users' %}">Clients</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Members:suggest_training_plans' %}">Training Plans</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Content Block -->
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Bootstrap and JavaScript links (unchanged) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

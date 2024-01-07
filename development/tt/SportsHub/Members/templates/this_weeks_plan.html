@@ -1,0 +1,72 @@
+{% extends 'Navbar2.html' %}
+
+{% block content %}
+   
+    <div class="container mt-5">
+        <h1>This Week's Fitness Plan</h1>
+
+    
+        {% if this_weeks_plan %}
+            <table class="table table-bordered table-striped table-dark">
+                <tbody>
+
+                    <tr>
+                        <th>Start Date:</th>
+                        <td>{{ this_weeks_plan.start_date }}</td>
+                    </tr>
+                    <tr>
+                        <th>End Date:</th>
+                        <td>{{ this_weeks_plan.end_date }}</td>
+                    </tr>
+                </tbody>
+            </table>
+    <br>
+
+    <br>
+    <h1>To do</h1>
+            <table class="table table-bordered table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Day 1</td>
+                        <td>{{ this_weeks_plan.day1details }}</td>
+                    </tr>
+                    <tr>
+                        <td>Day 2</td>
+                        <td>{{ this_weeks_plan.day2details }}</td>
+                    </tr>
+                    <tr>
+                        <td>Day 3</td>
+                        <td>{{ this_weeks_plan.day3details }}</td>
+                    </tr>
+                    <tr>
+                        <td>Day 4</td>
+                        <td>{{ this_weeks_plan.day4details }}</td>
+                    </tr>
+                    <tr>
+                        <td>Day 5</td>
+                        <td>{{ this_weeks_plan.day5details }}</td>
+                    </tr>
+                    <tr>
+                        <td>Day 6</td>
+                        <td>{{ this_weeks_plan.day6details }}</td>
+                    </tr>
+                    <tr>
+                        <td>Day 7</td>
+                        <td>{{ this_weeks_plan.day7details }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            
+        {% else %}
+            <p>No fitness plan available for this week.</p>
+        {% endif %}
+    </div>
+    
+{% endblock %}

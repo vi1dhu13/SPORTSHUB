@@ -1,0 +1,10 @@
+<h1>Weekly Workout Plans</h1>
+<ul>
+    {% for plan in plans %}
+        <li>
+            Week {{ plan.week_number }} - Client: {{ plan.client.user.username }}
+            <a href="{% url 'update_weekly_workout_plan' plan.id %}">Edit</a>
+            <a href="{% url 'delete_weekly_workout_plan' plan.id %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
