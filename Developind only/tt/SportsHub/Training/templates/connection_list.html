@@ -1,0 +1,12 @@
+<!-- connection_list.html -->
+
+
+{% block content %}
+  <h1>Your Connections</h1>
+  <ul>
+    {% for connection in connections %}
+      <li>{{ connection.trainer.user.username }}</li>
+      <!-- Add more details about the connection if needed -->
+    {% endfor %}
+  </ul>
+{% endblock %}
