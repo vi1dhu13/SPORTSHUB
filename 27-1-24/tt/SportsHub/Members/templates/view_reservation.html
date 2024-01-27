@@ -1,0 +1,10 @@
+
+
+{% block content %}
+<h1>Your Gym Reservations</h1>
+<ul>
+  {% for reservation in reservations %}
+    <li>{{ reservation.slot.date }} - {{ reservation.slot.start_time }} to {{ reservation.slot.end_time }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
