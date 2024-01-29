@@ -1,0 +1,54 @@
+
+
+    {% extends "Navbar.html" %}
+
+    {% block title %}Create Training Plan{% endblock %}
+    
+    {% block content %}
+    
+        
+            <div class="row d-flex justify-content-center align-items-center h-100 " style="background-color: #ffffff;">
+                <div class="col-md-6">
+                    <div class="card" style="background-color: #ca484e;">
+                        <div class="card-body p-4 p-lg-5 text-white">
+                            <h2 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px; font-weight:bold;">Create Plan</h2>
+                            
+                            <!-- Add instructions for the trainer -->
+                            <p><strong>Instructions for creating a training plan:</strong></p>
+                            <ul>
+                                <li>Consider the user's budget and set a reasonable price limit for the plan.</li>
+                                <li>Ensure user comfortability by tailoring the plan to their fitness level and goals.</li>
+                                <li>Take into account any gym-related conditions or restrictions when designing the workouts.</li>
+                                <li>Balance cardiovascular, strength, and flexibility exercises to create a well-rounded plan.</li>
+                                <li>Provide clear instructions for each exercise, including proper form and technique.</li>
+                                <li>Consider any medical conditions or injuries the user may have and adapt the plan accordingly.</li>
+                                <li>Ensure that the plan aligns with the user's specific fitness goals, whether it's weight loss, muscle gain, or overall fitness.</li>
+                                <li>Offer variations and modifications for exercises to accommodate users of different skill levels.</li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card" style="background-color: #ffffff;">
+                        <div class="card-body p-4 p-lg-5 text-black">
+                            <h2 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px; font-weight:bold; color:#bc0505;">Create Plan</h2>
+                            <form method="post" class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-danger">Create Plan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+   
+    {% endblock %}
+    
+ </body>
+    
+</html>

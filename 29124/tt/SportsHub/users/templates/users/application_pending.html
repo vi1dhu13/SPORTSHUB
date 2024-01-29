@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+  
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+VAdr3k6cqGpPjXkbJHIuM/CJ5InAI6fDj4sD6k/KJmJiS" crossorigin="anonymous">
+  
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+    <link href="{% static 'css/jquery.mb.YTPlayer.min.css' %}" media="all" rel="stylesheet" type="text/css">
+  
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+        /* Define your theme colors here */
+        body {
+            background-color: #2A9D8F; /* Teal background color */
+            color: #fff; /* Text color */
+        }
+
+        .container {
+            background-color: #E9C46A; /* Yellow background color for containers */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #264653; /* Dark teal for headings */
+        }
+
+        /* You can customize other elements' styles as needed */
+    </style>
+</head>
+<header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+    <div class="container-fluid">
+      <div class="d-flex align-items-center">
+        <div class="site-logo"><a href="{% url 'index' %}">SportsHub<span>.</span></a></div>
+        <div class="ml-auto">
+          <nav class="site-navigation position-relative text-right" role="navigation">
+            <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+             {% comment %} <li><a href="#home-section" class="nav-link">Home</a></li>
+             <li><a href="#classes-section" class="nav-link">Classes</a></li> {% endcomment %}
+             {% comment %} <li><a href="{% url 'users:role_application' %}" class="btn btn-primary">Apply for a Role</a></li> {% endcomment %}
+             <li><a href="{% url 'index' %}" class="nav-link"> BACK</a></li>
+             
+             
+             <li><a href="{% url 'users:profile' user.username %}" class="nav-link"> MYprofile</a></li>
+             
+             <li><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
+           </ul>
+         </nav>
+         <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
+       </div>
+     </div>
+   </div>
+ </header>
+ <br>
+<br>
+<br>
+<br>
+<body>
+    <div class="container" >
+        
+        <h2>Role Application Pending</h2>
+        <p>Your role application is pending approval by the admin.</p>
+        <p>Please wait for approval to access the requested role features.</p>
+        
+        <!-- You can add more details or instructions here -->
+    </div>
+
+    <!-- Optional: Include any JavaScript scripts or links to external scripts here -->
+</body>
+</html>

@@ -1,0 +1,16 @@
+
+
+{% block content %}
+  <div class="container mt-4">
+    <h2 class="mb-4">Assign Nutrition Plan</h2>
+
+    <form method="post" class="needs-validation" novalidate>
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary">Assign Nutrition Plan</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
