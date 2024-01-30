@@ -59,9 +59,10 @@
 
       label {
          font-weight: bold;
+         
       }
       body {
-        background-color: #f2f2f2; /* Light grey background color */
+        background-color: #f2f2f2; 
     }
    </style>
 </head>
@@ -72,20 +73,18 @@
         <div class="row">
             <div class="col-12">
                 <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
+
                     <a href="index.html" class="logo">Sports<em>Hub</em></a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
+
                     <ul class="nav">
                         <li class="scroll-to-section"><a href="{% url 'index' %}">Home</a></li>
-                        <li class="scroll-to-section"><a href="{% url 'Members:select_trainer' %}">Select Trainer</a></li>
+
                         <li class="scroll-to-section"><a href="{% url 'Members:view_assigned_training_plans' user.id %}">My Plan</a></li>
                         <li class="scroll-to-section"><a href="{% url 'Members:this_weeks_plan' %}">This Week's Plan</a></li>
-                        <li class="scroll-to-section"><a href="{% url 'Training:render_my_template' %}">Train with ZIZU</a></li>
-                        <li><a href="{% url 'Training:user_workout_routines' %}" class="btn btn-primary">View My Workout Routines</a></li>
-                        <!-- user_profile.html -->
-                        <a href="{% url 'Training:create_or_edit_medical_overview' %}">Edit Medical Overview</a>
-                        <a href="{% url 'Training:delete_medical_overview' %}">Delete Medical Overview</a>
+
+                        <li class="scroll-to-section"><a href="{% url 'Training:user_workout_routines' %}" >View My Workout Routines</a></li>
+                        <li class="scroll-to-section"><a href="{% url 'Training:create_or_edit_medical_overview' %}">E0</a></li>
+                        <li class="scroll-to-section"><a href="{% url 'Training:delete_medical_overview' %}">D0</a></li>
 
                         <li class="scroll-to-section"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
                     </ul>
@@ -135,11 +134,11 @@
                 </div>
             </div>
         
-            <!-- Workout Plan Section -->
+
             <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="card-title">Your Workout Plan</h2>
-                    <!-- Display user-specific workout plan details here -->
+
                     <table class="table">
                         {% if training_plan_assignments %}
                             {% with assignment=training_plan_assignments.0.plan %}
@@ -181,18 +180,18 @@
                             <th>Caloric Intake:</th>
                             <td>2000 calories/day</td>
                         </tr>
-                        <!-- Add more nutrition plan details as needed -->
+  
                     </table>
                     <a href="#" class="btn btn-primary">View Nutrition Plan</a>
                 </div>
             </div>
             <BR>
-            <!-- Trainer Section -->
+
             <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="card-title">Trainer Information</h2>
                     {% if trainer %}
-                        <!-- Display trainer-specific information here -->
+
                         <table class="table ">
                             <tr>
                                 <th>Name:</th>
@@ -206,7 +205,7 @@
                                 <th>Experience:</th>
                                 <td>{{ trainer.experience }} years</td>
                             </tr>
-                            <!-- Add more trainer details as needed -->
+
                         </table>
                     {% else %}
                         <p><em>You do not have a connected trainer at the moment.</em></p>
@@ -217,7 +216,7 @@
         {% endblock %}
     </div>
 
-    <!-- Bootstrap and JavaScript links (unchanged) -->
+    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
