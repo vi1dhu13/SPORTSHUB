@@ -89,3 +89,17 @@ class NutritionPlanAssignmentForm(forms.ModelForm):
                 print("Validation Error:", e)
 
         return instance
+
+
+# forms.py
+from django import forms
+from .models import MedicalOverview
+
+class MedicalOverviewForm(forms.ModelForm):
+    class Meta:
+        model = MedicalOverview
+        fields = ['conditions']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Additional customization for the form, if needed

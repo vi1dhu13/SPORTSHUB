@@ -396,3 +396,44 @@ def delete_nutrition_plan(request, nutrition_plan_id):
 
 
 
+# views.py
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .models import FitnessUser, MedicalOverview
+from .forms import MedicalOverviewForm
+
+# views.py
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .models import FitnessUser, MedicalOverview
+from .forms import MedicalOverviewForm
+
+@login_required
+def create_or_edit_medical_overview(request):
+    fitness_user = get_object_or_404(FitnessUser, user=request.user)
+
+    # Check if MedicalOverview already exists for the user
+    medical_overview, created = MedicalOverview.objects.get_or_create(user=fitness_user)
+
+    if request.method == 'POST':
+        form = MedicalOverviewForm(request.POST, instance=medical_overview)
+        if form.is_valid():
+            form.save()
+            return redirect('Training:create_or_edit_medical_overview')  # Redirect to the view page after creation
+    else:
+        form = MedicalOverviewForm(instance=medical_overview)
+
+    return render(request, 'create_or_edit_medical_overview.html', {'form': form})
+
+
+@login_required
+def delete_medical_overview(request):
+    fitness_user = get_object_or_404(FitnessUser, user=request.user)
+    medical_overview = get_object_or_404(MedicalOverview, user=fitness_user)
+
+
+    if request.method == 'POST':
+        medical_overview.delete()
+        return redirect('Training:create_or_edit_medical_overview')
+
+    return render(request, 'delete_medical_overview.html', {'medical_overview': medical_overview})

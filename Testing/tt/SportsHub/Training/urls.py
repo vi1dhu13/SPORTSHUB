@@ -17,7 +17,11 @@ urlpatterns = [
     path('trainer_previous_assignments/', views.trainer_previous_assignments, name='trainer_previous_assignments'),
     path('assign_nutrition_plan/<int:user_id>/', views.assign_nutrition_plan, name='assign_nutrition_plan'),
     path('edit_nutrition_plan/<int:nutrition_plan_id>/', views.edit_nutrition_plan, name='edit_nutrition_plan'),
-    path('delete_nutrition_plan/<int:nutrition_plan_id>/', views.delete_nutrition_plan, name='delete_nutrition_plan'),
+    path('delete_nutrition_plan/<int:nutrition_plan_id>/', views.delete_nutrition_plan, name='delete_nutrition_plan'), 
+    path('create_or_edit_medical_overview/', views.create_or_edit_medical_overview, name='create_or_edit_medical_overview'),
+    path('delete_medical_overview/', views.delete_medical_overview, name='delete_medical_overview'),
+
+
 
 
     
