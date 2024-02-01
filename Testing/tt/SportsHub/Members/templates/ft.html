@@ -1,255 +1,224 @@
 {% load static %}
 {% load socialaccount %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-   <meta charset="utf-8"> 
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <title></title>
-   <meta name="description" content="">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sports Hub Dashboard</title>
+ 
 
-   <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+VAdr3k6cqGpPjXkbJHIuM/CJ5InAI6fDj4sD6k/KJmJiS" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+VAdr3k6cqGpPjXkbJHIuM/CJ5InAI6fDj4sD6k/KJmJiS" crossorigin="anonymous">
+  
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
  
-   <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.css' %}">
+     <link rel="stylesheet" href="{% static 'assets/css/templatemo-training-studio.css' %}">
+     
+  
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+    <link href="{% static 'css/jquery.mb.YTPlayer.min.css' %}" media="all" rel="stylesheet" type="text/css">
+  
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+ 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+       crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <!-- Add other stylesheets here -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+   
 
-   <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/templatemo-training-studio.css' %}">
- 
- 
-   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-   <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
-   <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-   <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-   <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
- 
-   <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
- 
-   <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
- 
-   <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
- 
-   <link rel="stylesheet" href="{% static 'css/aos.css' %}">
-   <link href="{% static 'css/jquery.mb.YTPlayer.min.css' %}" media="all" rel="stylesheet" type="text/css">
- 
-   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+    
 
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-      crossorigin="anonymous"></script>
+        .soul-logo {
+            mix-blend-mode: color-burn;
+        }
 
-   <style>
-      .soul-logo { 
-         mix-blend-mode: color-burn;
-      }
+        .placform::placeholder {
+            position: absolute;
+            left: 10px;
+        }
 
-      .placform::placeholder {
-         position: absolute;
-         left: 10px;
-      }
+        label {
+            font-weight: bold;
+        }
 
-
-      label {
-         font-weight: bold;
-      }
-      
-   </style>
+ 
+    </style>
 </head>
-
-<header class="header-area header-sticky" style="background: #000000;">
+<header class="header-area header-sticky" style="background: #000000; border-bottom: 2px solid #ffffff;">
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <nav class="main-nav d-flex justify-content-between align-items-center">
-                    <div>
-                        <a href="index.html" class="logo">Sports<em>Hub</em></a>
-                    </div>
+                <nav class="main-nav">
+
+                    A
+
                     <ul class="nav">
-                        <li class="scroll-to-section"><a href="{% url 'index' %}" >Home</a></li>
-                        <li class="scroll-to-section"><a href="{% url 'Members:create_weekly_plan' %}">WP</a></li>
-                        <li class="scroll-to-section"><a href="{% url 'Members:create_training_plan' %}">Create Plan</a></li>
-                        <li class="scroll-to-section"><a href="{% url 'Members:cereservation_page' %}" >Equipment</a></li>
+                        <li class="scroll-to-section"><a href="{% url 'index' %}">Home</a></li>
 
-                        <li><a href="{% url 'Training:create_routine'  %}">tte</a></li>
-                        <!-- Include this button wherever you want in your template -->
-
-
-                        <li class="scroll-to-section"><a href="{% url 'Members:make_reservation'  %}">Make Reservations</a></li> 
-                        <li class="scroll-to-section"><a href="{% url 'Members:suggest_training_plans' %}">Training Plans</a></li>
+     
+                        <li class="scroll-to-section"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
                     </ul>
                     <a class='menu-trigger'>
                         <span>Menu</span>
                     </a>
+
                 </nav>
             </div>
         </div>
     </div>
-</header>
+<body style="background-color: #898787; color: #ffffff; border-bottom: 2px solid #ffffff;">
 
+   
+    <aside class="sidebar" style="background: #000000; color: #fff; width: 220px; height: 100vh; position: fixed; top: 0; left: 0; padding-top: 30px; padding-left: 20px; border: 2px solid #ffffff;">
+       
 
-
-<body>
-
-<br>
-
-    <div class="container mt-4" style="background-color: #f9f9f9; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-        <div class="dcontainer">
-            <h1 class="mt-4" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">Welcome, {{ trainer.user.username }}!</h1>
-            <div style="background-color: rgb(194, 188, 188); border-radius: 15px; padding: 20px; margin-top: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                <h1 class="display-4" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">My Clients</h1>
     
-                <table class="table table-bordered mt-4">
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Fitness Goal</th>
-                            <th>Height (cm)</th>
-                            <th>Weight (kg)</th>
-                            <th>View Profile</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for user in connected_users %}
-                        <tr>
-                            <td><strong>{{ user.user.username }}</strong></td>
-                            <td>{{ user.fitness_goal }}</td>
-                            <td>{{ user.height }}</td>
-                            <td>{{ user.weight }}</td>
-                            <td>
-                                <!-- Add a button to assign nutrition plan with a link to the view -->
-                                <!-- user_profile.html -->
-
-                                {% if user.nutritionplan_set.all %}
-                                <!-- If the user has existing nutrition plans, show the list -->
-                                {% for nutrition_plan in user.nutritionplan_set.all %}
-                                    <p>{{ nutrition_plan.name }} - {{ nutrition_plan.description }}</p>
-                                    <a href="{% url 'Training:edit_nutrition_plan' nutrition_plan.id %}">Edit</a>
-                                    <a href="{% url 'Training:delete_nutrition_plan' nutrition_plan.id %}">Delete</a>
-                                {% endfor %}
-                                {% else %}
-                                <!-- If the user has no existing nutrition plans, show the "Assign Nutrition Plan" button -->
-                                <a href="{% url 'Training:assign_nutrition_plan' user.user.id %}" class="btn btn-success btn-sm">
-                                    <i class="fas fa-check"></i> Assign Nutrition Plan
-                                </a>
-                                {% endif %}
-
-
-                            </td>
-                            <td>
-                                <button class="btn btn-primary btn-sm view-profile-btn" data-toggle="modal" data-target="#profileModal{{ user.user.id }}" data-userid="{{ user.user.id }}">
-                                    <i class="fas fa-eye"></i> View Profile
-                                </button>
-                            </td>
-                        </tr>
-                        <div class="modal fade" id="profileModal{{ user.user.id }}" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="profileModalLabel">User Profile</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p><strong>Username:</strong> {{ user.user.username }}</p>
-                                        <p><strong>Email:</strong> {{ user.user.email }}</p>
-                                        <p><strong>Fitness Goal:</strong> {{ user.fitness_goal }}</p>
-                                        <p><strong>Height (cm):</strong> {{ user.height }}</p>
-                                        <p><strong>Weight (kg):</strong> {{ user.weight }}</p>
-                                        <p><strong>Role:</strong> {{ user.user.role }}</p>
-                                        <p><strong>Description:</strong> {{ user.user.description }}</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav d-flex flex-column">
+                        <div>
+                            <a href="index.html" class="logo" style="color: #ffffff; font-size: 1.0em; text-shadow: 2px 2px 4px #000;">Sports<em>Hub</em></a>
                         </div>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        <ul class="nav flex-column">
+                            <br>
+                            <li class="scroll-to-section"><a href="{% url 'index' %}" style="color: #fff; margin-bottom: 10px; padding: 10px 0; text-shadow: 1px 1px 2px #000;"><i class="fas fa-home fa-lg"></i> Home</a></li>
+                            <br>  
+                            <li class="scroll-to-section"><a href="{% url 'Members:create_weekly_plan' %}" style="color: #fff; margin-bottom: 40px; text-shadow: 1px 1px 2px #000;"><i class="far fa-calendar-alt fa-lg"></i> Weekly Plan</a></li>
+                            <br>  
+                            <li class="scroll-to-section"><a href="{% url 'Members:create_training_plan' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="far fa-file-alt fa-lg"></i> Create Plan</a></li>
+                            <br>    
+                            <li class="scroll-to-section"><a href="{% url 'Members:cereservation_page' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="fas fa-tools fa-lg"></i> Equipment</a></li>
+                            <br>
+                            <li><a href="{% url 'Training:create_routine' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="fas fa-pen fa-lg"></i> Routine</a></li>
+                            <br>
+                            <li class="scroll-to-section"><a href="{% url 'Members:make_reservation' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="far fa-calendar-plus fa-lg"></i> Make Reservations</a></li>
+                            <br>
+                            <br>
+                            
+                            <li class="scroll-to-section"><a href="{% url 'Members:suggest_training_plans' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="fas fa-list fa-lg"></i> Training Plans</a></li>
+                        </ul>
+    
+                    </nav>
+                </div>
             </div>
         </div>
-            <div class="row mt-4">
-                <!-- Recent Reservations -->
-                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    </aside>
+    
+
+    <div class="main-content" style="margin-left: 220px; padding-top: 30px;">
+        <div class="container mt-4" style="background-color: #0e0e0e; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <div class="dcontainer">
+                <h1 class="mt-4" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">Welcome, {{ trainer.user.username }}!</h1>
+
+                
+
+            </div>
+        </div> 
+    </div>         
+    <div id="dashboardCarousel" class="carousel slide" data-ride="carousel" data-interval="3000" style="overflow: auto;">
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <div class="container mt-4" style="background-color: #b8b8b8; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                     <h2 style="color: #f06d01;">Recent Reservations:</h2>
                     <table class="table table-bordered">
-                        <!-- Table Content -->
-                        
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Time Slot</th>
-                                    <th>Fitness User</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for reservation in recent_reservations %}
-                                <tr>
-                                    <td>{{ reservation.reservation_date }}</td>
-                                    <td>{{ reservation.slot.start_time }} - {{ reservation.slot.end_time }}</td>
-                                    <td>{{ reservation.fitness_user.user.username }}</td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="3">No recent reservations.</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+        
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time Slot</th>
+                                <th>Fitness User</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reservation in recent_reservations %}
+                            <tr>
+                                <td>{{ reservation.reservation_date }}</td>
+                                <td>{{ reservation.slot.start_time }} - {{ reservation.slot.end_time }}</td>
+                                <td>{{ reservation.fitness_user.user.username }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3">No recent reservations.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
+            </div>
 
-                <!-- Training Plan Assignments -->
-                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <div class="carousel-item">
+                <div class="container mt-4" style="background-color: #000000; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                     <h2 style="color: #4285f4;">Training Plan Assignments:</h2>
                     <ul class="list-group">
-                        
-                                {% for assignment in training_plan_assignments %}
-                                <li class="list-group-item">
-                                    <strong>Plan Name:</strong> {{ assignment.plan.plan_name }}<br>
-                                    
-                                    <strong>Accepted:</strong> {% if assignment.is_accepted %}Yes{% else %}No{% endif %}
-                                </li>
-                                {% empty %}
-                                <li class="list-group-item">No training plan assignments.</li>
-                                {% endfor %}
-                            
+                        {% for assignment in training_plan_assignments %}
+                        <li class="list-group-item">
+                            <strong>Plan Name:</strong> {{ assignment.plan.plan_name }}<br>
+                            <strong>Accepted:</strong> {% if assignment.is_accepted %}Yes{% else %}No{% endif %}
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No training plan assignments.</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
 
-            <div class="row mt-4">
-                <!-- Weekly Fitness Plans -->
-                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+
+            <div class="carousel-item">
+                <div class="container mt-4" style="background-color: #000000; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                     <h2 style="color: #4285f4;">Weekly Fitness Plans:</h2>
-                    
-                        <!-- List Content -->
-                        <ul class="list-group">
-                            {% for weekly_plan in weekly_fitness_plans %}
-                            <li class="list-group-item">
-                                <strong>Plan Name:</strong> {{ weekly_plan.plan_name }}<br>
-                                <strong>Start Date:</strong> {{ weekly_plan.start_date }}<br>
-                                <strong>End Date:</strong> {{ weekly_plan.end_date }}
-                            </li>
-                            {% empty %}
-                            <li class="list-group-item">No weekly fitness plans.</li>
-                            {% endfor %}
-                        
+
+                    <ul class="list-group">
+                        {% for weekly_plan in weekly_fitness_plans %}
+                        <li class="list-group-item">
+                            <strong>Plan Name:</strong> {{ weekly_plan.plan_name }}<br>
+                            <strong>Start Date:</strong> {{ weekly_plan.start_date }}<br>
+                            <strong>End Date:</strong> {{ weekly_plan.end_date }}
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No weekly fitness plans.</li>
+                        {% endfor %}
                     </ul>
                 </div>
+            </div>
 
-                <!-- Pending Connection Requests -->
-                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <!-- Pending Connection Requests -->
+            <div class="carousel-item">
+                <div class="container mt-4" style="background-color: #000000; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                     <h2 style="color: #4285f4;">Pending Connection Requests:</h2>
                     <ul class="list-group">
                         {% for request in pending_requests %}
@@ -270,13 +239,14 @@
                     </ul>
                 </div>
             </div>
+
         </div>
+    </div>
+</div>
 
 
-
-    <!-- Bootstrap and JavaScript links (unchanged) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
-</html>
