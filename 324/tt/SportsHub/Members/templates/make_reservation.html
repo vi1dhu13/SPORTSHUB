@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Make Reservation</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Include the jQuery UI library for the date picker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Initialize the date picker -->
+    <script>
+        $(document).ready(function () {
+            // Initialize the date picker
+            $('.datepicker').datepicker({
+                dateFormat: 'yy-mm-dd',
+                minDate: 0,
+                onSelect: function (selectedDate) {
+                    updateAvailableSlots(selectedDate);
+                }
+            });
+
+            // Function to update available slots based on the selected date
+            function updateAvailableSlots(selectedDate) {
+                $.ajax({
+                    url: '{% url 'Members:available_slots' %}',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    },
+                    data: {
+                        'selected_date': selectedDate,
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        var slotsHTML = '<h3>Available Slots:</h3>';
+                        if (data.available_slots.length > 0) {
+                            slotsHTML += '<ul>';
+                            data.available_slots.forEach(function (slot) {
+                                slotsHTML += '<li>' + slot.start_time + ' - ' + slot.end_time + '</li>';
+                            });
+                            slotsHTML += '</ul>';
+                        } else {
+                            slotsHTML += '<p>No available slots for the selected date.</p>';
+                        }
+                        $('#available-slots').html(slotsHTML);
+                    },
+                    error: function () {
+                        alert('An error occurred while fetching available slots.');
+                    }
+                });
+            }
+
+            // Function to get the CSRF token from cookies
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            // Attach the date picker's onSelect event handler to initially load available slots
+            var initialDate = $('#selected_date').val();
+            updateAvailableSlots(initialDate);
+        });
+    </script>
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Make Reservation</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="selected_date">Select Date:</label>
+            <input type="text" id="selected_date" name="selected_date" class="form-control datepicker">
+        </div>
+        <div id="available-slots">
+            <!-- Available slots will be displayed here using JavaScript/jQuery -->
+        </div>
+        <button type="submit" class="btn btn-primary">Reserve</button>
+    </form>
+    <a href="{% url 'Members:available_slots' %}" class="btn btn-secondary mt-2">Back to Available Slots</a>
+</div>
+</body>
+</html>

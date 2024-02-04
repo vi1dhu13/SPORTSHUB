@@ -1,0 +1,12 @@
+{% extends "fu.html" %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Create or Edit Medical Overview</h2>
+    <form method="post" action="{% url 'Training:create_or_edit_medical_overview' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Save">
+    </form>
+{% endblock %}
+
