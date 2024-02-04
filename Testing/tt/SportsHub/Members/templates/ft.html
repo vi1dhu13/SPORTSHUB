@@ -73,6 +73,18 @@
         label {
             font-weight: bold;
         }
+        .main-content {
+            margin-left: 220px;
+            padding-top: 30px;
+        }
+
+        .container-right {
+            margin-left: 250px; /* Adjust margin as needed */
+            padding: 30px; /* Adjust padding as needed */
+            background-color: #ffffff; /* Add background color */
+            color: #000000; /* Text color for the container */
+            border: 2px solid #ffffff;
+        }
 
  
     </style>
@@ -140,89 +152,157 @@
     
 
 
-    <div class="main-content" style="margin-left: 220px; padding-top: 30px;">
-        <div class="container mt-4">
-            <div class="card bg-dark text-white" style="border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                <img src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'path_to_default_image.jpg' %}{% endif %}" class="card-img-top" alt="Profile Picture" style="width: 100px; height: 100px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">Welcome, {{ user.username }}!</h5>
-                    <p class="card-text">Email: {{ user.email }}</p>
-                    <p class="card-text">Role: {{ user.role }}</p>
-                </div>
+
+    <div class="container mt-4" style="background-color: #f9f9f9; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <div class="dcontainer">
+            <h1 class="mt-4" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">Welcome, {{ trainer.user.username }}!</h1>
+            <div style="background-color: rgb(194, 188, 188); border-radius: 15px; padding: 20px; margin-top: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <h1 class="display-4" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">My Clients</h1>
+    
+                <table class="table table-bordered mt-4">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Fitness Goal</th>
+                            <th>Height (cm)</th>
+                            <th>Weight (kg)</th>
+                            <th>View Profile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in connected_users %}
+                        <tr>
+                            <td><strong>{{ user.user.username }}</strong></td>
+                            <td>{{ user.fitness_goal }}</td>
+                            <td>{{ user.height }}</td>
+                            <td>{{ user.weight }}</td>
+                            <td>
+                                <!-- Add a button to assign nutrition plan with a link to the view -->
+                                <!-- user_profile.html -->
+
+                                {% if user.nutritionplan_set.all %}
+                                <!-- If the user has existing nutrition plans, show the list -->
+                                {% for nutrition_plan in user.nutritionplan_set.all %}
+                                    <p>{{ nutrition_plan.name }} - {{ nutrition_plan.description }}</p>
+                                    <a href="{% url 'Training:edit_nutrition_plan' nutrition_plan.id %}">Edit</a>
+                                    <a href="{% url 'Training:delete_nutrition_plan' nutrition_plan.id %}">Delete</a>
+                                {% endfor %}
+                                {% else %}
+                                <!-- If the user has no existing nutrition plans, show the "Assign Nutrition Plan" button -->
+                                <a href="{% url 'Training:assign_nutrition_plan' user.user.id %}" class="btn btn-success btn-sm">
+                                    <i class="fas fa-check"></i> Assign Nutrition Plan
+                                </a>
+                                {% endif %}
+
+
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btn-sm view-profile-btn" data-toggle="modal" data-target="#profileModal{{ user.user.id }}" data-userid="{{ user.user.id }}">
+                                    <i class="fas fa-eye"></i> View Profile
+                                </button>
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="profileModal{{ user.user.id }}" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="profileModalLabel">User Profile</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>Username:</strong> {{ user.user.username }}</p>
+                                        <p><strong>Email:</strong> {{ user.user.email }}</p>
+                                        <p><strong>Fitness Goal:</strong> {{ user.fitness_goal }}</p>
+                                        <p><strong>Height (cm):</strong> {{ user.height }}</p>
+                                        <p><strong>Weight (kg):</strong> {{ user.weight }}</p>
+                                        <p><strong>Role:</strong> {{ user.user.role }}</p>
+                                        <p><strong>Description:</strong> {{ user.user.description }}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
-    
-
-    
-    <div id="dashboardCarousel" class="carousel slide mx-auto" data-ride="carousel" data-interval="3000" style="overflow: auto; max-width: 800px;">
-        <div class="carousel-inner">
-    
-            <div class="carousel-item active">
-                <div class="container mt-4" style="background-color: #b8b8b8; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <div class="row mt-4">
+                <!-- Recent Reservations -->
+                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                     <h2 style="color: #f06d01;">Recent Reservations:</h2>
                     <table class="table table-bordered">
-        
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Time Slot</th>
-                                <th>Fitness User</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for reservation in recent_reservations %}
-                            <tr>
-                                <td>{{ reservation.reservation_date }}</td>
-                                <td>{{ reservation.slot.start_time }} - {{ reservation.slot.end_time }}</td>
-                                <td>{{ reservation.fitness_user.user.username }}</td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="3">No recent reservations.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
+                        <!-- Table Content -->
+                        
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time Slot</th>
+                                    <th>Fitness User</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reservation in recent_reservations %}
+                                <tr>
+                                    <td>{{ reservation.reservation_date }}</td>
+                                    <td>{{ reservation.slot.start_time }} - {{ reservation.slot.end_time }}</td>
+                                    <td>{{ reservation.fitness_user.user.username }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3">No recent reservations.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </table>
                 </div>
-            </div>
-    
-            <div class="carousel-item">
-                <div class="container mt-4" style="background-color: #000000; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+
+                <!-- Training Plan Assignments -->
+                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                     <h2 style="color: #4285f4;">Training Plan Assignments:</h2>
                     <ul class="list-group">
-                        {% for assignment in training_plan_assignments %}
-                        <li class="list-group-item">
-                            <strong>Plan Name:</strong> {{ assignment.plan.plan_name }}<br>
-                            <strong>Accepted:</strong> {% if assignment.is_accepted %}Yes{% else %}No{% endif %}
-                        </li>
-                        {% empty %}
-                        <li class="list-group-item">No training plan assignments.</li>
-                        {% endfor %}
+                        
+                                {% for assignment in training_plan_assignments %}
+                                <li class="list-group-item">
+                                    <strong>Plan Name:</strong> {{ assignment.plan.plan_name }}<br>
+                                    
+                                    <strong>Accepted:</strong> {% if assignment.is_accepted %}Yes{% else %}No{% endif %}
+                                </li>
+                                {% empty %}
+                                <li class="list-group-item">No training plan assignments.</li>
+                                {% endfor %}
+                            
                     </ul>
                 </div>
             </div>
-    
-            <div class="carousel-item">
-                <div class="container mt-4" style="background-color: #000000; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+
+            <div class="row mt-4">
+                <!-- Weekly Fitness Plans -->
+                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                     <h2 style="color: #4285f4;">Weekly Fitness Plans:</h2>
-                    <ul class="list-group">
-                        {% for weekly_plan in weekly_fitness_plans %}
-                        <li class="list-group-item">
-                            <strong>Plan Name:</strong> {{ weekly_plan.plan_name }}<br>
-                            <strong>Start Date:</strong> {{ weekly_plan.start_date }}<br>
-                            <strong>End Date:</strong> {{ weekly_plan.end_date }}
-                        </li>
-                        {% empty %}
-                        <li class="list-group-item">No weekly fitness plans.</li>
-                        {% endfor %}
+                    
+                        <!-- List Content -->
+                        <ul class="list-group">
+                            {% for weekly_plan in weekly_fitness_plans %}
+                            <li class="list-group-item">
+                                <strong>Plan Name:</strong> {{ weekly_plan.plan_name }}<br>
+                                <strong>Start Date:</strong> {{ weekly_plan.start_date }}<br>
+                                <strong>End Date:</strong> {{ weekly_plan.end_date }}
+                            </li>
+                            {% empty %}
+                            <li class="list-group-item">No weekly fitness plans.</li>
+                            {% endfor %}
+                        
                     </ul>
                 </div>
-            </div>
-    
-            <!-- Pending Connection Requests -->
-            <div class="carousel-item">
-                <div class="container mt-4" style="background-color: #000000; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+
+                <!-- Pending Connection Requests -->
+                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                     <h2 style="color: #4285f4;">Pending Connection Requests:</h2>
                     <ul class="list-group">
                         {% for request in pending_requests %}
@@ -243,9 +323,9 @@
                     </ul>
                 </div>
             </div>
-    
         </div>
-    </div>
+
+   
     
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

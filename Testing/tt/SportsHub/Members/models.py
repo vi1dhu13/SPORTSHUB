@@ -6,15 +6,17 @@ from users.models import CustomUser
 
 
 
-
 class FitnessUser(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     fitness_goal = models.CharField(max_length=255)
     height = models.FloatField()
     weight = models.FloatField()
-   
+    medical_conditions_text = models.TextField(blank=True, null=True)
+    medical_conditions_pdf = models.FileField(upload_to='medical_conditions_pdfs/', blank=True, null=True)
+
     def __str__(self):
         return self.user.username
+
          
 class FitnessTrainer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)

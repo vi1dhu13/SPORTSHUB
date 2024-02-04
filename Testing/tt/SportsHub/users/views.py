@@ -167,7 +167,6 @@ from .models import CustomUser
 from Members.models import FitnessUser, FitnessTrainer, SportsTrainer
 from django.http import HttpResponse
 from .forms import UserProfileForm, FitnessUserForm, FitnessTrainerForm, SportsTrainerForm
-
 @login_required
 def profile(request):
     user = request.user
@@ -175,26 +174,28 @@ def profile(request):
     if request.method == "POST":
         user_form = UserProfileForm(request.POST, request.FILES, instance=user)
         role = user.role
+        role_form = None  # Initialize role_form to None by default
+        role_title = None
 
         if role == "FitnessUser":
-            role_form = FitnessUserForm(request.POST, instance=user.fitnessuser)
+            role_form = FitnessUserForm(request.POST,request.FILES, instance=user.fitnessuser)
         elif role == "FitnessTrainer":
             role_form = FitnessTrainerForm(request.POST, instance=user.fitnesstrainer)
         elif role == "SportsTrainer":
             role_form = SportsTrainerForm(request.POST, instance=user.sportstrainer)
-        else:
-             role_form = None
-             role_title = None
 
-        if user_form.is_valid() and (role_form is None or role_form.is_valid()):
+        # Check if role_form is not None and is valid
+        if role_form and role_form.is_valid() and user_form.is_valid():
             user_form.save()
-            if role_form:
-                role_form.save()
+            role_form.save()
             return redirect('users:profile')
+        else:
+            print(role_form.errors)
 
     else:
         user_form = UserProfileForm(instance=user)
         role = user.role
+        role_form = None
 
         if role == "FitnessUser":
             role_form = FitnessUserForm(instance=user.fitnessuser)
@@ -202,17 +203,15 @@ def profile(request):
             role_form = FitnessTrainerForm(instance=user.fitnesstrainer)
         elif role == "SportsTrainer":
             role_form = SportsTrainerForm(instance=user.sportstrainer)
-        else:
-            role_form = None
-            role_title = None
 
     context = {
         'user_form': user_form,
         'role_form': role_form,
-        'user':user,
+        'user': user,
     }
 
     return render(request, 'users/profile.html', context)
+
 
 
 

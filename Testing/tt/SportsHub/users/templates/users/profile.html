@@ -74,6 +74,7 @@
           const firstNameInput = document.getElementById('first-name');
           const lastNameInput = document.getElementById('last-name');
           const phoneInput = document.getElementById('phone');
+          const pdf = document.getElementById('pdf')
           const form = document.getElementById('save');
   
           // Function to validate image files onchange
@@ -104,7 +105,37 @@
               imagesInput.classList.add('is-valid');
               return true;
           }
-  
+         
+    function validateFiles() {
+        const pdfInput = document.getElementById('pdf-input');  // Replace 'pdf-input' with the actual ID of your input field
+        const pdfInputValue = pdfInput.value.toLowerCase();
+        const pdfError = document.getElementById('pdf-error');
+        const allowedExtensions = ['.pdf']; // List of allowed PDF file extensions
+
+        if (!pdfInputValue) {
+            pdfError.innerText = 'Please select a PDF file.';
+            pdfInput.classList.remove('is-valid');
+            pdfInput.classList.add('is-invalid');
+            return false;
+        }
+
+        const fileExtension = pdfInputValue.slice(((pdfInputValue.lastIndexOf(".") - 1) >>> 0) + 2);
+
+        if (!allowedExtensions.includes(`.${fileExtension}`)) {
+            pdfInput.value = '';
+            pdfError.innerText = 'Invalid PDF format. Supported format: PDF.';
+            pdfInput.classList.remove('is-valid');
+            pdfInput.classList.add('is-invalid');
+            return false;
+        }
+
+        pdfError.innerText = ''; // Clear the error message
+        pdfInput.classList.remove('is-invalid');
+        pdfInput.classList.add('is-valid');
+        return true;
+    }
+
+
           // Function to validate country onkeyup
         
   
@@ -263,72 +294,56 @@
     <div class="container" style="margin-top: 70px;">
         <h2 class="mt-4">Edit Profile</h2>
         <Br>
-            
-        <form method="post" enctype="multipart/form-data" class="mt-3">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-md-6">
-                    <!-- Basic Information Card -->
-                    <h4 class="card-title text-white">Basic Information</h4>
-                    <div class="card mb-3">
-                        <div class="card-body" >
-                            
-                            {{ user_form.as_p }}
-                        </div>
-                        <button type="submit" id="save" class="btn btn-primary mt-3">Save Changes</button>
-                    </div>
-                    
-                </div>
-                
-                <div class="col-md-6">
-                    <!-- Additional Details Card -->
-                    <h4 class="card-title text-white">Additional Data</h4>
-                    <div class="card mb-3">
-                        <div class="card-body" >
-                          {% if user.profile_picture  %}
-                                                           <center>     <img class="rounded-circle" src="{{ user.profile_picture.url }}" alt="Profile Picture" style="width: 200px; height: 200px;" />
-                                                                
-                                                            {% else %}
-                                                                <div class="rounded-circle no-file-message">
-                                                                    <img class="rounded-circle" src="{% static 'assets/img/pro_pic.png' %}" alt="Profile Picture" style="width: 200px; height: 200px;" />
-                                                                </div>
-                                                                
-                                                            {% endif %}
-                                                            <h4 class="card-title text-white"> {{ user.username}}</h4></center>
-                            
-                           
-                            {% if user.role == "FitnessUser" %}
-                            <h4 class="card-title text-white">Fitness User Details</h4>
-                            {{ role_form.as_p }}
-                            {{ role_form.errors }}
-                            {% endif %}
-                            
-                            {% if user.role == "FitnessTrainer" %}
-                            <h4 class="card-title text-white">Fitness Trainer Details</h4>
-                            {{ role_form.as_p }}
-                            {{ role_form.errors }}
-                            {% endif %}
-    
-                            {% if user.role == "SportsTrainer" %}
-                            <h4 class="card-title text-white">Sports Trainer Details</h4>
-                            {{ role_form.as_p }}
-                            {{ role_form.errors }}
-                            {% endif %}
-                            {% if role_title %}
-                            
-                            <h4 class="font-weight-bold">{{ role_title }}</h4>
-                                {{ role_form.as_p }}
-                                {{ role_form.errors }}
+            <form method="post" enctype="multipart/form-data" class="mt-3">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Basic Information Card -->
+                        <h4 class="card-title text-white">Basic Information</h4>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                {{ user_form.as_p }}
                             </div>
-                            {% endif %}
+                            <button type="submit" id="save" class="btn btn-primary mt-3">Save Changes</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Additional Details Card -->
+                        <h4 class="card-title text-white">Additional Data</h4>
+                        <div class="card mb-3">
+                            <div class="card-body text-center">
+                                {% if user.profile_picture %}
+                                    <img class="rounded-circle" src="{{ user.profile_picture.url }}" alt="Profile Picture" style="width: 200px; height: 200px;" />
+                                {% else %}
+                                    <div class="rounded-circle no-file-message">
+                                        <img class="rounded-circle" src="{% static 'assets/img/pro_pic.png' %}" alt="Profile Picture" style="width: 200px; height: 200px;" />
+                                    </div>
+                                {% endif %}
+                                <h4 class="card-title text-white">{{ user.username }}</h4>
+            
+                                {% if user.role == "FitnessUser" %}
+                                    <h4 class="card-title text-white">Fitness User Details</h4>
+                                    {{ role_form.as_p }}
+                                    {{ role_form.errors }}
+                                
 
+                                {% elif user.role == "FitnessTrainer" %}
+                                    <h4 class="card-title text-white">Fitness Trainer Details</h4>
+                                    {{ role_form.as_p }}
+                                    {{ role_form.errors }}
+                                {% elif user.role == "SportsTrainer" %}
+                                    <h4 class="card-title text-white">Sports Trainer Details</h4>
+                                    {{ role_form.as_p }}
+                                    {{ role_form.errors }}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-    
+            </form>
             
-        </form>
+            
+            
     </div>
     {% endblock %}
     

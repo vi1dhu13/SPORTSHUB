@@ -150,27 +150,36 @@ class UserProfileForm(forms.ModelForm):
         }
 
 
+
+
+
+
 class FitnessUserForm(forms.ModelForm):
     class Meta:
         model = FitnessUser
-        fields = ('fitness_goal', 'height', 'weight')
+        fields = ['fitness_goal', 'height', 'weight', 'medical_conditions_text', 'medical_conditions_pdf']
         widgets = {
-            'fitness_goal': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Fitness Goal', 'style': 'background-color: #90ee90; color: #264653!important;'}),
-            'height': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Height', 'style': 'background-color: #90ee90; color: #264653!important;'}),
-            'weight': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Weight', 'style': 'background-color: #90ee90; color: #264653!important;'}),
+            'fitness_goal': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Fitness Goal'}),
+            'height': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Height'}),
+            'weight': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Weight'}),
+            'medical_conditions_text': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Medical Conditions (Text)'}),
+            'medical_conditions_pdf': forms.FileInput(attrs={'class': 'form-control','id':'pdf'}),
         }
 
-        def clean_height(self):
-            height = self.cleaned_data.get('height')
-            if height < 0 or height > 300:
-                raise forms.ValidationError("Height must be greater than zero and less than or equal to 300.")
-            return height
+    def clean_height(self):
+        height = self.cleaned_data.get('height')
+        if height < 0 or height > 300:
+            raise forms.ValidationError("Height must be greater than zero and less than or equal to 300.")
+        return height
 
-        def clean_weight(self):
-            weight = self.cleaned_data.get('weight')
-            if weight < 0 or weight > 300:
-                raise forms.ValidationError("Weight must be greater than zero and less than or equal to 300.")
-            return weight
+    def clean_weight(self):
+        weight = self.cleaned_data.get('weight')
+        if weight < 0 or weight > 300:
+            raise forms.ValidationError("Weight must be greater than zero and less than or equal to 300.")
+        return weight
+
+
+
 
 class FitnessTrainerForm(forms.ModelForm):
     class Meta:
