@@ -918,5 +918,26 @@ def cereservation_page(request):
 
 
 
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.conf import settings
+import os
+
+# views.py
+from django.shortcuts import render, get_object_or_404
+from .models import CustomUser  # Replace with your actual user model
+
+def view_profile(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    return render(request, 'pprofile.html', {'user': user})
 
 
+def download_pdf(request, pdf_path):
+    pdf_file = os.path.join(settings.MEDIA_ROOT, pdf_path)
+    
+    with open(pdf_file, 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_file)}"'
+        return response
+
+    return HttpResponse("File not found.")

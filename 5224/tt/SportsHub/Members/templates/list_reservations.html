@@ -1,0 +1,16 @@
+<!-- YourApp/templates/list_reservations.html -->
+
+{% extends 'Navbar.html' %}
+
+{% block content %}
+<body>
+    <h1>Equipment Reservations</h1>
+    <ul>
+        {% for reservation in reservations %}
+            <li>
+                <strong>{{ reservation.equipment.name }}</strong> - Reserved by {{ reservation.fitness_user.user.username }}
+                on {{ reservation.date }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
