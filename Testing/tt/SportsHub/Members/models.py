@@ -32,7 +32,7 @@ class FitnessTrainer(models.Model):
 
 class SportsTrainer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    specialization = models.CharField(max_length=255)
+    specialization = models.CharField(max_length=255,null=True)
     height = models.FloatField(blank=True, null=True)
     weight = models.FloatField(blank=True, null=True)
     # Add other fields specific to SportsTrainer

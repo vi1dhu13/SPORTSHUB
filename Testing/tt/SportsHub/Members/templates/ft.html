@@ -17,7 +17,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
      <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.css' %}">
      <link rel="stylesheet" href="{% static 'assets/css/templatemo-training-studio.css' %}">
-     
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
   
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
@@ -74,7 +75,7 @@
             font-weight: bold;
         }
         .main-content {
-            margin-left: 220px;
+            margin-left: 250px;
             padding-top: 30px;
         }
 
@@ -151,10 +152,34 @@
     </aside>
     
 
+    {% for user in connected_users %}
+    <div class="modal fade" id="profileModal{{ user.user.id }}" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">User Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Username:</strong> {{ user.user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.user.email }}</p>
+                    <p><strong>Fitness Goal:</strong> {{ user.fitness_goal }}</p>
+                    <p><strong>Height (cm):</strong> {{ user.height }}</p>
+                    <p><strong>Weight (kg):</strong> {{ user.weight }}</p>
+                    <p><strong>Role:</strong> {{ user.user.role }}</p>
+                    <p><strong>Description:</strong> {{ user.user.description }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 
-
-    <div class="container mt-4" style="background-color: #f9f9f9; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-        <div class="dcontainer">
+    <div class="container mt-4" style="background-color: hsl(0, 0%, 0%); padding: 100px; border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-left: 250px;">        <div class="dcontainer">
             <h1 class="mt-4" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">Welcome, {{ trainer.user.username }}!</h1>
             <div style="background-color: rgb(194, 188, 188); border-radius: 15px; padding: 20px; margin-top: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                 <h1 class="display-4" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">My Clients</h1>
@@ -179,13 +204,12 @@
                             <td>
                                 <!-- Add a button to assign nutrition plan with a link to the view -->
                                 <!-- user_profile.html -->
-
                                 {% if user.nutritionplan_set.all %}
                                 <!-- If the user has existing nutrition plans, show the list -->
                                 {% for nutrition_plan in user.nutritionplan_set.all %}
-                                    <p>{{ nutrition_plan.name }} - {{ nutrition_plan.description }}</p>
-                                    <a href="{% url 'Training:edit_nutrition_plan' nutrition_plan.id %}">Edit</a>
-                                    <a href="{% url 'Training:delete_nutrition_plan' nutrition_plan.id %}">Delete</a>
+                                <p>{{ nutrition_plan.name }} - {{ nutrition_plan.description }}</p>
+                                <a href="{% url 'Training:edit_nutrition_plan' nutrition_plan.id %}">Edit</a>
+                                <a href="{% url 'Training:delete_nutrition_plan' nutrition_plan.id %}">Delete</a>
                                 {% endfor %}
                                 {% else %}
                                 <!-- If the user has no existing nutrition plans, show the "Assign Nutrition Plan" button -->
@@ -193,8 +217,6 @@
                                     <i class="fas fa-check"></i> Assign Nutrition Plan
                                 </a>
                                 {% endif %}
-
-
                             </td>
                             <td>
                                 <button class="btn btn-primary btn-sm view-profile-btn" data-toggle="modal" data-target="#profileModal{{ user.user.id }}" data-userid="{{ user.user.id }}">
@@ -202,128 +224,98 @@
                                 </button>
                             </td>
                         </tr>
-                        <div class="modal fade" id="profileModal{{ user.user.id }}" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="profileModalLabel">User Profile</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p><strong>Username:</strong> {{ user.user.username }}</p>
-                                        <p><strong>Email:</strong> {{ user.user.email }}</p>
-                                        <p><strong>Fitness Goal:</strong> {{ user.fitness_goal }}</p>
-                                        <p><strong>Height (cm):</strong> {{ user.height }}</p>
-                                        <p><strong>Weight (kg):</strong> {{ user.weight }}</p>
-                                        <p><strong>Role:</strong> {{ user.user.role }}</p>
-                                        <p><strong>Description:</strong> {{ user.user.description }}</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
-            <div class="row mt-4">
-                <!-- Recent Reservations -->
-                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                    <h2 style="color: #f06d01;">Recent Reservations:</h2>
-                    <table class="table table-bordered">
-                        <!-- Table Content -->
-                        
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Time Slot</th>
-                                    <th>Fitness User</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for reservation in recent_reservations %}
-                                <tr>
-                                    <td>{{ reservation.reservation_date }}</td>
-                                    <td>{{ reservation.slot.start_time }} - {{ reservation.slot.end_time }}</td>
-                                    <td>{{ reservation.fitness_user.user.username }}</td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="3">No recent reservations.</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </table>
-                </div>
-
-                <!-- Training Plan Assignments -->
-                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                    <h2 style="color: #4285f4;">Training Plan Assignments:</h2>
-                    <ul class="list-group">
-                        
-                                {% for assignment in training_plan_assignments %}
-                                <li class="list-group-item">
-                                    <strong>Plan Name:</strong> {{ assignment.plan.plan_name }}<br>
-                                    
-                                    <strong>Accepted:</strong> {% if assignment.is_accepted %}Yes{% else %}No{% endif %}
-                                </li>
-                                {% empty %}
-                                <li class="list-group-item">No training plan assignments.</li>
-                                {% endfor %}
-                            
-                    </ul>
-                </div>
-            </div>
-
-            <div class="row mt-4">
-                <!-- Weekly Fitness Plans -->
-                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                    <h2 style="color: #4285f4;">Weekly Fitness Plans:</h2>
-                    
-                        <!-- List Content -->
-                        <ul class="list-group">
-                            {% for weekly_plan in weekly_fitness_plans %}
-                            <li class="list-group-item">
-                                <strong>Plan Name:</strong> {{ weekly_plan.plan_name }}<br>
-                                <strong>Start Date:</strong> {{ weekly_plan.start_date }}<br>
-                                <strong>End Date:</strong> {{ weekly_plan.end_date }}
-                            </li>
-                            {% empty %}
-                            <li class="list-group-item">No weekly fitness plans.</li>
-                            {% endfor %}
-                        
-                    </ul>
-                </div>
-
-                <!-- Pending Connection Requests -->
-                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                    <h2 style="color: #4285f4;">Pending Connection Requests:</h2>
-                    <ul class="list-group">
-                        {% for request in pending_requests %}
-                        <li class="list-group-item">
-                            <strong>User:</strong> {{ request.fitness_user.user.username }}<br>
-                            <strong>Status:</strong> {{ request.status }}<br>
-                            {% if request.status == 'pending' %}
-                            <form method="post" action="{% url 'Members:approve_reject_request' request.id %}">
-                                {% csrf_token %}
-                                <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">Approve</button>
-                                <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
-                            </form>
-                            {% endif %}
-                        </li>
+        <div class="row mt-4 justify-content-end">
+            <!-- Recent Reservations -->
+            <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <h2 style="color: #f06d01;">Recent Reservations:</h2>
+                <table class="table table-bordered">
+                    <!-- Table Content -->
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time Slot</th>
+                            <th>Fitness User</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reservation in recent_reservations %}
+                        <tr>
+                            <td>{{ reservation.reservation_date }}</td>
+                            <td>{{ reservation.slot.start_time }} - {{ reservation.slot.end_time }}</td>
+                            <td>{{ reservation.fitness_user.user.username }}</td>
+                        </tr>
                         {% empty %}
-                        <li class="list-group-item">No pending requests.</li>
+                        <tr>
+                            <td colspan="3">No recent reservations.</td>
+                        </tr>
                         {% endfor %}
-                    </ul>
-                </div>
+                    </tbody>
+                </table>
+            </div>
+    
+            <!-- Training Plan Assignments -->
+            <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <h2 style="color: #4285f4;">Training Plan Assignments:</h2>
+                <ul class="list-group">
+                    {% for assignment in training_plan_assignments %}
+                    <li class="list-group-item">
+                        <strong>Plan Name:</strong> {{ assignment.plan.plan_name }}<br>
+                        <strong>Accepted:</strong> {% if assignment.is_accepted %}Yes{% else %}No{% endif %}
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item">No training plan assignments.</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
+    
+        <div class="row mt-4 justify-content-end">
+            <!-- Weekly Fitness Plans -->
+            <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <h2 style="color: #4285f4;">Weekly Fitness Plans:</h2>
+                <!-- List Content -->
+                <ul class="list-group">
+                    {% for weekly_plan in weekly_fitness_plans %}
+                    <li class="list-group-item">
+                        <strong>Plan Name:</strong> {{ weekly_plan.plan_name }}<br>
+                        <strong>Start Date:</strong> {{ weekly_plan.start_date }}<br>
+                        <strong>End Date:</strong> {{ weekly_plan.end_date }}
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item">No weekly fitness plans.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+    
+            <!-- Pending Connection Requests -->
+            <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <h2 style="color: #4285f4;">Pending Connection Requests:</h2>
+                <ul class="list-group">
+                    {% for request in pending_requests %}
+                    <li class="list-group-item">
+                        <strong>User:</strong> {{ request.fitness_user.user.username }}<br>
+                        <strong>Status:</strong> {{ request.status }}<br>
+                        {% if request.status == 'pending' %}
+                        <form method="post" action="{% url 'Members:approve_reject_request' request.id %}">
+                            {% csrf_token %}
+                            <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">Approve</button>
+                            <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
+                        </form>
+                        {% endif %}
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item">No pending requests.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
 
    
     

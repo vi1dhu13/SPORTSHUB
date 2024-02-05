@@ -1,4 +1,3 @@
-# connect/models.py
 
 from django.db import models
 from Members.models import FitnessTrainer,FitnessUser
@@ -28,12 +27,7 @@ class TrainingPlan(models.Model):
 
 
 # models.py
-from django.db import models
 
-
-
-
-from django.db import models
 
 class Exercise(models.Model):
     name = models.CharField(max_length=255)
@@ -46,12 +40,6 @@ class Exercise(models.Model):
         return self.name
 
 
-
-
-
-from django.db import models
-
-
 class WorkoutRoutine(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -62,10 +50,6 @@ class WorkoutRoutine(models.Model):
     def __str__(self):
         return self.name
 
-
-
-
-from django.db import models
 
 class Nutrition(models.Model):
     name = models.CharField(max_length=255)
