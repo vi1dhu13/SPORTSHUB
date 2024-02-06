@@ -152,7 +152,7 @@
     
     <div class="main-content">
         <!-- Add your main content here -->
-        <div class="row mt-4 justify-content-end">
+        <div class="row mt-4 ">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
@@ -161,12 +161,12 @@
                     <div class="card-body">
                         <img src="{{ user.profile_picture.url }}" alt="Profile Picture"
                             style="width: 150px; height: 150px; object-fit: cover;">
-                        <p>Fitness Goal: {{ user.fitnessuser.fitness_goal }}</p>
+                        <p>Fitness Goal: {{ us.fitnessuser.fitness_goal }}</p>
                         <p>Height: {{ user.fitnessuser.height }} cm</p>
                         <p>Weight: {{ user.fitnessuser.weight }} kg</p>
         
                         {% if user.fitnessuser.medical_conditions_pdf %}
-                        <a href="{% url 'Members:download_pdf' user.fitnessuser.medical_conditions_pdf.name %}" target="_blank">Download PDF</a>
+                        <a href="{% url 'Members:download_pdf' user.fitnessuser.medical_conditions_pdf.name %}" target="_blank">Medical reports</a>
 
                         {% else %}
                         <p>No PDF available</p>
@@ -174,9 +174,83 @@
                     </div>
                 </div>
             </div>
+            <h1 class="display-4" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">My Clients</h1>
+    
+            <table class="table table-bordered mt-4">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Fitness Goal</th>
+                        <th>Height (cm)</th>
+                        <th>Weight (kg)</th>
+                        <th>View Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in connected_users %}
+                    <tr>
+                        <td><strong>{{ user.user.username }}</strong></td>
+                        <td>{{ user.fitness_goal }}</td>
+                        <td>{{ user.height }}</td>
+                        <td>{{ user.weight }}</td>
+                        <td>
+                            <!-- Add a button to assign nutrition plan with a link to the view -->
+                            <!-- user_profile.html -->
+
+                            {% if user.nutritionplan_set.all %}
+                            <!-- If the user has existing nutrition plans, show the list -->
+                            {% for nutrition_plan in user.nutritionplan_set.all %}
+                                <p>{{ nutrition_plan.name }} - {{ nutrition_plan.description }}</p>
+                                <a href="{% url 'Training:edit_nutrition_plan' nutrition_plan.id %}">Edit</a>
+                                <a href="{% url 'Training:delete_nutrition_plan' nutrition_plan.id %}">Delete</a>
+                            {% endfor %}
+                            {% else %}
+                            <!-- If the user has no existing nutrition plans, show the "Assign Nutrition Plan" button -->
+                            <a href="{% url 'Training:assign_nutrition_plan' user.user.id %}" class="btn btn-success btn-sm">
+                                <i class="fas fa-check"></i> Assign Nutrition Plan
+                            </a>
+                            {% endif %}
+
+
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm view-profile-btn" data-toggle="modal" data-target="#profileModal{{ user.user.id }}" data-userid="{{ user.user.id }}">
+                                <i class="fas fa-eye"></i> View Profile
+                            </button>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="profileModal{{ user.user.id }}" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="profileModalLabel">User Profile</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>Username:</strong> {{ user.user.username }}</p>
+                                    <p><strong>Email:</strong> {{ user.user.email }}</p>
+                                    <p><strong>Fitness Goal:</strong> {{ user.fitness_goal }}</p>
+                                    <p><strong>Height (cm):</strong> {{ user.height }}</p>
+                                    <p><strong>Weight (kg):</strong> {{ user.weight }}</p>
+                                    <p><strong>Role:</strong> {{ user.user.role }}</p>
+                                    <p><strong>Description:</strong> {{ user.user.description }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+
+      
         </div>
-        
-    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

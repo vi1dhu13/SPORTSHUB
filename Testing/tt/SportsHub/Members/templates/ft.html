@@ -203,9 +203,9 @@
                     </div>
                 </div>
         
-                <!-- ToDo List Card -->
+
                 <div class="col-md-6">
-                    <div class="border rounded p-4 mt-4 mt-md-0">
+                    <div class="border rounded p-4 mt-4 ">
                         <div class="card text-center bg-dark" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">Your ToDo List</h5>
@@ -221,46 +221,60 @@
         </div>
         
 
-   
 
+        <h1 class="display-4" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">My Clients</h1>
+    
+        <div class="container">
+            <div class="row">
+                {% for user in connected_users %}
+                <div class="col-md-6">
+                    <div class="card mb-4" style="height: 430px;">
+                        <br>
+                        <img class="card-img-top rounded-circle" src="{{ user.user.profile_picture.url }}" alt="Profile Picture" style="width: 100px; height: 100px; object-fit: cover;">
+                        <div class="card-body" style="height: 250px;">
+                            <h5 class="card-title"><strong>{{ user.user.username }}</strong></h5>
+                            <p class="card-text"><strong>Fitness Goal:</strong> {{ user.fitness_goal }}</p>
+                            <p class="card-text"><strong>Height (cm):</strong> {{ user.height }}</p>
+                            <p class="card-text"><strong>Weight (kg):</strong> {{ user.weight }}</p>
+                            <p class="card-text">
+                                <strong>Nutrition Plan:</strong>
+                                {% if user.nutritionplan_set.all %}
+                                    {% for nutrition_plan in user.nutritionplan_set.all %}
+                                        {{ nutrition_plan.name }} - {{ nutrition_plan.description }}<br>
+                                        <a href="{% url 'Training:edit_nutrition_plan' nutrition_plan.id %}">Edit</a>
+                                        <a href="{% url 'Training:delete_nutrition_plan' nutrition_plan.id %}">Delete</a>
+                                    {% endfor %}
+                                {% else %}
+                                    <a href="{% url 'Training:assign_nutrition_plan' user.user.id %}" class="btn btn-success btn-sm">
+                                        <i class="fas fa-check"></i> Assign Nutrition Plan
+                                    </a>
+                                {% endif %}
+                            </p>
+                            <p class="card-text">
+                                <strong>Medical Conditions:</strong>
+                                {% if user.medical_conditions_pdf %}
+                                    <a href="{% url 'Members:download_pdf' user.medical_conditions_pdf.name %}" target="_blank">Medical reports</a>
+                                {% else %}
+                                    <p>No Reports available</p>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        
+        
+    </div>
+
+
+
+              
             
             
         
-            <div class="container">
-                <h1 class="display-4" style="color: rgb(199, 66, 13); text-align: center; text-shadow: 2px 2px 4px #000;">My Clients</h1>
-                <div class="container">
-                    <div class="card border rounded p-4 mt-4">
-                        <h5 class="card-title text-center">Watch a Video</h5>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/D-TL5hDQucI" allowfullscreen></iframe>
-                        </div>
-                        <div class="card-body text-center">
-                            <p class="card-text">Enjoy this video for inspiration!</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card-deck">
-                    {% for user in connected_users %}
-                    <div class="card text-white bg-dark mb-3" style="width: 18rem;">
-                        <img class="card-img-top rounded-circle" src="{{ user.user.profile_picture.url }}" alt="Profile Picture" style="width: 150px; height: 150px; object-fit: cover;">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">{{ user.user.username }}</h5>
-                            <p class="card-text">Fitness Goal: {{ user.fitness_goal }}</p>
-                            <p class="card-text">Height: {{ user.height }} cm</p>
-                            <p class="card-text">Weight: {{ user.weight }} kg</p>
-                        </div>
-<!-- Update the card-footer section in your existing template -->
-<div class="card-footer text-center">
-    <a href="{% url 'Members:view_profile' user_id=user.user.id %}" class="btn btn-primary">View Profile</a>
-</div>
-
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            
-        </div>
         <div class="row mt-4 justify-content-end">
             <!-- Recent Reservations -->
             <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
@@ -290,7 +304,7 @@
                 </table>
             </div>
     
-            <!-- Training Plan Assignments -->
+
             <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                 <h2 style="color: #4285f4;">Training Plan Assignments:</h2>
                 <ul class="list-group">

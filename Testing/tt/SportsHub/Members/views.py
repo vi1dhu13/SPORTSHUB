@@ -190,6 +190,11 @@ from .models import FitnessUser, TrainingPlanAssignment
 from django.shortcuts import render
 from .models import FitnessUser, TrainingPlanAssignment, TrainerUserConnection
 
+from django.shortcuts import render
+from .models import FitnessUser, TrainerUserConnection, TrainingPlanAssignment
+
+from Training.models import NutritionPlan
+
 def fitness_user_dashboard(request):
     # Assuming you have a way to determine the logged-in user, for example, through authentication
     # Replace this line with your logic to get the logged-in user
@@ -205,13 +210,19 @@ def fitness_user_dashboard(request):
     # Get the training plan assignments for the logged-in user
     training_plan_assignments = TrainingPlanAssignment.objects.filter(user=fitness_user)
 
+    # Get the nutrition plan of the user
+    nutrition_plan = NutritionPlan.objects.filter(creator_user=fitness_user).first()
+
     context = {
         'fitness_user': fitness_user,
         'trainer': trainer,
         'training_plan_assignments': training_plan_assignments,
+        'nutrition_plan': nutrition_plan,
+        
     }
 
     return render(request, 'fu.html', context)
+
 
 
 
@@ -927,9 +938,26 @@ import os
 from django.shortcuts import render, get_object_or_404
 from .models import CustomUser  # Replace with your actual user model
 
+from django.shortcuts import render, get_object_or_404
+from .models import CustomUser
+from Training.models import NutritionPlan,WorkoutRoutine
+from django.shortcuts import render, get_object_or_404
+from .models import CustomUser
+
 def view_profile(request, user_id):
-    user = get_object_or_404(CustomUser, id=user_id)
-    return render(request, 'pprofile.html', {'user': user})
+    custom_user = get_object_or_404(CustomUser, id=user_id)
+    
+    # Assuming you have a one-to-one relationship with FitnessUser
+    fitness_user = get_object_or_404(FitnessUser, user=custom_user)
+    
+    # Get associated NutritionPlan
+    nutrition_plan = NutritionPlan.objects.filter(creator_user=fitness_user)
+    
+    # Get associated WorkoutRoutine
+    workout_plan = WorkoutRoutine.objects.filter(creator_user=fitness_user)
+
+    return render(request, 'pprofile.html', {'user': custom_user, 'fitness_user': fitness_user, 'nutrition_plan': nutrition_plan, 'workout_plan': workout_plan})
+
 
 
 def download_pdf(request, pdf_path):

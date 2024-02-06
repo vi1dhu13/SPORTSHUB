@@ -81,13 +81,4 @@ from django.db import models
 
 
 
-# models.py
-from django.db import models
-from django.conf import settings
 
-class MedicalOverview(models.Model):
-    user = models.OneToOneField(FitnessUser, on_delete=models.CASCADE, related_name='medical_overview')
-    conditions = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return f"Medical Overview for {self.user.username}"

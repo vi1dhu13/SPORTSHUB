@@ -310,7 +310,7 @@ def assign_nutrition_plan(request, user_id):
                 assignment.creator_trainer = trainer
                 assignment.save()
                 assignment.items.set(form.cleaned_data['items'])
-            return redirect('Training:workout_routines')
+            return redirect('Members:fitness_trainer_dashboard')
     else:
         form = NutritionPlanAssignmentForm(trainer=trainer, user=user)
 
@@ -362,7 +362,7 @@ def edit_nutrition_plan(request, nutrition_plan_id):
             item_ids = request.POST.getlist('items')  # Assuming 'items' is the name of the items field in the form
             instance.items.set(item_ids)  # Set the selected items for the nutrition plan
 
-            return redirect('Training:workout_routines')
+            return redirect('Members:fitness_trainer_dashboard')
         else:
             # Print form errors if the form is not valid
             print("Form is not valid:", form.errors)
@@ -388,7 +388,7 @@ def delete_nutrition_plan(request, nutrition_plan_id):
 
     if request.method == 'POST':
         nutrition_plan.delete()
-        return redirect('Training:render_my_template')
+        return redirect('Members:fitness_trainer_dashboard')
 
     return render(request, 'delete_nutrition_plan.html', {'nutrition_plan': nutrition_plan})
 
@@ -396,44 +396,19 @@ def delete_nutrition_plan(request, nutrition_plan_id):
 
 
 
-# views.py
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from .models import FitnessUser, MedicalOverview
-from .forms import MedicalOverviewForm
 
-# views.py
-from django.shortcuts import render, get_object_or_404, redirect
+
+
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import FitnessUser, MedicalOverview
-from .forms import MedicalOverviewForm
 
 @login_required
-def create_or_edit_medical_overview(request):
-    fitness_user = get_object_or_404(FitnessUser, user=request.user)
+def view_nutrition_plan(request):
+    # Assuming you have a FitnessUser model with a one-to-one relationship with the built-in User model
+    fitness_user = request.user.fitnessuser
 
-    # Check if MedicalOverview already exists for the user
-    medical_overview, created = MedicalOverview.objects.get_or_create(user=fitness_user)
+    # Get the nutrition plan created by the logged-in user
+    nutrition_plan = NutritionPlan.objects.filter(creator_user=fitness_user).first()
 
-    if request.method == 'POST':
-        form = MedicalOverviewForm(request.POST, instance=medical_overview)
-        if form.is_valid():
-            form.save()
-            return redirect('Training:create_or_edit_medical_overview')  # Redirect to the view page after creation
-    else:
-        form = MedicalOverviewForm(instance=medical_overview)
-
-    return render(request, 'create_or_edit_medical_overview.html', {'form': form})
-
-
-@login_required
-def delete_medical_overview(request):
-    fitness_user = get_object_or_404(FitnessUser, user=request.user)
-    medical_overview = get_object_or_404(MedicalOverview, user=fitness_user)
-
-
-    if request.method == 'POST':
-        medical_overview.delete()
-        return redirect('Training:create_or_edit_medical_overview')
-
-    return render(request, 'delete_medical_overview.html', {'medical_overview': medical_overview})
+    # Pass the nutrition plan to the template or do something with it
+    return render(request, 'pprofile.html', {'nutrition_plan': nutrition_plan})
