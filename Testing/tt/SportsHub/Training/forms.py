@@ -23,12 +23,12 @@ class WorkoutRoutineForm(forms.ModelForm):
         model = WorkoutRoutine
         fields = ['name', 'description', 'exercises','creator_user']
 
-    def __init__(self, *args, trainer=None, **kwargs):
+    def __init__(self, *args, trainer=None,user=None, **kwargs):
         super().__init__(*args, **kwargs)
         
         if trainer:
             # Limit the choices for creator_user to the trainer's connected users
-            self.fields['creator_user'].queryset = trainer.connected_users.all()
+            
 
             # Set the widget for exercises to CheckboxSelectMultiple
             self.fields['exercises'].widget = forms.CheckboxSelectMultiple()

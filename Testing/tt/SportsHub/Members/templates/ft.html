@@ -217,6 +217,7 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
         
@@ -250,6 +251,21 @@
                                     </a>
                                 {% endif %}
                             </p>
+                            <p class="card-text">
+                                <strong>Workout Routine:</strong>
+                                {% if user.workoutroutine_set.all %}
+                                    {% for workout_routine in user.workoutroutine_set.all %}
+                                        {{ workout_routine.name }} - {{ workout_routine.description }}<br>
+                                        <a href="{% url 'Training:edit_workout_routine' workout_routine.id %}">Edit</a>
+                                        <a href="#" class="delete-workout" data-url="{% url 'Training:delete_workout_routine' workout_routine.id %}">Delete</a>
+                                    {% endfor %}
+                                {% else %}
+                                    <a href="{% url 'Training:assign_workout_routine' user.user.id %}" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-dumbbell"></i> Assign Workout Routine
+                                    </a>
+                                {% endif %}
+                            </p>
+                            
                             <p class="card-text">
                                 <strong>Medical Conditions:</strong>
                                 {% if user.medical_conditions_pdf %}
@@ -369,5 +385,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ 
 
 </body>

@@ -18,6 +18,10 @@ urlpatterns = [
     path('assign_nutrition_plan/<int:user_id>/', views.assign_nutrition_plan, name='assign_nutrition_plan'),
     path('edit_nutrition_plan/<int:nutrition_plan_id>/', views.edit_nutrition_plan, name='edit_nutrition_plan'),
     path('delete_nutrition_plan/<int:nutrition_plan_id>/', views.delete_nutrition_plan, name='delete_nutrition_plan'), 
+    path('assign_workout_routine/<int:user_id>/', views.assign_workout_routine, name='assign_workout_routine'),
+    path('edit_workout_routine/<int:workout_routine_id>/', views.edit_workout_routine, name='edit_workout_routine'),
+    path('delete_workout_routine/<int:workout_routine_id>/', views.delete_workout_routine, name='delete_workout_routine'),
+
 
 
 

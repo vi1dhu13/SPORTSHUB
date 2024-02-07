@@ -164,28 +164,37 @@
                     <a href="#" class="btn btn-primary">View Workout Plan</a>
                 </div>
             </div>
-        <!--
-            
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title">Your Nutrition Plan</h2>
-                     Display user-specific nutrition plan details here 
-                    <table class="table">
-                        <tr>
-                            <th>Plan Name:</th>
-                            <td>Balanced Diet</td>
-                        </tr>
-                        <tr>
-                            <th>Caloric Intake:</th>
-                            <td>2000 calories/day</td>
-                        </tr>
-  
-                    </table>
-                    <a href="#" class="btn btn-primary">View Nutrition Plan</a>
-                </div>
-            </div>-->
-            <BR>
 
+            <BR>
+                {% if fitness_user %}
+                <p>Hello, {{ fitness_user.user.username }}!</p>
+        
+                {% if trainer %}
+                    <p>Your Trainer: {{ trainer.user.username }}</p>
+                {% else %}
+                    <p>You don't have an assigned trainer yet.</p>
+                {% endif %}
+        
+                {% if training_plan_assignments %}
+                    <h3>Your Training Plan Assignments:</h3>
+                    <ul>
+                        {% for assignment in training_plan_assignments %}
+                            <li>{{ assignment.training_plan.name }} - {{ assignment.training_plan.description }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No training plan assignments available.</p>
+                {% endif %}
+        
+                {% if nutrition_plan %}
+                    <h3>Your Nutrition Plan:</h3>
+                    <p>{{ nutrition_plan.name }} - {{ nutrition_plan.description }}</p>
+                {% else %}
+                    <p>No nutrition plan available.</p>
+                {% endif %}
+            {% else %}
+                <p>You are not logged in. Please log in to view your dashboard.</p>
+            {% endif %}
 
             <div class="card mb-4">
                 <div class="card-body">

@@ -1,7 +1,7 @@
 {% block content %}
-  <h2>Delete Nutrition Plan</h2>
+  <h2>Delete Workout Routine</h2>
 
-  <p>Are you sure you want to delete the nutrition plan "{{ nutrition_plan.name }}"?</p>
+  <p>Are you sure you want to delete the workout routine "{{ workout_routine.name }}"?</p>
 
   <form method="post">
     {% csrf_token %}
@@ -10,3 +10,4 @@
 
   <p><a href="{% url 'Members:fitness_trainer_dashboard' %}">Cancel</a></p>
 {% endblock %}
+

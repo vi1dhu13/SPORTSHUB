@@ -220,7 +220,11 @@ def fitness_user_dashboard(request):
         'nutrition_plan': nutrition_plan,
         
     }
-
+    print("Logged-in User:", logged_in_user)
+    print("Fitness User:", fitness_user)
+    print("Trainer:", trainer)
+    print("Training Plan Assignments:", training_plan_assignments)
+    print("Nutrition Plan:", nutrition_plan)
     return render(request, 'fu.html', context)
 
 
