@@ -270,3 +270,7 @@ def paymenthandler(request, reservation_id=None, assignment_id=None):
     
 
 
+from django.shortcuts import render
+
+def pose_detection_view(request):
+    return render(request, 'pose_detection_app.html')

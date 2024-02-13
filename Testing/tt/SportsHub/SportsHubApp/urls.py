@@ -21,7 +21,7 @@ urlpatterns = [
     path('paymenthandler/assignment/<int:assignment_id>/', views.paymenthandler, name='paymenthandler_assignment'),
     
     path('paymenthandler/<int:reservation_id>/', views.paymenthandler, name='paymenthandler'),
-    
+    path('pose-detection/',views.pose_detection_view, name='pose_detection_view'),
 
 
 ]

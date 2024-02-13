@@ -230,13 +230,38 @@ def fitness_user_dashboard(request):
 
 
 
+<<<<<<< HEAD
+from django.shortcuts import render
+from Members.models import SportsTrainer
+
+def sports_user_dashboard(request):
+
+    # Fetch data specific to the logged-in user (assuming the user is a trainer)
+    sports_trainer = get_object_or_404(SportsTrainer, user=request.user)
+
+    # Get the associated SportsCenter
+    
+
+    # Get all SportsCenters where the trainer is the logged-in trainer
+    sports_centers = SportsCenter.objects.filter(trainer=sports_trainer)
+
+    context = {
+        'sports_trainer': sports_trainer,
+        'sports_centers': sports_centers,
+    }
+
+    return render(request, 'su.html', context)
+
+
+
+
+
+=======
 def sports_user_dashboard(request):
     # Fetch data specific to SportsUser
     # Render the SportsUser dashboard template
     return render(request, 'su.html')
-
-
-
+>>>>>>> parent of 07a8ef7 (frf)
 
 from django.shortcuts import render, get_object_or_404
 from .models import FitnessTrainer, TrainerUserConnection, TrainingPlanAssignment, Reservation
