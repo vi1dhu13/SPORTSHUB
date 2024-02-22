@@ -129,8 +129,8 @@
 .card {
   display: block;
   position: relative;
-  max-width: 300px;
-  max-height: 320px;
+  max-width: 400px;
+  max-height: 1000px;
   background-color: #f2f8f9;
   border-radius: 10px;
   padding: 2em 1.2em;
@@ -138,7 +138,7 @@
   text-decoration: none;
   z-index: 0;
   overflow: hidden;
-  background: linear-gradient(to bottom, #c3e6ec, #a7d1d9);
+  background: linear-gradient(to bottom, #fd7404, #a7d1d9);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -149,7 +149,7 @@
   top: -16px;
   right: -16px;
   background: linear-gradient(135deg, #ffffff, #ffffff);
-  height: 32px;
+  height: 92px;
   width: 32px;
   border-radius: 32px;
   transform: scale(1);
@@ -220,9 +220,7 @@
                             <li class="scroll-to-section"><a href="{% url 'Members:create_training_plan' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="far fa-file-alt fa-lg"></i> Create Plan</a></li>
                             <br>    
                             <li class="scroll-to-section"><a href="{% url 'Members:cereservation_page' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="fas fa-tools fa-lg"></i> Equipment</a></li>
-                            <br>
-                            <li><a href="{% url 'Training:create_routine' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="fas fa-pen fa-lg"></i> Routine</a></li>
-                            <br>
+
                             <li class="scroll-to-section"><a href="{% url 'Members:make_reservation' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="far fa-calendar-plus fa-lg"></i> Make Reservations</a></li>
                             <br>
                             <br>
@@ -317,9 +315,8 @@
                     <div class="card mb-4" style="height: 480px;">
                         <br>
                         <img class="card-img-top rounded-circle" src="{{ user.user.profile_picture.url }}" alt="Profile Picture" style="width: 100px; height: 100px; object-fit: cover;">
-                        <div class="card-body" style="height: 250px;">
+                        <div class="card-body" style="height: 200px;">
                             <h5 class="card-title"><strong>{{ user.user.username }}</strong></h5>
-                            <p class="card-text"><strong>Fitness Goal:</strong> {{ user.fitness_goal }}</p>
                             <p class="card-text"><strong>Height (cm):</strong> {{ user.height }}</p>
                             <p class="card-text"><strong>Weight (kg):</strong> {{ user.weight }}</p>
                             <p class="card-text">
@@ -355,8 +352,7 @@
                                 <strong>Medical Conditions:</strong>
                                 {% if user.medical_conditions_pdf %}
                                     <a href="{% url 'Members:download_pdf' user.medical_conditions_pdf.name %}" target="_blank">Medical reports</a>
-                                {% else %}
-                                    <p>No Reports available</p>
+
                                 {% endif %}
                             </p>
                         </div>
