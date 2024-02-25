@@ -1,0 +1,6 @@
+<p>Are you sure you want to delete this weekly workout plan?</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'weekly_workout_plan_list' %}">Cancel</a>
+</form>
