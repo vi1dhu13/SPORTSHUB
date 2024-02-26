@@ -276,3 +276,41 @@ from django.shortcuts import render
 
 def pose_detection_view(request):
     return render(request, 'pose_detection_app.html')
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import SportsCenter, InventoryItem
+from .forms import InventoryItemForm
+
+def inventory_detail(request, sports_center_id):
+    sports_center = get_object_or_404(SportsCenter, pk=sports_center_id)
+    if request.method == 'POST':
+        form = InventoryItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            inventory_item = form.save(commit=False)
+            inventory_item.sports_center = sports_center
+            inventory_item.save()
+            return redirect('inventory_detail', sports_center_id=sports_center_id)
+    else:
+        form = InventoryItemForm()
+    return render(request, 'inventory_detail.html', {'sports_center': sports_center, 'form': form})
+
+def delete_inventory_item(request, sports_center_id, inventory_item_id):
+    inventory_item = get_object_or_404(InventoryItem, pk=inventory_item_id)
+    inventory_item.delete()
+    return redirect('inventory_detail', sports_center_id=sports_center_id)
+
+def update_inventory_quantity(request, sports_center_id, inventory_item_id):
+    inventory_item = get_object_or_404(InventoryItem, pk=inventory_item_id)
+    sports_center = get_object_or_404(SportsCenter, pk=sports_center_id)
+    if request.method == 'POST':
+        form = InventoryItemForm(request.POST, instance=inventory_item)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory_detail', sports_center_id=sports_center_id)
+        else:
+            print(form.errors)  # Print form errors if form is not valid
+    else:
+        form = InventoryItemForm(instance=inventory_item)
+    return render(request, 'inventory_detail.html', {'sports_center': sports_center, 'form': form})
+
+

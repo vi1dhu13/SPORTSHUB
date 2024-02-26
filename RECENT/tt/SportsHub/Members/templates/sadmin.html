@@ -231,7 +231,21 @@
                         </tbody>
                     </table>
                 </div>
-        
+                <div class="container mt-3">
+                    <div class="row">
+                        {% for sports_center in sports_centers %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ sports_center.name }}</h5>
+                                    <p class="card-text">Location: {{ sports_center.location }}</p>
+                                    <a href="{% url 'inventory_detail' sports_center_id=sports_center.id %}" class="btn btn-primary">Inventory</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
                 <!-- Assign Sports Trainer to Sports Center Form -->
                 <div class="container mt-5">
                     <h2 class="text-uppercase">Assign Sports Trainer to Sports Center</h2>
@@ -243,6 +257,10 @@
                                 <select name="sports_center" class="form-select" required>
                                     {% for sports_center in sports_centers %}
                                     <option value="{{ sports_center.id }}">{{ sports_center.name }}</option>
+                                    <div class="container mt-3">
+                                        
+                                    </div>
+                                    
                                     {% endfor %}
                                 </select>
                             </div>

@@ -997,3 +997,5 @@ def download_pdf(request, pdf_path):
         return response
 
     return HttpResponse("File not found.")
+
+
