@@ -1,0 +1,62 @@
+
+
+{% block content %}
+  <h1>Create Workout Plan</h1>
+
+  <div class="workout-container">
+    <div class="workout-list" id="workout-list" ondrop="drop(event)" ondragover="allowDrop(event)">
+      {% for workout_set in workout_sets %}
+        <div class="workout-item" draggable="true" ondragstart="drag(event)" data-workout-id="{{ workout_set.id }}">
+          {{ workout_set.name }}
+        </div>
+      {% endfor %}
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <div class="workout-box" id="workout-box" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <h2>Workout Sets</h2>
+        <div id="selected-workouts" class="selected-workouts"></div>
+        <input type="hidden" name="workout_sets_order[]" id="workout-sets-order" value="">
+      </div>
+
+      <button type="submit">Save Workout Plan</button>
+    </form>
+  </div>
+
+  <script>
+    // ... (Copy the JavaScript functions here)
+   
+  function allowDrop(event) {
+    event.preventDefault();
+  }
+
+  function drag(event) {
+    event.dataTransfer.setData("text", event.target.getAttribute("data-workout-id"));
+  }
+
+  function drop(event) {
+    event.preventDefault();
+    var workoutId = event.dataTransfer.getData("text");
+    var workoutItem = document.getElementById(workoutId).cloneNode(true);
+
+    // Append the cloned workout item to the selected-workouts div
+    document.getElementById("selected-workouts").appendChild(workoutItem);
+
+    // Update the hidden input with the selected workout IDs
+    updateHiddenInput();
+  }
+
+  function updateHiddenInput() {
+    var selectedWorkouts = document.getElementById("selected-workouts").querySelectorAll(".workout-item");
+    var workoutIds = Array.from(selectedWorkouts).map(function(item) {
+      return item.getAttribute("data-workout-id");
+    });
+
+    document.getElementById("workout-sets-order").value = workoutIds.join(",");
+  }
+
+  </script>
+{% endblock %}

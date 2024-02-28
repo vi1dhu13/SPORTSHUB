@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Selected Training Plan</title>
+</head>
+<body>
+    <h1>Selected Training Plan</h1>
+    
+    {% if selected_plan %}
+        <h2>{{ selected_plan.plan_name }}</h2>
+        <p>Description: {{ selected_plan.description }}</p>
+        <p>Duration: {{ selected_plan.duration }} days</p>
+    {% else %}
+        <p>No training plan selected.</p>
+    {% endif %}
+    
+    <!-- Add a button or link to allow the user to go back or take other actions -->
+</body>
+</html>

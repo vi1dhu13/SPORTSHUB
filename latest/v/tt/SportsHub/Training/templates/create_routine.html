@@ -1,0 +1,140 @@
+<!-- create_routine.html -->
+<!-- workout_routines.html -->
+{% load static %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8"> 
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title></title>
+   <meta name="description" content="">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+
+   <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+VAdr3k6cqGpPjXkbJHIuM/CJ5InAI6fDj4sD6k/KJmJiS" crossorigin="anonymous">
+ 
+   <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+
+   <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-training-studio.css' %}">
+    
+ 
+   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+   <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+   <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+   <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+   <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+ 
+   <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+ 
+   <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+ 
+   <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+ 
+   <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+   <link href="{% static 'css/jquery.mb.YTPlayer.min.css' %}" media="all" rel="stylesheet" type="text/css">
+ 
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"></script>
+
+   <style>
+      .soul-logo { 
+         mix-blend-mode: color-burn;
+      }
+
+      .placform::placeholder {
+         position: absolute;
+         left: 10px;
+      }
+
+
+      label {
+         font-weight: bold;
+      }
+      body {
+        background-color: #f2f2f2; /* Light grey background color */
+    }
+   </style>
+</head>
+
+
+      <header class="header-area header-sticky"  style="background:  #000000;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">Sports<em>Hub</em></a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="{% url 'index' %}">Home</a>
+                            <li class="scroll-to-section"><a href="{% url 'Members:select_trainer' %}">Select Trainer</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'Members:view_assigned_training_plans' user.id %}">My Plan</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'Members:this_weeks_plan' %}">This Week's Plan</a></li>
+                        
+                            <li><a href="{% url 'Training:create_routine'  %}">tte</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'Training:render_my_template' %}" >Train with ZIZU</a></li> 
+                            
+                            <li class="scroll-to-section"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li> 
+                            
+                        </ul>        
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+<br>
+<br>
+
+    <!-- Content Block -->
+
+<!-- create_routine.html -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card" style="background-color: #ffffff;">
+                <div class="card-body p-4 p-lg-5 text-black">
+                    <h2 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px; font-weight:bold; color:#bc0505;">Create Plan</h2>
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-danger">Create Plan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ 
+
+    <!-- Bootstrap and JavaScript links (unchanged) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+
