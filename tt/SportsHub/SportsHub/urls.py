@@ -25,6 +25,7 @@ urlpatterns = [
     path("users/", include('users.urls')),
     path('members/', include('Members.urls')),
     path('Training/', include('Training.urls')),
+    path('plan/', include('plan.urls')),
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
     path("", include("allauth.urls")),

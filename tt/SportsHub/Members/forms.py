@@ -100,3 +100,7 @@ class ReservationForm(forms.ModelForm):
         widgets = {
         'reservation_date': forms.DateInput(attrs={'class': 'datepicker'}),
     }
+        
+
+# forms.py
+

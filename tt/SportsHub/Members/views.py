@@ -7,8 +7,17 @@ def landing_page(request):
 from django.shortcuts import render
 from .models import  TrainingPlanAssignment, TrainerUserConnection
 from .models import CustomUser, FitnessUser, FitnessTrainer, SportsTrainer,WeeklyPlan,DailyWorkout
+from SportsHubApp.models import SportsCenter
 
-
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
+from django.shortcuts import render, get_object_or_404
+from django.db.models import Sum, Q
+from .models import TrainingPlanAssignment, TrainerUserConnection, FitnessUser, FitnessTrainer, SportsTrainer, WeeklyPlan, DailyWorkout, WeeklyFitnessPlan, GymSlot, Reservation, SportsTrainer
+from django.utils.timezone import now, timedelta
+from django.db.models import Count
+from SportsHubApp.models import SportsCenter,Payment
 
 def admin_dashboard(request):
     # Retrieve the last 3 accepted plans
@@ -41,19 +50,69 @@ def admin_dashboard(request):
     # Retrieve the last 3 Reservation entries
     last_3_reservations = Reservation.objects.order_by('-id')[:3]
 
-    total_custom_users = CustomUser.objects.count()
-    total_fitness_users = FitnessUser.objects.count()
-    total_fitness_trainers = FitnessTrainer.objects.count()
-    total_sports_trainers = SportsTrainer.objects.count()
+    recent_plans = WeeklyPlan.objects.order_by('-id')[:5]
 
+    if request.method == 'POST':
+        sports_center_id = request.POST.get('sports_center')
+        sports_trainer_id = request.POST.get('sports_trainer')
 
-    counts_list = [
-        ('Custom Users', total_custom_users),
-        ('Fitness Users', total_fitness_users),
-        ('Fitness Trainers', total_fitness_trainers),
-        ('Sports Trainers', total_sports_trainers),
+        if sports_center_id and sports_trainer_id:
+            sports_center = get_object_or_404(SportsCenter, pk=sports_center_id)
+            sports_trainer = get_object_or_404(SportsTrainer, pk=sports_trainer_id)
+
+            # Check if the sports_center already has a trainer assigned
+            if sports_center.trainer:
+                # If assigned, remove the association
+                sports_center.trainer = None
+                sports_center.save()
+            else:
+                # If not assigned, associate the trainer with the sports center
+                sports_center.trainer = sports_trainer
+                sports_center.save()
+
+    sports_centers = SportsCenter.objects.all()
+    sports_trainers = SportsTrainer.objects.all()
+
+    labels = ['Category A', 'Category B', 'Category C']
+    values = [10, 20, 15]
+
+    sports_centers_without_trainers = SportsCenter.objects.filter(trainer__isnull=True)
+
+# Now, 'sports_centers_without_trainers' contains a queryset of SportsCenter objects without assigned trainers.
+
+    # Encode the plot as base64 for rendering in the template
+    
+    total_amount_received = Payment.objects.filter(payment_status=Payment.PaymentStatusChoices.SUCCESSFUL).aggregate(Sum('amount'))['amount__sum']
+
+    # If there are no successful payments, set total_amount_received to 0
+    total_amount_received = total_amount_received if total_amount_received is not None else 0
+
+    # Extract category names from the queryset
+    total_amount_for_reservations = Payment.objects.filter(
+        payment_status=Payment.PaymentStatusChoices.SUCCESSFUL,
+        reservation__isnull=False
+    ).aggregate(Sum('amount'))['amount__sum']
+
+    # If there are no successful payments for reservations, set total_amount_for_reservations to 0
+    total_amount_for_reservations = total_amount_for_reservations if total_amount_for_reservations is not None else 0
+
+    # Calculate the total amount for successful payments related to training plans
+    total_amount_for_training_plans = Payment.objects.filter(
+        payment_status=Payment.PaymentStatusChoices.SUCCESSFUL,
+        TrainingPlanAssignment__isnull=False
+    ).aggregate(Sum('amount'))['amount__sum']
+
+    # If there are no successful payments for training plans, set total_amount_for_training_plans to 0
+    total_amount_for_training_plans = total_amount_for_training_plans if total_amount_for_training_plans is not None else 0
+
+    date_filters = [
+        ('All Time', 'all_time'),
+        ('Last Month', 'last_month'),
+        ('Last Week', 'last_week'),
+        ('Last Day', 'last_day'),
     ]
-
+    selected_filter = request.GET.get('time_filter', 'all_time')
+   
     context = {
         'last_3_accepted_plans': last_3_accepted_plans,
         'last_5_connections': last_5_connections,
@@ -65,15 +124,30 @@ def admin_dashboard(request):
         'last_3_weekly_fitness_plans': last_3_weekly_fitness_plans,
         'last_3_gym_slots': last_3_gym_slots,
         'last_3_reservations': last_3_reservations,
-        'total_custom_users': total_custom_users,
-        'total_fitness_users': total_fitness_users,
-        'total_fitness_trainers': total_fitness_trainers,
-        'total_sports_trainers': total_sports_trainers,
-        'counts_list': counts_list
+        'sports_centers': sports_centers,
+        'sports_trainers': sports_trainers,
+        'date_filters': date_filters,
+        'selected_filter': selected_filter,
+        'recent_plans': recent_plans,
+        'date_filters': date_filters,
+        'sports_centers': sports_centers,
+        'sports_centers_without_trainers':sports_centers_without_trainers,
+        'total_amount_received': total_amount_received,
+        'total_amount_for_reservations': total_amount_for_reservations,
+        'total_amount_for_training_plans': total_amount_for_training_plans
+        
     }
 
     return render(request, 'sadmin.html', context)
 
+def handle_time_filter(request):
+    selected_filter = request.GET.get('time_filter', 'all_time')
+
+    # Handle the selected filter and apply it to your data
+    # You can implement the logic based on the selected_filter value
+
+    # Redirect back to your_existing_view with the updated filter
+    return redirect('Members:admin_dashboard')
 
 
 
@@ -120,6 +194,11 @@ from .models import FitnessUser, TrainingPlanAssignment
 from django.shortcuts import render
 from .models import FitnessUser, TrainingPlanAssignment, TrainerUserConnection
 
+from django.shortcuts import render
+from .models import FitnessUser, TrainerUserConnection, TrainingPlanAssignment
+
+from Training.models import NutritionPlan
+
 def fitness_user_dashboard(request):
     # Assuming you have a way to determine the logged-in user, for example, through authentication
     # Replace this line with your logic to get the logged-in user
@@ -133,47 +212,74 @@ def fitness_user_dashboard(request):
     trainer = trainer_connection.fitness_trainer if trainer_connection else None
 
     # Get the training plan assignments for the logged-in user
-    training_plan_assignments = TrainingPlanAssignment.objects.filter(user=fitness_user)
+    training_plan_assignments = WorkoutRoutine.objects.filter(creator_user=fitness_user).first()
+
+    # Get the nutrition plan of the user
+    nutrition_plan = NutritionPlan.objects.filter(creator_user=fitness_user).first()
 
     context = {
         'fitness_user': fitness_user,
         'trainer': trainer,
         'training_plan_assignments': training_plan_assignments,
+        'nutrition_plan': nutrition_plan,
+        
     }
-
+    print("Logged-in User:", logged_in_user)
+    print("Fitness User:", fitness_user)
+    print("Trainer:", trainer)
+    print("Training Plan Assignments:", training_plan_assignments)
+    print("Nutrition Plan:", nutrition_plan)
     return render(request, 'fu.html', context)
-
-
-
-def sports_user_dashboard(request):
-    # Fetch data specific to SportsUser
-    # Render the SportsUser dashboard template
-    return render(request, 'su.html')
 
 
 
 
 from django.shortcuts import render
-from .models import FitnessTrainer, TrainerUserConnection, TrainingPlanAssignment
+from Members.models import SportsTrainer
+from SportsHubApp.models import SReservation
 
+def sports_user_dashboard(request):
+
+    # Fetch data specific to the logged-in user (assuming the user is a trainer)
+    sports_trainer = get_object_or_404(SportsTrainer, user=request.user)
+
+    # Get all SportsCenters where the trainer is the logged-in trainer
+    sports_centers = SportsCenter.objects.filter(trainer=sports_trainer)
+
+    # Fetch reservations related to the sports centers
+    sports_center_reservations = SReservation.objects.filter(sport__in=sports_centers)
+    
+    context = {
+        'sports_trainer': sports_trainer,
+        'sports_centers': sports_centers,
+        'sports_center_reservations': sports_center_reservations,
+    }
+
+    return render(request, 'su.html', context)
+
+
+
+
+
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import FitnessTrainer, TrainerUserConnection, TrainingPlanAssignment, Reservation
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def fitness_trainer_dashboard(request):
-    # Assuming you have a way to determine the logged-in trainer, for example, through authentication
-    # Replace this line with your logic to get the logged-in trainer
-    logged_in_trainer = FitnessTrainer.objects.get(user=request.user)
+    logged_in_trainer = get_object_or_404(FitnessTrainer, user=request.user)
 
-    # Get the approved connections for the logged-in trainer
+    connected_users = FitnessUser.objects.filter(traineruserconnection__fitness_trainer=logged_in_trainer)
+
     connections = TrainerUserConnection.objects.filter(fitness_trainer=logged_in_trainer, status='approved')
-
-    # Get the connected fitness users
     fitness_users = [connection.fitness_user for connection in connections]
 
-    # Get the training plan assignments for the logged-in trainer
     training_plan_assignments = TrainingPlanAssignment.objects.filter(assigned_by=logged_in_trainer)
 
-    # Get recent reservations for this trainer
     recent_reservations = Reservation.objects.filter(trainer=logged_in_trainer).order_by('-reservation_time')[:5]
 
-    # Retrieve all pending connection requests for the logged-in trainer
     pending_requests = TrainerUserConnection.objects.filter(
         fitness_trainer=logged_in_trainer,
         status='pending',
@@ -184,27 +290,26 @@ def fitness_trainer_dashboard(request):
         action = request.POST.get("action")
 
         if action == "approve":
-            # Approve the request
             connection_request = TrainerUserConnection.objects.get(id=request_id)
             connection_request.status = 'approved'
             connection_request.save()
         elif action == "reject":
-            # Reject the request
             connection_request = TrainerUserConnection.objects.get(id=request_id)
             connection_request.status = 'rejected'
             connection_request.save()
 
     context = {
         'trainer': logged_in_trainer,
+        'connected_users': connected_users,
         'fitness_users': fitness_users,
         'training_plan_assignments': training_plan_assignments,
         'recent_reservations': recent_reservations,
         'pending_requests': pending_requests,
     }
 
-    
-
     return render(request, 'ft.html', context)
+
+
 
 
 
@@ -302,15 +407,6 @@ def connection_success(request):
 from django.shortcuts import render
 from .models import FitnessTrainer, TrainerUserConnection
 
-def show_connected_users(request):
-    # Assuming the logged-in user is a fitness trainer
-    logged_in_trainer = request.user.fitnesstrainer
-
-    # Retrieve all connected FitnessUser instances for the logged-in trainer
-    connected_users = FitnessUser.objects.filter(traineruserconnection__fitness_trainer=logged_in_trainer)
-
-    context = {'connected_users': connected_users}
-    return render(request, 'connected_users.html', context)
 
 
 
@@ -385,6 +481,7 @@ def suggest_training_plans(request):
 
 
 
+
 from django.shortcuts import render, get_object_or_404
 from .models import CustomUser, TrainingPlanAssignment, FitnessUser
 
@@ -407,36 +504,12 @@ def view_assigned_training_plans(request, user_id):
     context = {'assignments': assignments, 'fitness_user': fitness_user}
     return render(request, 'view_assigned_training_plans.html', context)
 
+
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import CustomUser, TrainingPlanAssignment, FitnessUser
 from django.contrib import messages
 
-# def accept_training_plan(request, user_id):
-#     if request.method == "POST":
-#         # Retrieve the custom user based on the provided user_id
-#         custom_user = get_object_or_404(CustomUser, pk=user_id)
 
-#         # Retrieve the associated fitness user if it exists
-#         fitness_user = None
-#         try:
-#             fitness_user = custom_user.fitnessuser
-#         except FitnessUser.DoesNotExist:
-#             pass
-
-#         if fitness_user:
-#             # Retrieve the TrainingPlanAssignment for this fitness user
-#             user_assignment = TrainingPlanAssignment.objects.filter(user=fitness_user).first()
-#             if user_assignment:
-#                 # Update the is_accepted field to True
-#                 user_assignment.is_accepted = True
-#                 user_assignment.save()
-#                 messages.success(request, 'Training plan accepted successfully.')
-#             else:
-#                 messages.error(request, 'Training plan not found.')
-#         else:
-#             messages.error(request, 'Fitness user not found.')
-
-#     return redirect('Members:view_assigned_training_plans', user_id=user_id)
 
 def accept_training_plan(request, user_id):
     if request.method == "POST":
@@ -535,37 +608,6 @@ def training_plan_list(request):
 
     context = {'training_plans': training_plans}
     return render(request, 'training_plan_list.html', context)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
  # Add the login_required decorator to restrict access to authenticated users
@@ -911,3 +953,50 @@ def cereservation_page(request):
     }
 
     return render(request, 'xreservation.html', context)
+
+
+
+
+
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.conf import settings
+import os
+
+# views.py
+from django.shortcuts import render, get_object_or_404
+from .models import CustomUser  # Replace with your actual user model
+
+from django.shortcuts import render, get_object_or_404
+from .models import CustomUser
+from Training.models import NutritionPlan,WorkoutRoutine
+from django.shortcuts import render, get_object_or_404
+from .models import CustomUser
+
+def view_profile(request, user_id):
+    custom_user = get_object_or_404(CustomUser, id=user_id)
+    
+    # Assuming you have a one-to-one relationship with FitnessUser
+    fitness_user = get_object_or_404(FitnessUser, user=custom_user)
+    
+    # Get associated NutritionPlan
+    nutrition_plan = NutritionPlan.objects.filter(creator_user=fitness_user)
+    
+    # Get associated WorkoutRoutine
+    workout_plan = WorkoutRoutine.objects.filter(creator_user=fitness_user)
+
+    return render(request, 'pprofile.html', {'user': custom_user, 'fitness_user': fitness_user, 'nutrition_plan': nutrition_plan, 'workout_plan': workout_plan})
+
+
+
+def download_pdf(request, pdf_path):
+    pdf_file = os.path.join(settings.MEDIA_ROOT, pdf_path)
+    
+    with open(pdf_file, 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_file)}"'
+        return response
+
+    return HttpResponse("File not found.")
+
+

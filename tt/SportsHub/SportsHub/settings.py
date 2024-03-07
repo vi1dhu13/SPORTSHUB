@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users',
     'Members',
     'Training',
+    'plan',
     'tinymce',
     'crispy_forms',
     'captcha',

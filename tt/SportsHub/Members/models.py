@@ -6,15 +6,17 @@ from users.models import CustomUser
 
 
 
-
 class FitnessUser(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     fitness_goal = models.CharField(max_length=255)
     height = models.FloatField()
     weight = models.FloatField()
-   
+    medical_conditions_text = models.TextField(blank=True, null=True)
+    medical_conditions_pdf = models.FileField(upload_to='medical_conditions_pdfs/', blank=True, null=True)
+
     def __str__(self):
         return self.user.username
+
          
 class FitnessTrainer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -30,10 +32,9 @@ class FitnessTrainer(models.Model):
 
 class SportsTrainer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    specialization = models.CharField(max_length=255)
+    specialization = models.CharField(max_length=255,null=True)
     height = models.FloatField(blank=True, null=True)
     weight = models.FloatField(blank=True, null=True)
-    # Add other fields specific to SportsTrainer
 
 
 
@@ -201,3 +202,4 @@ class EquipmentReservation(models.Model):
     
     def __str__(self):
         return f"Reservation for {self.equipment.name} on {self.date} by {self.fitness_user.user.username}"
+

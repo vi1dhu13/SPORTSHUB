@@ -15,38 +15,6 @@ from django.http import HttpResponseBadRequest
 razorpay_client = razorpay.Client(
 auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
 
-# def index(request):
-    
-#     if request.method == 'POST' and 'razorpay_payment_id' in request.POST:
-#         # Handle the Razorpay callback here if needed
-#         pass
-    
-#     currency = 'INR'
-#     amount = 20000  # Rs. 200
-
-#     # Create a Razorpay Order
-#     razorpay_order = razorpay_client.order.create(dict(
-#         amount=amount,
-#         currency=currency,
-#         payment_capture='0'
-#     ))
-
-#     # Order ID of the newly created order.
-#     razorpay_order_id = razorpay_order['id']
-#     callback_url = 'paymenthandler/'
-
-#     # Pass these details to the frontend.
-#     context = {
-#         'user': request.user,
-#         'razorpay_order_id': razorpay_order_id,
-#         'razorpay_merchant_key': settings.RAZOR_KEY_ID,
-#         'razorpay_amount': amount,
-#         'currency': currency,
-#         'callback_url': callback_url
-#     }
-
-#     return render(request, 'index.html', context=context)
-
 def index(request):
     return render(request, 'index.html')
     
@@ -84,52 +52,7 @@ from django.http import HttpResponseBadRequest
 razorpay_client = razorpay.Client(
 auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
    
-# @csrf_exempt
-# def paymenthandler(request):
- 
-#     # only accept POST request.
-#     if request.method == "POST":
-#         try:
-           
-#             # get the required parameters from post request.
-#             payment_id = request.POST.get('razorpay_payment_id', '')
-#             razorpay_order_id = request.POST.get('razorpay_order_id', '')
-#             signature = request.POST.get('razorpay_signature', '')
-#             params_dict = {
-#                 'razorpay_order_id': razorpay_order_id,
-#                 'razorpay_payment_id': payment_id,
-#                 'razorpay_signature': signature
-#             }
- 
-#             # verify the payment signature.
-#             result = razorpay_client.utility.verify_payment_signature(
-#                 params_dict)
-#             if result is not None:
-#                 amount = 20000  # Rs. 200
-#                 try:
- 
-#                     # capture the payemt
-#                     razorpay_client.payment.capture(payment_id, amount)
- 
-#                     # render success page on successful caputre of payment
-#                     return render(request, 'paymentsuccess.html')
-#                 except:
- 
-#                     # if there is an error while capturing payment.
-#                     return render(request, 'paymentfail.html')
-#             else:
- 
-#                 # if signature verification fails.
-#                 return render(request, 'paymentfail.html')
-#         except:
- 
-#             # if we don't find the required parameters in POST data
-#             return HttpResponseBadRequest()
-#     else:
-#        # if other than POST request is made.
-#         return HttpResponseBadRequest()
-    
-    # views.py
+
 from django.shortcuts import render
 from django.views.generic import ListView
 from .models import SportsCenter,Payment
@@ -139,36 +62,7 @@ class SportsCenterListView(ListView):
     template_name = 'sports_center_list.html'
     context_object_name = 'sports_centers'
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import SportsCenter, SportscenterSlot, Reservation
-
-# def select_slot(request, sports_center_id):
-#     try:
-#         sportscenter = SportsCenter.objects.get(id=sports_center_id)
-#     except SportsCenter.DoesNotExist:
-#         return render(request, 'sportscenter_not_found.html')  
-
-#     if request.method == 'POST':
-#         selected_slot_id = request.POST.get('slot_id')
-#         reservation_date = request.POST.get('reservation_date')
-
-#         try:
-#             selected_slot = SportscenterSlot.objects.get(id=selected_slot_id)
-            
-#             reservation = Reservation(
-#                 reserver=request.user if request.user.is_authenticated else None,
-#                 sport=sportscenter,
-#                 slot=selected_slot,
-#                 reservation_date=reservation_date,
-#             )
-#             reservation.save()
-#             return redirect('payment',reservation_id=reservation.id)
-
-#         except SportscenterSlot.DoesNotExist:
-#             return HttpResponse('Selected slot not found', status=400)  # Return an error response
-
-#     return render(request, 'select_slot.html', {
-#         'sportscenter': sportscenter,
-#     })
+from .models import SportsCenter, SportscenterSlot, SReservation
 
 
 def select_slot(request, sports_center_id):
@@ -184,7 +78,7 @@ def select_slot(request, sports_center_id):
         try:
             selected_slot = SportscenterSlot.objects.get(id=selected_slot_id)
 
-            reservation = Reservation(
+            reservation = SReservation(
                 reserver=request.user if request.user.is_authenticated else None,
                 sport=sportscenter,
                 slot=selected_slot,
@@ -219,7 +113,7 @@ def get_available_slots(request, sportscenter_id, selected_date):
         return JsonResponse({'error': 'Invalid date format'}, status=400)
 
     # Get available slots for the selected sports center and date
-    reservations_for_sportscenter = Reservation.objects.filter(sport=sportscenter, reservation_date=selected_date,status=True)
+    reservations_for_sportscenter = SReservation.objects.filter(sport=sportscenter, reservation_date=selected_date,status=True)
     reserved_slot_ids = reservations_for_sportscenter.values_list('slot__id', flat=True)
     available_slots = SportscenterSlot.objects.exclude(id__in=reserved_slot_ids)
 
@@ -235,7 +129,8 @@ def payment(request, reservation_id=None, assignment_id=None):
     # Determine whether to create a Reservation payment or a Subscription payment
     if reservation_id:
         # Handle payment for reservation
-        reservation = get_object_or_404(Reservation, pk=reservation_id)
+        reservation = get_object_or_404(SReservation, pk=reservation_id)
+        
         amount = reservation.sport.price_per_slot
         description = f"Payment for Reservation - {reservation.id}"
 
@@ -281,6 +176,7 @@ def payment(request, reservation_id=None, assignment_id=None):
     elif assignment_id:
         # Handle payment for assignment
         assignment = get_object_or_404(TrainingPlanAssignment, pk=assignment_id)
+        print(assignment)
         amount = assignment.plan.amount
         description = f"Payment for Assignment - {assignment.id}"
 
@@ -358,7 +254,7 @@ def paymenthandler(request, reservation_id=None, assignment_id=None):
 
         if reservation_id:
             # Update the Reservation status to True.
-            reservation = Reservation.objects.get(id=reservation_id)
+            reservation = SReservation.objects.get(id=reservation_id)
             reservation.status = True
             reservation.save()
         elif assignment_id:
@@ -373,3 +269,48 @@ def paymenthandler(request, reservation_id=None, assignment_id=None):
     else:
         # If other than POST request is made.
         return HttpResponseBadRequest()
+    
+
+
+from django.shortcuts import render
+
+def pose_detection_view(request):
+    return render(request, 'pose_detection_app.html')
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import SportsCenter, InventoryItem
+from .forms import InventoryItemForm
+
+def inventory_detail(request, sports_center_id):
+    sports_center = get_object_or_404(SportsCenter, pk=sports_center_id)
+    if request.method == 'POST':
+        form = InventoryItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            inventory_item = form.save(commit=False)
+            inventory_item.sports_center = sports_center
+            inventory_item.save()
+            return redirect('inventory_detail', sports_center_id=sports_center_id)
+    else:
+        form = InventoryItemForm()
+    return render(request, 'inventory_detail.html', {'sports_center': sports_center, 'form': form})
+
+def delete_inventory_item(request, sports_center_id, inventory_item_id):
+    inventory_item = get_object_or_404(InventoryItem, pk=inventory_item_id)
+    inventory_item.delete()
+    return redirect('inventory_detail', sports_center_id=sports_center_id)
+
+def update_inventory_quantity(request, sports_center_id, inventory_item_id):
+    inventory_item = get_object_or_404(InventoryItem, pk=inventory_item_id)
+    sports_center = get_object_or_404(SportsCenter, pk=sports_center_id)
+    if request.method == 'POST':
+        form = InventoryItemForm(request.POST, instance=inventory_item)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory_detail', sports_center_id=sports_center_id)
+        else:
+            print(form.errors)  # Print form errors if form is not valid
+    else:
+        form = InventoryItemForm(instance=inventory_item)
+    return render(request, 'inventory_detail.html', {'sports_center': sports_center, 'form': form})
+
+

@@ -21,6 +21,11 @@ urlpatterns = [
     path('paymenthandler/assignment/<int:assignment_id>/', views.paymenthandler, name='paymenthandler_assignment'),
     
     path('paymenthandler/<int:reservation_id>/', views.paymenthandler, name='paymenthandler'),
+    path('pose-detection/',views.pose_detection_view, name='pose_detection_view'),
+    path('sports_center/<int:sports_center_id>/', views.inventory_detail, name='inventory_detail'),
+    path('sports_center/<int:sports_center_id>/delete/<int:inventory_item_id>/', views.delete_inventory_item, name='delete_inventory_item'),
+    path('sports_center/<int:sports_center_id>/update/<int:inventory_item_id>/', views.update_inventory_quantity, name='update_inventory_quantity'),
+
 
 
 ]
