@@ -73,7 +73,7 @@ class ProfilePage extends StatelessWidget {
               height: 20,
             ),
             const Text(
-              'Amogh \nSaxena',
+              'Vidhu \n Krishnan',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 35,
