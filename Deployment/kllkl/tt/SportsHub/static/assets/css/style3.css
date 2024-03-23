@@ -1,0 +1,16 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  color: rgb(0, 0, 0);
+  background-color: black;
+}
+
+canvas {
+  display: block;
+  margin: auto;
+  position: absolute;
+  top: 50%; /* Place the canvas 50% from the top of the viewport */
+  left: 50%; /* Place the canvas 50% from the left of the viewport */
+  transform: translate(-50%, -50%); /* Center the canvas */
+  color: rgb(4, 4, 4);
+}
