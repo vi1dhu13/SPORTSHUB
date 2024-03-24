@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament List</title>
+</head>
+<body>
+    <h1>Tournament List</h1>
+    <ul>
+        {% for tournament in tournaments %}
+            <li>
+                {{ tournament.name }} - {{ tournament.date }}
+                <!-- Add more fields as needed -->
+                <form action="{% url 'tournament_signup' tournament_id=tournament.id %}" method="post" style="display: inline;">
+
+                    {% csrf_token %}
+                    <input type="hidden" name="tournament_id" value="{{ tournament.id }}">
+                    <button type="submit" class="btn btn-primary">Select Tournament</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <!-- Button to create a new tournament -->
+    
+</body>
+</html>
