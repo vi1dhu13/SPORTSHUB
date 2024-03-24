@@ -335,7 +335,6 @@
         </div>
     </section>
 
-    <!-- ***** Testimonials Starts ***** -->
     <section class="section" id="trainers">
         <div class="container">
             <div class="row">
@@ -405,9 +404,7 @@
             </div>
         </div>
     </section>
-    <!-- ***** Testimonials Ends ***** -->
-    
-    <!-- ***** Contact Us Area Starts ***** -->
+
     <section class="section" id="contact-us">
         <div class="container-fluid">
             <div class="row">
@@ -452,9 +449,7 @@
             </div>
         </div>
     </section>
-    <!-- ***** Contact Us Area Ends ***** -->
-    
-    <!-- ***** Footer Start ***** -->
+
     <footer>
         <div class="container">
             <div class="row">
@@ -463,61 +458,29 @@
                     
                     - Designed by <a rel="nofollow" href="https://templatemo.com" class="tm-text-link" target="_parent">TemplateMo</a></p>
                     
-                    <!-- You shall support us a little via PayPal to info@templatemo.com -->
+ 
                     
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- jQuery -->
+
     <script src="{% static 'assets/js/jquery-2.1.0.min.js' %}"></script>
 
-    <!-- Bootstrap -->
     <script src="{% static 'assets/js/popper.js' %}"></script>
     <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 
-    <!-- Plugins -->
+ 
     <script src="{% static 'assets/js/scrollreveal.min.js' %}"></script>
     <script src="{% static 'assets/js/waypoints.min.js' %}"></script>
     <script src="{% static 'assets/js/jquery.counterup.min.js' %}"></script>
     <script src="{% static 'assets/js/imgfix.min.js' %}"></script> 
     <script src="{% static 'assets/js/mixitup.js' %}"></script> 
     <script src="{% static 'assets/js/accordions.js' %}"></script>
-    
-    <!-- Global Init -->
+   
     <script src="{% static 'assets/js/custom.js' %}"></script>
-    <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <script>
-        var options = {
-           
-          // Enter the Key ID generated from the Dashboard
-          key: "{{ razorpay_merchant_key }}",
-           
-          // Amount is in currency subunits.
-          // Default currency is INR. Hence,
-          // 50000 refers to 50000 paise
-          amount: "{{ razorpay_amount }}",
-          currency: "{{ currency }}",
-           
-          // Your/store name.
-          name: "Dj Razorpay",
-           
-          // Pass the `id` obtained in the response of Step 1
-          order_id: "{{ razorpay_order_id }}",
-          callback_url: "{{ callback_url }}",
-        };
-         
-        // initialise razorpay with the options.
-        var rzp1 = new Razorpay(options);
-         
-        // add event listener to the payment button.
-        document.getElementById("pay-btn").onclick = function (e) {
-          rzp1.open();
-          e.preventDefault();
-        };
-      </script> -->
 
   </body>
 

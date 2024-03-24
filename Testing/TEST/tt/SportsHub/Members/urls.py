@@ -36,6 +36,7 @@ urlpatterns = [
     path('ce_reservation/', views.ce_reservation, name='ce_reservation'),
     path('profile/<int:user_id>/', views.view_profile, name='view_profile'),
     path('download_pdf/<path:pdf_path>/', views.download_pdf, name='download_pdf'),
+
    
 
 ]

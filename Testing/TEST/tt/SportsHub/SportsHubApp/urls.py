@@ -22,7 +22,23 @@ urlpatterns = [
     
     path('paymenthandler/<int:reservation_id>/', views.paymenthandler, name='paymenthandler'),
     path('pose-detection/',views.pose_detection_view, name='pose_detection_view'),
-
-
+    path('sports_center/<int:sports_center_id>/', views.inventory_detail, name='inventory_detail'),
+    path('sports_center/<int:sports_center_id>/delete/<int:inventory_item_id>/', views.delete_inventory_item, name='delete_inventory_item'),
+    path('sports_center/<int:sports_center_id>/update/<int:inventory_item_id>/', views.update_inventory_quantity, name='update_inventory_quantity'),
+    path('inventory/request/create/', views.inventory_request_create, name='inventory_request_create'),
+    path('inventory/request/<int:request_id>/approve/', views.approve_request, name='approve_request'),
+    path('inventory/request/<int:request_id>/reject/', views.reject_request, name='reject_request'),
+    path('inventory/requests/', views.inventory_request_list, name='inventory_request_list'),
+    path('request/status/', views.user_request_status, name='user_request_status'),
+    path('tournament/<int:tournament_id>/', views.tournament_detail, name='tournament_detail'),
+    path('tournament/<int:tournament_id>/signup/', views.tournament_signup, name='tournament_signup'),
+    path('create-tournament/', views.create_tournament, name='create_tournament'),
+    path('tournaments/', views.tournament_list, name='tournament_list'),
+    # Add other URL patterns as needed
 ]
-# urls.py
+
+
+
+
+
+

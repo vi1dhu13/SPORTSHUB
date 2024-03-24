@@ -276,3 +276,135 @@ from django.shortcuts import render
 
 def pose_detection_view(request):
     return render(request, 'pose_detection_app.html')
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import SportsCenter, InventoryItem
+from .forms import InventoryItemForm
+
+def inventory_detail(request, sports_center_id):
+    sports_center = get_object_or_404(SportsCenter, pk=sports_center_id)
+    if request.method == 'POST':
+        form = InventoryItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            inventory_item = form.save(commit=False)
+            inventory_item.sports_center = sports_center
+            inventory_item.save()
+            return redirect('inventory_detail', sports_center_id=sports_center_id)
+    else:
+        form = InventoryItemForm()
+    return render(request, 'inventory_detail.html', {'sports_center': sports_center, 'form': form})
+
+def delete_inventory_item(request, sports_center_id, inventory_item_id):
+    inventory_item = get_object_or_404(InventoryItem, pk=inventory_item_id)
+    inventory_item.delete()
+    return redirect('inventory_detail', sports_center_id=sports_center_id)
+
+def update_inventory_quantity(request, sports_center_id, inventory_item_id):
+    inventory_item = get_object_or_404(InventoryItem, pk=inventory_item_id)
+    sports_center = get_object_or_404(SportsCenter, pk=sports_center_id)
+    if request.method == 'POST':
+        form = InventoryItemForm(request.POST, instance=inventory_item)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory_detail', sports_center_id=sports_center_id)
+        else:
+            print(form.errors)  # Print form errors if form is not valid
+    else:
+        form = InventoryItemForm(instance=inventory_item)
+    return render(request, 'inventory_detail.html', {'sports_center': sports_center, 'form': form})
+
+
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import InventoryRequestForm
+from .models import InventoryRequest
+
+
+def inventory_request_create(request):
+    if request.method == 'POST':
+        form = InventoryRequestForm(request.POST)
+        if form.is_valid():
+            logged_in_trainer = request.user.sportstrainer  # Get the logged-in trainer
+            inventory_request = form.save(commit=False)
+            inventory_request.trainer = logged_in_trainer  # Set the trainer field
+            inventory_request.save()
+            return redirect('user_request_status')  # Redirect to request list page
+    else:
+        form = InventoryRequestForm()
+    return render(request, 'inventory_request_form.html', {'form': form})
+
+def inventory_request_list(request):
+    requests = InventoryRequest.objects.all()
+    return render(request, 'inventory_request_list.html', {'requests': requests})
+
+def approve_request(request, request_id):
+    inventory_request = get_object_or_404(InventoryRequest, id=request_id)
+    inventory_request.status = 'approved'
+    inventory_request.save()
+    return redirect('inventory_request_list')
+
+def reject_request(request, request_id):
+    inventory_request = get_object_or_404(InventoryRequest, id=request_id)
+    inventory_request.status = 'rejected'
+    inventory_request.save()
+    return redirect('inventory_request_list')
+
+from django.shortcuts import render
+from .models import InventoryRequest
+
+def user_request_status(request):
+    # Assuming the user is authenticated and the trainer is associated with the user
+    logged_in_trainer = request.user.sportstrainer
+    requests = InventoryRequest.objects.filter(trainer=logged_in_trainer)
+    return render(request, 'myrequests.html', {'requests': requests})
+
+
+from django.shortcuts import render, redirect
+from .models import Tournament
+from .forms import TournamentSignUpForm
+
+def tournament_detail(request, tournament_id):
+    tournament = Tournament.objects.get(id=tournament_id)
+    return render(request, 'tournament_detail.html', {'tournament': tournament})
+
+def tournament_signup(request, tournament_id):
+    tournament = Tournament.objects.get(id=tournament_id)
+    if request.method == 'POST':
+        form = TournamentSignUpForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            tournament.participants.add(user)
+            return redirect('tournament_detail', tournament_id=tournament_id)
+    else:
+        form = TournamentSignUpForm()
+    return render(request, 'tournament_signup.html', {'form': form})
+
+
+from django.shortcuts import render, redirect
+from .models import Tournament
+from .forms import TournamentForm
+from Members.models import SportsTrainer
+
+
+def create_tournament(request):
+    if request.method == 'POST':
+        form = TournamentForm(request.POST)
+        if form.is_valid():
+            tournament = form.save(commit=False)
+            tournament.organizer = SportsTrainer.objects.get(user=request.user)
+            tournament.save()
+            # Optionally, you can redirect the user to the newly created tournament detail page
+            return redirect('tournament_detail', tournament_id=tournament.id)
+    else:
+        form = TournamentForm()
+    return render(request, 'create_tournament.html', {'form': form})
+
+
+from django.shortcuts import render
+from .models import Tournament
+
+def tournament_list(request):
+    tournaments = Tournament.objects.all()
+    return render(request, 'tournament_list.html', {'tournaments': tournaments})
+

@@ -148,9 +148,7 @@ class WeeklyFitnessPlan(models.Model):
 from django.db import models
 
 class GymSlot(models.Model):
-    """
-    Model to represent gym time slots available for reservation.
-    """
+  
     start_time = models.TimeField()
     end_time = models.TimeField()
     capacity = models.PositiveIntegerField(default=6)
@@ -202,4 +200,6 @@ class EquipmentReservation(models.Model):
     
     def __str__(self):
         return f"Reservation for {self.equipment.name} on {self.date} by {self.fitness_user.user.username}"
+
+
 

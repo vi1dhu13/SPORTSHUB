@@ -122,3 +122,63 @@ from django.db import models
 class DataPoint(models.Model):
     category = models.CharField(max_length=255)
     value = models.IntegerField()
+
+
+from django.db import models
+
+class InventoryItem(models.Model):
+    name = models.CharField(max_length=100)
+    quantity = models.IntegerField(default=0)
+    image = models.ImageField(upload_to='inventory_images/', blank=True, null=True)
+    sports_center = models.ForeignKey(
+        SportsCenter,
+        on_delete=models.CASCADE,
+        related_name='inventory_items'
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class InventoryRequest(models.Model):
+    trainer = models.ForeignKey(SportsTrainer, on_delete=models.CASCADE)
+    sports_center = models.ForeignKey(SportsCenter, on_delete=models.CASCADE)
+    item = models.ForeignKey(InventoryItem, on_delete=models.CASCADE, null=True, blank=True)
+    new_item_name = models.CharField(max_length=100, blank=True)  # Name of the new item if not present in inventory
+    quantity_requested = models.IntegerField()
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+
+
+
+from django.db import models
+from django.contrib.auth import get_user_model
+from .models import SportsCenter
+from Members.models import SportsTrainer
+
+class Tournament(models.Model):
+    name = models.CharField(max_length=100)
+    date = models.DateField()
+    description = models.TextField(blank=True)
+    organizer = models.ForeignKey(
+        SportsTrainer,
+        on_delete=models.CASCADE,
+        related_name='hosted_tournaments'
+    )
+    location = models.ForeignKey(
+        SportsCenter,
+        on_delete=models.CASCADE,
+        related_name='tournaments'
+    )
+    participants = models.ManyToManyField(
+        get_user_model(),
+        related_name='tournaments_participated', 
+        blank=True
+    )
+
+    def __str__(self):
+        return self.name

@@ -70,7 +70,7 @@ def admin_dashboard(request):
                 sports_center.trainer = sports_trainer
                 sports_center.save()
 
-    sports_centers = SportsCenter.objects.filter(trainer__isnull=True)
+    sports_centers = SportsCenter.objects.all()
     sports_trainers = SportsTrainer.objects.all()
 
     labels = ['Category A', 'Category B', 'Category C']
@@ -131,6 +131,7 @@ def admin_dashboard(request):
         'recent_plans': recent_plans,
         'date_filters': date_filters,
         'sports_centers': sports_centers,
+        'sports_centers_without_trainers':sports_centers_without_trainers,
         'total_amount_received': total_amount_received,
         'total_amount_for_reservations': total_amount_for_reservations,
         'total_amount_for_training_plans': total_amount_for_training_plans
@@ -235,26 +236,48 @@ def fitness_user_dashboard(request):
 
 from django.shortcuts import render
 from Members.models import SportsTrainer
-from SportsHubApp.models import SReservation
+from SportsHubApp.models import SReservation,SportscenterSlot
+
+
+
+from django.db.models import Count
 
 def sports_user_dashboard(request):
-
     # Fetch data specific to the logged-in user (assuming the user is a trainer)
     sports_trainer = get_object_or_404(SportsTrainer, user=request.user)
+    all_reservations = SReservation.objects.all().order_by('sport__name')
 
+    most_selected_slots = SportscenterSlot.objects.annotate(num_reservations=Count('reservations')).order_by('-num_reservations')
     # Get all SportsCenters where the trainer is the logged-in trainer
     sports_centers = SportsCenter.objects.filter(trainer=sports_trainer)
 
     # Fetch reservations related to the sports centers
     sports_center_reservations = SReservation.objects.filter(sport__in=sports_centers)
-    
+
+    most_booked_slot = SReservation.objects.values('slot').annotate(num_reservations=Count('slot')).order_by('-num_reservations').first()
+
+    # Query for the sports center with the most bookings
+    sports_center_with_most_booking = SportsCenter.objects.annotate(num_bookings=Count('sreservation')).order_by('-num_bookings').first()
+
+    # Query for the total money collected by each sports center
+    money_by_sports_center = SportsCenter.objects.annotate(
+        total_money_collected=Sum('sreservation__sport__price_per_slot')
+    )
+
     context = {
         'sports_trainer': sports_trainer,
         'sports_centers': sports_centers,
         'sports_center_reservations': sports_center_reservations,
+        'all_reservations': all_reservations,
+        'most_selected_slots': most_selected_slots,
+        'most_booked_slot': most_booked_slot,
+        'sports_center_with_most_booking': sports_center_with_most_booking,
+        'money_by_sports_center': money_by_sports_center,
     }
 
     return render(request, 'su.html', context)
+
+
 
 
 
@@ -997,3 +1020,5 @@ def download_pdf(request, pdf_path):
         return response
 
     return HttpResponse("File not found.")
+
+

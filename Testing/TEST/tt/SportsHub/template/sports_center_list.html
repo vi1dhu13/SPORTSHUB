@@ -149,7 +149,9 @@
                             <li  class="scroll-to-section"><a href="{% url 'users:logout' %}" >Logout</a></li>
                             {% else %}
                             
-                           
+                           <!-- Button to access tournament detail -->
+                           <a href="{% url 'tournament_list' %}" class="btn btn-primary">View Tournaments List</a>
+
                             <li class="scroll-to-section"><a href="{% url 'sports_center_list' %}" >Services</a></li>
                            
                             <li class="scroll-to-section"><a href="{% url 'users:login' %}" >Login</a></li>

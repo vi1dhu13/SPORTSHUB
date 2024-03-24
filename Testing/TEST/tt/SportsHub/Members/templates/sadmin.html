@@ -111,19 +111,22 @@
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">Sports<em>HuB</em></a>
+                        <a href="{% url 'index' %}" class="logo">Sports<em>HuB</em></a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                            <li class="scroll-to-section"><a href="{% url 'index' %}">Home</a>
-                            
-                            
-                            <li class="scroll-to-section"><a href="{% url 'Training:render_my_template' %}" >Train with ZIZU</a></li> 
-                           
-                            <li class="scroll-to-section"> <a href="{% url 'users:role_approval' %}" class="btn btn-primary">Go to Role Approval</a></li> 
-                            <li class="scroll-to-section"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li> 
-                            
-                        </ul>        
+                        <nav class="navbar">
+                            <ul class="nav">
+                                <li class="scroll-to-section"><a href="{% url 'index' %}">Home</a></li>
+                                
+                                <li class="scroll-to-section"><a href="{% url 'users:role_approval' %}">Go to Role Approval</a></li>
+                                <li class="scroll-to-section"><a href="{% url 'inventory_request_list' %}">View Inventory Requests</a></li>
+                                <li class="scroll-to-section"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
+                            </ul>
+                            <div class="header-panel">
+                                <button onclick="showRecents()">Show Recents</button>
+                                <button onclick="showResources()">Show Resources</button>
+                            </div>
+                        </nav>      
                         <a class='menu-trigger'>
                             <span>Menu</span>
                         </a>
@@ -145,10 +148,7 @@
             <center><h1 style="color: rgb(241, 241, 241); font-weight: bold; text-transform: uppercase;">Admin Dashboard</h1></center>
           </div>
   
-          <div class="header-panel">
-            <button onclick="showRecents()">Show Recents</button>
-            <button onclick="showResources()">Show Resources</button>
-        </div>
+
           <div class="container">
             <section id="recents">
         
@@ -231,7 +231,26 @@
                         </tbody>
                     </table>
                 </div>
-        
+                <div class="container mt-3">
+                    <h2 class="text-uppercase">Inventory</h2>
+                    <div class="row">
+                        {% for sports_center in sports_centers %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ sports_center.name }}</h5>
+                                    <p class="card-text">Location: {{ sports_center.location }}</p>
+                                    <div style="height: 200px; overflow: hidden;">
+                                        <img class="mt-3 rounded-border" style="width: 100%; height: 100%;" src="{{ sports_center.image.url }}" alt="{{ sports_center.name }}" class="card-img-top">
+                                    </div>
+                                    <a href="{% url 'inventory_detail' sports_center_id=sports_center.id %}" class="btn btn-primary mt-3">Inventory</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
                 <!-- Assign Sports Trainer to Sports Center Form -->
                 <div class="container mt-5">
                     <h2 class="text-uppercase">Assign Sports Trainer to Sports Center</h2>
@@ -241,8 +260,12 @@
                             <div class="col-md-6">
                                 <label for="sports_center" class="form-label">Select Sports Center:</label>
                                 <select name="sports_center" class="form-select" required>
-                                    {% for sports_center in sports_centers %}
+                                    {% for sports_center in sports_centers_without_trainers %}
                                     <option value="{{ sports_center.id }}">{{ sports_center.name }}</option>
+                                    <div class="container mt-3">
+                                        
+                                    </div>
+                                    
                                     {% endfor %}
                                 </select>
                             </div>
@@ -294,44 +317,7 @@
                     </table>
                 </div>
             </div>
-            
-           
-
-
-            <h2>Sports Centers</h2>
-            <table id="sportsCentersTable">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Description</th>
-                        <th>Image</th>
-                        <th>Price per Slot</th>
-                        <th>Trainer</th>
-                        <th>Equipment</th>
-                        <!-- Add more columns as needed -->
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for center in sports_centers %}
-                        <tr>
-                            <td>{{ center.name }}</td>
-                            <td>{{ center.location }}</td>
-                            <td>{{ center.description|safe }}</td>
-                            <td><img src="{{ center.image.url }}" alt="{{ center.name }}" width="50"></td>
-                            <td>{{ center.price_per_slot }}</td>
-                            <td>{{ center.trainer.user.username }}</td>
-                            <td>
-                                {% for equipment in center.equipment.all %}
-                                    {{ equipment.name }}{% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            </td>
-                            <!-- Add more columns as needed -->
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            
+         
         </section>
     
         <!-- Add buttons or links to toggle between sections -->

@@ -422,30 +422,7 @@ from .forms import NutritionPlanAssignmentForm
 from django.db import transaction
 
 
-# @login_required
-# def assign_nutrition_plan(request, user_id):
-#     trainer = request.user.fitnesstrainer
 
-#     user = get_object_or_404(CustomUser, id=user_id)
-
-#     connection = FitnessUser.objects.filter(traineruserconnection__fitness_trainer=trainer, user=user).first()
-
-#     if connection is None:
-#         return render(request, 'xreservation.html')
-
-#     if request.method == 'POST':
-#         form = NutritionPlanAssignmentForm(request.POST, trainer=trainer, user=user)
-#         if form.is_valid():
-#             with transaction.atomic():
-#                 assignment = form.save(commit=False)
-#                 assignment.creator_trainer = trainer
-#                 assignment.save()
-#                 assignment.items.set(form.cleaned_data['items'])
-#             return redirect('Members:fitness_trainer_dashboard')
-#     else:
-#         form = NutritionPlanAssignmentForm(trainer=trainer, user=user)
-
-#     return render(request, 'assign_nutrition_plan.html', {'form': form, 'user': user})
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
