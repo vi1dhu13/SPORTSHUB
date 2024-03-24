@@ -1,0 +1,62 @@
+<!-- customized_routine.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customized Routine</title>
+
+    <!-- Include jQuery and jQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- Your custom JavaScript for drag-and-drop functionality -->
+    <script>
+        $(function() {
+            $("#sortable").sortable({
+                update: function(event, ui) {
+                    var exercise_ids = $(this).sortable('toArray');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/update_order/',
+                        data: {'exercise_ids[]': exercise_ids},
+                        dataType: 'json',
+                        success: function(data) {
+                            // Handle success, if needed
+                        },
+                    });
+                },
+            });
+            $("#sortable").disableSelection();
+        });
+    </script>
+
+    <!-- Your CSS styles -->
+    <style>
+        #sortable {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sortable li {
+            background-color: #f4f4f4;
+            margin: 5px;
+            padding: 10px;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Sample Workout Routine</h2>
+    
+    <ul id="sortable">
+        <li id="exercise1">Exercise 1</li>
+        <li id="exercise2">Exercise 2</li>
+        <li id="exercise3">Exercise 3</li>
+    </ul>
+
+    <a href="/workout_routines">Back to Workout Routines</a>
+
+</body>
+</html>
