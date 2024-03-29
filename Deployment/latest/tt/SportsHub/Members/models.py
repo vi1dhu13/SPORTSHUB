@@ -201,3 +201,5 @@ class EquipmentReservation(models.Model):
     def __str__(self):
         return f"Reservation for {self.equipment.name} on {self.date} by {self.fitness_user.user.username}"
 
+
+

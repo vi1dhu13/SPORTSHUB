@@ -152,3 +152,33 @@ class InventoryRequest(models.Model):
         ('rejected', 'Rejected'),
     ]
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+
+
+
+from django.db import models
+from django.contrib.auth import get_user_model
+from .models import SportsCenter
+from Members.models import SportsTrainer
+
+class Tournament(models.Model):
+    name = models.CharField(max_length=100)
+    date = models.DateField()
+    description = models.TextField(blank=True)
+    organizer = models.ForeignKey(
+        SportsTrainer,
+        on_delete=models.CASCADE,
+        related_name='hosted_tournaments'
+    )
+    location = models.ForeignKey(
+        SportsCenter,
+        on_delete=models.CASCADE,
+        related_name='tournaments'
+    )
+    participants = models.ManyToManyField(
+        get_user_model(),
+        related_name='tournaments_participated', 
+        blank=True
+    )
+
+    def __str__(self):
+        return self.name

@@ -1,248 +1,209 @@
 {% load static %}
 {% load socialaccount %}
 <!DOCTYPE html>
-<html>
+
 
 <head>
-   <meta charset="utf-8"> 
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <title></title>
-   <meta name="description" content="">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
 
-   <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+VAdr3k6cqGpPjXkbJHIuM/CJ5InAI6fDj4sD6k/KJmJiS" crossorigin="anonymous">
- 
-   <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+VAdr3k6cqGpPjXkbJHIuM/CJ5InAI6fDj4sD6k/KJmJiS" crossorigin="anonymous">
 
-   <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/templatemo-training-studio.css' %}">
-    
- 
-   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-   <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
-   <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-   <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-   <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
- 
-   <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
- 
-   <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
- 
-   <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
- 
-   <link rel="stylesheet" href="{% static 'css/aos.css' %}">
-   <link href="{% static 'css/jquery.mb.YTPlayer.min.css' %}" media="all" rel="stylesheet" type="text/css">
- 
-   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-      crossorigin="anonymous"></script>
-
-   <style>
-      .soul-logo { 
-         mix-blend-mode: color-burn;
-      }
-
-      .placform::placeholder {
-         position: absolute;
-         left: 10px;
-      }
 
 
-      label {
-         font-weight: bold;
-         
-      }
-      body {
-        background-color: #f2f2f2; 
-    }
-   </style>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+    <link href="{% static 'css/jquery.mb.YTPlayer.min.css' %}" media="all" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            background-color: #000000; /* Set background color to black */
+        }
+
+        .card {
+            background-color: #000000;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            margin-bottom: 20px; /* Adjust spacing between cards */
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            color: #ffffff;
+        }
+
+        .main-nav {
+            background-color: #000000; /* Set background color for the navigation bar */
+        }
+    </style>
 </head>
 
+<body>
+    <header class="header-area   main-nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
 
-<header class="header-area header-sticky" style="background: #000000;">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
+                        <a href="index.html" class="logo">Sports<em>Hub</em></a>
 
-                    <a href="index.html" class="logo">Sports<em>Hub</em></a>
-
-                    <ul class="nav">
-                        <li class="scroll-to-section"><a href="{% url 'index' %}">Home</a></li>
-                        <li class="scroll-to-section"><a href="{% url 'Members:select_trainer' %}">Select Trainer</a></li>
-                        <li class="scroll-to-section"><a href="{% url 'Members:view_assigned_training_plans' user.id %}">My Plan</a></li>
-                        <li class="scroll-to-section"><a href="{% url 'Members:this_weeks_plan' %}">This Week's Plan</a></li>
-
-                        <li class="scroll-to-section"><a href="{% url 'Training:user_workout_routines' %}" >View My Workout Routines</a></li>
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="{% url 'index' %}">Home</a></li>
 
 
-                        <li class="scroll-to-section"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
-                    </ul>
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
+
+                            <li class="scroll-to-section"><a href="{% url 'users:logout' %}"
+                                    class="nav-link">Logout</a></li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
     <!-- Content Block -->
     <div class="container mt-4">
-      <br>
-      <br>
-      <br>
+        <br>
+        <br>
+        <br>
         {% block content %}
         <div class="container mt-5">
             <h1 class="display-4">Welcome</h1>
-        
-            <!-- User Profile Section -->
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title">Profile Information</h2>
-                    <!-- Display user-specific information here -->
-                    <table class="table">
-                        <tr>
-                            <th>UserName:</th>
-                            <td>{{ fitness_user.user.username }}</td>
-                        </tr>
-                        <tr>
-                            <th>Email:</th>
-                            <td>{{ fitness_user.user.email }}</td>
-                        </tr>
-      
-                        <tr>
-                            <th>Height:</th>
-                            <td>{{ fitness_user.height }} cm</td>
-                        </tr>
-                        <tr>
-                            <th>Weight:</th>
-                            <td>{{ fitness_user.weight }} kg</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        
 
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title">Your Workout Plan</h2>
-
-                    <table class="table">
-                        {% if training_plan_assignments %}
-                            {% with assignment=training_plan_assignments.0.plan %}
-                                <tr>
-                                    <th>Plan Name:</th>
-                                    <td>{{ assignment.plan_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Description:</th>
-                                    <td>{{ assignment.description }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Duration:</th>
-                                    <td>{{ assignment.duration }} months</td>
-                                </tr>
-                                <!-- Add more workout plan details as needed -->
-                            {% endwith %}
-                        {% else %}
-                            <tr>
-                                <td colspan="2">You do not have an assigned workout plan at the moment.</td>
-                            </tr>
-                        {% endif %}
-                    </table>
-                    <a href="#" class="btn btn-primary">View Workout Plan</a>
-                </div>
-            </div>
-
-            <BR>
-
-        
-                {% if trainer %}
-                    <p>Your Trainer: {{ trainer.user.username }}</p>
-                {% else %}
-                    <p>You don't have an assigned trainer yet.</p>
-                {% endif %}
-        
-                <div class="card mb-4">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <!-- User Profile Section -->
+                <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title">Your Workout Routine Assignment</h3>
-                        {% if training_plan_assignments %}
+                        <h5 class="card-title">User Information</h5>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p><strong>UserName:</strong> {{ fitness_user.user.username }}</p>
+                                <p><strong>Email:</strong> {{ fitness_user.user.email }}</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p><strong>Height:</strong> {{ fitness_user.height }} cm</p>
+                                <p><strong>Weight:</strong> {{ fitness_user.weight }} kg</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
+                
+
+
+
+                <!-- Trainer Information Section -->
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Trainer Information</h3>
+                            {% if trainer %}
+                            <div class="card-text">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><strong>Name:</strong> {{ trainer.user.first_name }}</li>
+                                    <li class="list-group-item"><strong>Email:</strong> {{ trainer.user.email }}</li>
+                                    <li class="list-group-item"><strong>Experience:</strong> {{ trainer.experience }} years</li>
+                                </ul>
+                            </div>
+                            {% else %}
+                            <p class="card-text">You do not have a connected trainer at the moment.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <!-- Your Workout Routine Assignment Section -->
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Your Workout Routine Assignment</h3>
+                            {% if training_plan_assignments %}
                             <strong>Name:</strong> {{ training_plan_assignments.name }}<br>
                             <strong>Description:</strong> {{ training_plan_assignments.description }}<br>
                             <strong>Exercises:</strong>
                             <ul>
                                 {% for exercise in training_plan_assignments.exercises.all %}
-                                    <li>{{ exercise.name }}</li>
+                                <li>{{ exercise.name }}</li>
                                 {% endfor %}
                             </ul>
-                        {% else %}
+                            {% else %}
                             <p>You don't have any workout routine assignments yet.</p>
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-                
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h3 class="card-title">Your Nutrition Plan</h3>
-                        {% if nutrition_plan %}
+
+                <!-- Your Nutrition Plan Section -->
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Your Nutrition Plan</h3>
+                            {% if nutrition_plan %}
                             <strong>Name:</strong> {{ nutrition_plan.name }}<br>
                             <strong>Description:</strong> {{ nutrition_plan.description }}<br>
                             <strong>Items:</strong>
                             <ul>
                                 {% for item in nutrition_plan.items.all %}
-                                    <li>{{ item.name }}</li>
+                                <li>{{ item.name }}</li>
                                 {% endfor %}
                             </ul>
-                        {% else %}
+                            {% else %}
                             <p>You don't have any assigned nutrition plan yet.</p>
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-                
-            
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title">Trainer Information</h2>
-                    {% if trainer %}
-
-                        <table class="table ">
-                            <tr>
-                                <th>Name:</th>
-                                <td>{{ trainer.user.first_name}}</td>
-                            </tr>
-                            <tr>
-                                <th>Email:</th>
-                                <td>{{ trainer.user.email }}</td>
-                            </tr>
-                            <tr>
-                                <th>Experience:</th>
-                                <td>{{ trainer.experience }} years</td>
-                            </tr>
-
-                        </table>
-                    {% else %}
-                        <p><em>You do not have a connected trainer at the moment.</em></p>
-                    {% endif %}
                 </div>
             </div>
         </div>
         {% endblock %}
     </div>
 
-    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

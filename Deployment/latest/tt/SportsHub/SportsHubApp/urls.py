@@ -30,6 +30,10 @@ urlpatterns = [
     path('inventory/request/<int:request_id>/reject/', views.reject_request, name='reject_request'),
     path('inventory/requests/', views.inventory_request_list, name='inventory_request_list'),
     path('request/status/', views.user_request_status, name='user_request_status'),
+    path('tournament/<int:tournament_id>/', views.tournament_detail, name='tournament_detail'),
+    path('tournament/<int:tournament_id>/signup/', views.tournament_signup, name='tournament_signup'),
+    path('create-tournament/', views.create_tournament, name='create_tournament'),
+    path('tournaments/', views.tournament_list, name='tournament_list'),
     # Add other URL patterns as needed
 ]
 

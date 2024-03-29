@@ -1,7 +1,7 @@
 {% load static %}
 {% load socialaccount %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-color: #000000;">
 
 <head>
     <meta charset="utf-8">
@@ -175,8 +175,8 @@
  
     </style>
 </head>
-<header class="header-area header-sticky" style="background: #000000; border-bottom: 2px solid #ffffff;">
-    <div class="container">
+<header class="header-area header-sticky" style="background-color: #000000;">
+    <div class="container" style="background-color: #000000;">
         <div class="row">
             <div class="col-12">
                 <nav class="main-nav">
@@ -211,44 +211,8 @@
             </div>
         </div>
     </div>
-<body style="background-color: #898787; color: #ffffff; border-bottom: 2px solid #ffffff;">
-
-
-    
-
-    {% for user in connected_users %}
-    <div class="modal fade" id="profileModal{{ user.user.id }}" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="profileModalLabel">User Profile</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>Username:</strong> {{ user.user.username }}</p>
-                    <p><strong>Email:</strong> {{ user.user.email }}</p>
-                    <p><strong>Fitness Goal:</strong> {{ user.fitness_goal }}</p>
-                    <p><strong>Height (cm):</strong> {{ user.height }}</p>
-                    <p><strong>Weight (kg):</strong> {{ user.weight }}</p>
-                
-                    {% if user.medical_conditions_pdf %}
-                        <p><strong>Medical Conditions PDF:</strong></p>
-                        <embed src="{{ user.medical_conditions_pdf.url }}" type="application/pdf" width="100%" height="600px">
-                    {% endif %}
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-
-    <div class="container mt-4" style="background-color: hsl(0, 0%, 100%); padding: 100px; border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-left: 250px;">        <div class="dcontainer">
-        <div class="container">
+    <body style="background-color: #000000; color: #ffffff;">
+        <div class="container" style="background-color: #000000;">
             <div class="row">
                 <!-- Trainer Welcome Card -->
                 <div class="col-md-6">
@@ -266,8 +230,7 @@
                         </div>
                     </div>
                 </div>
-        
-
+    
                 <div class="col-md-6">
                     <div class="border rounded p-4 mt-4 ">
                         <div class="card text-center bg-dark" style="width: 18rem;">
@@ -281,15 +244,11 @@
                         </div>
                     </div>
                 </div>
-                
-            </div>
-        </div>
-        
-
-
-        <h1 class="display-4" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">My Clients</h1>
     
-        <div class="container">
+            </div>
+    
+            <h1 class="display-4" style="color: #4285f4; text-align: center; text-shadow: 2px 2px 4px #000;">My Clients</h1>
+    
             <div class="row">
                 {% for user in connected_users %}
                 <div class="col-md-6">
@@ -328,12 +287,12 @@
                                     </a>
                                 {% endif %}
                             </p>
-                            
+    
                             <p class="card-text">
                                 <strong>Medical Conditions:</strong>
                                 {% if user.medical_conditions_pdf %}
                                     <a href="{% url 'Members:download_pdf' user.medical_conditions_pdf.name %}" target="_blank">Medical reports</a>
-
+    
                                 {% endif %}
                             </p>
                         </div>
@@ -341,106 +300,94 @@
                 </div>
                 {% endfor %}
             </div>
-        </div>
-        
-        
-        
-    </div>
-
-
-
-              
-            
-            
-        
-        <div class="row mt-4 justify-content-end">
-            <!-- Recent Reservations -->
-            <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                <h2 style="color: #f06d01;">Recent Reservations:</h2>
-                <table class="table table-bordered">
-                    <!-- Table Content -->
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time Slot</th>
-                            <th>Fitness User</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for reservation in recent_reservations %}
-                        <tr>
-                            <td>{{ reservation.reservation_date }}</td>
-                            <td>{{ reservation.slot.start_time }} - {{ reservation.slot.end_time }}</td>
-                            <td>{{ reservation.fitness_user.user.first_name }}</td>
-                        </tr>
+    
+            <div class="row mt-4 justify-content-end">
+                <!-- Recent Reservations -->
+                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                    <h2 style="color: #f06d01;">Recent Reservations:</h2>
+                    <table class="table table-bordered">
+                        <!-- Table Content -->
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time Slot</th>
+                                <th>Fitness User</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reservation in recent_reservations %}
+                            <tr>
+                                <td>{{ reservation.reservation_date }}</td>
+                                <td>{{ reservation.slot.start_time }} - {{ reservation.slot.end_time }}</td>
+                                <td>{{ reservation.fitness_user.user.first_name }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3">No recent reservations.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+    
+                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                    <h2 style="color: #4285f4;">Training Plan Assignments:</h2>
+                    <ul class="list-group">
+                        {% for assignment in training_plan_assignments %}
+                        <li class="list-group-item">
+                            <strong>Plan Name:</strong> {{ assignment.plan.plan_name }}<br>
+                            <strong>Accepted:</strong> {% if assignment.is_accepted %}Yes{% else %}No{% endif %}
+                        </li>
                         {% empty %}
-                        <tr>
-                            <td colspan="3">No recent reservations.</td>
-                        </tr>
+                        <li class="list-group-item">No training plan assignments.</li>
                         {% endfor %}
-                    </tbody>
-                </table>
+                    </ul>
+                </div>
             </div>
     
-
-            <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                <h2 style="color: #4285f4;">Training Plan Assignments:</h2>
-                <ul class="list-group">
-                    {% for assignment in training_plan_assignments %}
-                    <li class="list-group-item">
-                        <strong>Plan Name:</strong> {{ assignment.plan.plan_name }}<br>
-                        <strong>Accepted:</strong> {% if assignment.is_accepted %}Yes{% else %}No{% endif %}
-                    </li>
-                    {% empty %}
-                    <li class="list-group-item">No training plan assignments.</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
+            <div class="row mt-4 justify-content-end">
+                <!-- Weekly Fitness Plans -->
+                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                    <h2 style="color: #4285f4;">Weekly Fitness Plans:</h2>
+                    <!-- List Content -->
+                    <ul class="list-group">
+                        {% for weekly_plan in weekly_fitness_plans %}
+                        <li class="list-group-item">
+                            <strong>Plan Name:</strong> {{ weekly_plan.plan_name }}<br>
+                            <strong>Start Date:</strong> {{ weekly_plan.start_date }}<br>
+                            <strong>End Date:</strong> {{ weekly_plan.end_date }}
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No weekly fitness plans.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
     
-        <div class="row mt-4 justify-content-end">
-            <!-- Weekly Fitness Plans -->
-            <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                <h2 style="color: #4285f4;">Weekly Fitness Plans:</h2>
-                <!-- List Content -->
-                <ul class="list-group">
-                    {% for weekly_plan in weekly_fitness_plans %}
-                    <li class="list-group-item">
-                        <strong>Plan Name:</strong> {{ weekly_plan.plan_name }}<br>
-                        <strong>Start Date:</strong> {{ weekly_plan.start_date }}<br>
-                        <strong>End Date:</strong> {{ weekly_plan.end_date }}
-                    </li>
-                    {% empty %}
-                    <li class="list-group-item">No weekly fitness plans.</li>
-                    {% endfor %}
-                </ul>
-            </div>
-    
-            <!-- Pending Connection Requests -->
-            <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                <h2 style="color: #4285f4;">Pending Connection Requests:</h2>
-                <ul class="list-group">
-                    {% for request in pending_requests %}
-                    <li class="list-group-item">
-                        <strong>User:</strong> {{ request.fitness_user.user.username }}<br>
-                        <strong>Status:</strong> {{ request.status }}<br>
-                        {% if request.status == 'pending' %}
-                        <form method="post" action="{% url 'Members:approve_reject_request' request.id %}">
-                            {% csrf_token %}
-                            <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">Approve</button>
-                            <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
-                        </form>
-                        {% endif %}
-                    </li>
-                    {% empty %}
-                    <li class="list-group-item">No pending requests.</li>
-                    {% endfor %}
-                </ul>
+                <!-- Pending Connection Requests -->
+                <div class="col-md-6" style="background-color: #ffffff; border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                    <h2 style="color: #4285f4;">Pending Connection Requests:</h2>
+                    <ul class="list-group">
+                        {% for request in pending_requests %}
+                        <li class="list-group-item">
+                            <strong>User:</strong> {{ request.fitness_user.user.username }}<br>
+                            <strong>Status:</strong> {{ request.status }}<br>
+                            {% if request.status == 'pending' %}
+                            <form method="post" action="{% url 'Members:approve_reject_request' request.id %}">
+                                {% csrf_token %}
+                                <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">Approve</button>
+                                <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
+                            </form>
+                            {% endif %}
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No pending requests.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    
 
+    
    
     
 

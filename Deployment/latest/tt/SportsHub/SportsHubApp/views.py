@@ -358,3 +358,53 @@ def user_request_status(request):
     logged_in_trainer = request.user.sportstrainer
     requests = InventoryRequest.objects.filter(trainer=logged_in_trainer)
     return render(request, 'myrequests.html', {'requests': requests})
+
+
+from django.shortcuts import render, redirect
+from .models import Tournament
+from .forms import TournamentSignUpForm
+
+def tournament_detail(request, tournament_id):
+    tournament = Tournament.objects.get(id=tournament_id)
+    return render(request, 'tournament_detail.html', {'tournament': tournament})
+
+def tournament_signup(request, tournament_id):
+    tournament = Tournament.objects.get(id=tournament_id)
+    if request.method == 'POST':
+        form = TournamentSignUpForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            tournament.participants.add(user)
+            return redirect('tournament_detail', tournament_id=tournament_id)
+    else:
+        form = TournamentSignUpForm()
+    return render(request, 'tournament_signup.html', {'form': form})
+
+
+from django.shortcuts import render, redirect
+from .models import Tournament
+from .forms import TournamentForm
+from Members.models import SportsTrainer
+
+
+def create_tournament(request):
+    if request.method == 'POST':
+        form = TournamentForm(request.POST)
+        if form.is_valid():
+            tournament = form.save(commit=False)
+            tournament.organizer = SportsTrainer.objects.get(user=request.user)
+            tournament.save()
+            # Optionally, you can redirect the user to the newly created tournament detail page
+            return redirect('tournament_detail', tournament_id=tournament.id)
+    else:
+        form = TournamentForm()
+    return render(request, 'create_tournament.html', {'form': form})
+
+
+from django.shortcuts import render
+from .models import Tournament
+
+def tournament_list(request):
+    tournaments = Tournament.objects.all()
+    return render(request, 'tournament_list.html', {'tournaments': tournaments})
+
