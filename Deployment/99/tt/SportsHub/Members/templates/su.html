@@ -1,0 +1,317 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sports Hub Dashboard</title>
+ 
+
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+VAdr3k6cqGpPjXkbJHIuM/CJ5InAI6fDj4sD6k/KJmJiS" crossorigin="anonymous">
+  
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+ 
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.css' %}">
+     <link rel="stylesheet" href="{% static 'assets/css/templatemo-training-studio.css' %}">
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+  
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+    <link href="{% static 'css/jquery.mb.YTPlayer.min.css' %}" media="all" rel="stylesheet" type="text/css">
+  
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+ 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+       crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <!-- Add other stylesheets here -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+   
+
+    <style>
+    
+
+        .soul-logo {
+            mix-blend-mode: color-burn;
+        }
+
+        .placform::placeholder {
+            position: absolute;
+            left: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding-top: 30px;
+        }
+        .text-orange {
+        color: orange;
+        }
+
+
+
+ 
+    </style>
+</head>
+<header class="header-area header-sticky" style="background: #000000;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+
+                    <a href="index.html" class="logo">Sports<em>Hub</em></a>
+
+                    <ul class="nav">
+
+                        <li class="scroll-to-section"><a href="{% url 'inventory_request_create' %}" class="nav-link">Create Inventory Request</a></li>
+                        
+                        <!-- Button to access tournament detail -->
+<!--  -->
+
+<!-- Button to sign up for tournament -->
+
+
+<!-- Button to create a new tournament -->
+<li class="scroll-to-section"><a href="{% url 'create_tournament' %}" class="nav-link">Create New Tournament</a></li>
+
+
+                        <li class="scroll-to-section"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+<body style="background: #000000;">
+
+   
+
+    
+
+
+    <div class="container" style="margin-top: 80px; background: #000000; border: 2px solid white;">
+
+        <div class="row justify-content-center" >
+            <div class="col-md-8">
+                <div class="text-center">
+                    <h1 class="text-dark fs-1 fw-bold">Welcome, <span class="text-orange fs-1 fw-bolder">{{ sports_trainer.user.username }}</span></h1>
+
+                </div>
+                <div class="text-center border p-4 mt-4">
+                    <h2 class="text-dark fw-bold">Reservations for Your Sports Centers:</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="table-info">>
+                                <th>User</th>
+                                <th >Sport</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reservation in sports_center_reservations %}
+                            <tr>
+                                <td >{{ reservation.reserver.username }}</td>
+                                <td>{{ reservation.sport.name }}</td>
+                                <td>{{ reservation.reservation_date }}</td>
+                                <td>{{ reservation.slot.start_time }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-4" style="border: 2px solid white;">
+                <div class="text-center border p-4 mt-4">
+                    <h2 class="text-dark fw-bold">Your Sports Centers:</h2>
+                    {% if sports_centers %}
+                    <div class="row">
+                        {% for center in sports_centers %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <img src="{{ center.image.url }}" alt="{{ center.name }}" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">{{ center.name }}</h5>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p>You do not manage any Sports Centers.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Container -->
+    <div class="container mt-4" style="border: 2px solid white;">
+        <div class="row">
+
+            
+            
+            
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <br>
+                    <div class="card-body border p-4">
+                        <h2 class="card-title text-dark fw-bold">Sports Center with Most Bookings</h2>
+                        {% if sports_center_with_most_booking %}
+                            <p class="card-text">Name: {{ sports_center_with_most_booking.name }}</p>
+                            <p class="card-text">Number of Bookings: {{ sports_center_with_most_booking.num_bookings }}</p>
+                        {% else %}
+                            <p class="card-text">No sports center found.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Third Container -->
+    <div class="container mt-4" style="border: 2px solid white;">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="text-center border p-4">
+                    <h2 class="text-dark fw-bold">Money Collected by Sports Centers</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr >
+                                <th>Name</th>
+                                <th>Total Money Collected</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for center in money_by_sports_center %}
+                            <tr>
+                                <td>{{ center.name }}</td>
+                                <td>Rs{{ center.total_money_collected }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6" style="border: 2px solid white;">
+                <div class="text-center border p-4">
+                    <h2 class="text-dark fw-bold">Most Selected Slots</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Number of Reservations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for slot in most_selected_slots %}
+                            <tr>
+                                <td>{{ slot.start_time }}</td>
+                                <td>{{ slot.end_time }}</td>
+                                <td>{{ slot.num_reservations }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fourth Container -->
+    <div class="container mt-4" style="border: 2px solid white;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center border p-4">
+                    <h2 class="text-dark fw-bold">All Reservations</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Reserver</th>
+                                <th>Sport</th>
+                                <th>Slot Start Time</th>
+                                <th>Reservation Date</th>
+                                <th>Reservation Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reservation in all_reservations %}
+                            <tr>
+                                <td>{{ reservation.reserver.username }}</td>
+                                <td>{{ reservation.sport.name }}</td>
+                                <td>{{ reservation.slot.start_time }}</td>
+                                <td>{{ reservation.reservation_date }}</td>
+                                <td>{{ reservation.reservation_time }}</td>
+                                <td>{% if reservation.status %}Confirmed{% else %}Pending{% endif %}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+              
+
+
+    
+        
+
+    
+    
+   
+    
+ 
+   
+
+    
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ 
+
+</body>

@@ -1,0 +1,47 @@
+{% extends "sadmin.html" %}
+
+
+{% block content %}
+    <div class="page-container">
+        <div class="header-container">
+            <h1>Fitness Trainers</h1>
+        </div>
+        <div class="trainers-container">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trainer in fitness_trainers %}
+                    <tr>
+                        <td>{{ trainer.user.username }}</td>
+                        <td>{{ trainer.user.email }}</td>
+                        <td>
+                            {% if trainer.user.role == 'FitnessUser' %}
+                                <strong>Fitness Goal:</strong> {{ trainer.user.fitnessuser.fitness_goal }}<br>
+                                <strong>Height:</strong> {{ trainer.user.fitnessuser.height }}<br>
+                                <strong>Weight:</strong> {{ trainer.user.fitnessuser.weight }}
+                            {% elif trainer.user.role == 'FitnessTrainer' %}
+                                <strong>Experience:</strong> {{ trainer.user.fitnesstrainer.experience }} years<br>
+                                 <strong>Training Goal:</strong> {{ trainer.user.fitnesstrainer.training_goal }}<br>
+                                <strong>Height:</strong> {{ trainer.user.fitnesstrainer.height }}<br>
+                                <strong>Weight:</strong> {{ trainer.user.fitnesstrainer.weight }}<br>
+                                <strong>certification </strong> {{ trainer.user.fitnesstrainer.certification  }}<br>
+                                <strong>Certificate Link:</strong> <a href="{{ trainer.user.fitnesstrainer.certification_link }}" target="_blank">View Certificate</a><br>
+
+                            {% elif trainer.user.role == 'SportsTrainer' %}
+                                <strong>Specialization:</strong> {{ trainer.user.sportstrainer.specialization }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
