@@ -1,7 +1,7 @@
 {% load static %}
 {% load socialaccount %}
 <!DOCTYPE html>
-<html>
+<html style="background-color: black;">
 
 <head>
    <meta charset="utf-8"> 
@@ -65,7 +65,7 @@
     }
    </style>
 </head>
-
+<body  style="background-color: black;">
 
       <header class="header-area header-sticky"  style="background:  #000000;">
         <div class="container">
@@ -77,15 +77,21 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="{% url 'Members:fitness_trainer_dashboard' %}" >Home</a>
-                            
-                            <li class="scroll-to-section"><a href="{% url 'Members:view_pending_requests' %}">View Requests</a>
-                            <li class="scroll-to-section"><a href="{% url 'Members:create_training_plan' %}">Create Plan</a>
+                            <li class="scroll-to-section"><a href="{% url 'index' %}">Home</a></li>
                         
+ 
+                            <li class="scroll-to-section"><a href="{% url 'Members:create_weekly_plan' %}" style="color: #fff; margin-bottom: 40px; text-shadow: 1px 1px 2px #000;"><i class="far fa-calendar-alt fa-lg"></i> Weekly Plan</a></li>
 
-                            <li class="scroll-to-section"><a href="{% url 'Members:make_reservation'  %}">Make Reservations</a></li> 
-                            <li class="scroll-to-section"><a href="{% url 'Members:suggest_training_plans' %}">Training Plans</a></li> 
-                            <li class="scroll-to-section"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li> 
+                            <li class="scroll-to-section"><a href="{% url 'Members:create_training_plan' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="far fa-file-alt fa-lg"></i> Create Plan</a></li>
+                                                    <li class="scroll-to-section"><a href="{% url 'Members:cereservation_page' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="fas fa-tools fa-lg"></i> Equipment</a></li>
+
+                            <li class="scroll-to-section"><a href="{% url 'Members:make_reservation' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="far fa-calendar-plus fa-lg"></i> Make Reservations</a></li>
+
+                            
+                            <li class="scroll-to-section"><a href="{% url 'Members:suggest_training_plans' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="fas fa-list fa-lg"></i> Training Plans</a></li>
+                        
+     
+                        <li class="scroll-to-section"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
                             
                         </ul>        
                         <a class='menu-trigger'>

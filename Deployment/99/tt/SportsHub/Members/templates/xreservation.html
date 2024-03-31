@@ -1,228 +1,122 @@
+{% load static %}
+{% load socialaccount %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Gym Trainer Dashboard{% endblock %}</title>
-    <!-- Add Bootstrap CSS link -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        .navbar {
-            background-color: #264653!important; /* Deep teal background color */
-            height: 100px; /* Adjust the height as needed */
-        }
-      
-        .navbar-dark .navbar-nav .nav-link {
-            color: #F4A261!important; /* Light orange text color for navbar items */
-        }
-      
-        .navbar-dark .navbar-toggler-icon {
-            background-color: #E76F51!important; /* Coral color for the navbar toggler icon */
-        }
-      
-        /* Body Styles */
-        body {
-            background-color: #ffffff!important; /* Teal background color for the body */
-        }
-      
-        /* Container Styles */
-        .container {
-            background-color: #ffffff!important; /* Yellow background color for containers */
-            padding: 20px; /* Add some padding to the containers */
-            border-radius: 10px; /* Add rounded corners to the containers */
-        }
-      
-        .alert-label {
-          display: none;
-          color: #0000AA; /* Dark blue text color */
-          font-size: 14px;
+   <meta charset="utf-8"> 
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title></title>
+   <meta name="description" content="">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+
+   <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+VAdr3k6cqGpPjXkbJHIuM/CJ5InAI6fDj4sD6k/KJmJiS" crossorigin="anonymous">
+ 
+   <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+
+   <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-training-studio.css' %}">
+ 
+ 
+   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+   <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+   <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+   <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+   <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+ 
+   <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+ 
+   <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+ 
+   <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+ 
+   <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+   <link href="{% static 'css/jquery.mb.YTPlayer.min.css' %}" media="all" rel="stylesheet" type="text/css">
+ 
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"></script>
+
+   <style>
+      .soul-logo { 
+         mix-blend-mode: color-burn;
       }
-      
-      input:required + .alert-label {
-          display: block;
+
+      .placform::placeholder {
+         position: absolute;
+         left: 10px;
       }
-         
-          /* Custom styles for the form container */
-          .container {
-            max-width: 1400px;
-            margin: 10px auto;
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            color: #fff;
-          }
-      
-          /* Custom styles for the form */
-          form {
-            margin-top: 20px;
-          }
-      
-          /* Style form labels */
-          label {
-            font-weight: bold;
-            color: #264653!important; ;
-          }
-      
-          /* Style form fields */
-          .form-group {
-            margin-bottom: 20px;
-          }
-      
-          /* Style input fields */
-          input[type="text"],
-          input[type="email"],
-          input[type="password"],
-          select {
-            background-color: #444;
-            color: #fff;
-            border: 1px solid #555;
-            width: 100%; /* Make input fields longer */
-            padding: 10px; /* Add some padding for better appearance */
-            box-sizing: border-box; /* Include padding in width calculation */
-          }
-      
-          /* Style submit button */
-          .btn-primary {
-            background-color: #4285F4;
-            border-color: #4285F4;
-          }
-      
-          /* Additional styles for the second form section */
-          .form-row {
-            margin-top: 20px;
-          }
-          .card {
-              
-              background-color: 	#d3d3d3
-              padding: 1em;
-              
-              box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
-              border-radius: 10px;
-              
-              transition: 200ms ease-in-out;
-            }
-            
-            .username {
-              color: #C6E1ED;
-              font-size: 0.85em;
-              font-weight: 600;
-            }
-            
-            .body {
-              display: flex;
-              flex-direction: column;
-            }
-            
-            .body .text {
-              margin: 0 10px 0 0;
-              white-space: pre-line;
-              color: #264653!important; 
-              font-weight: 400;
-              line-height: 1.5;
-              margin-bottom: 4px;
-            }
-            
-            .footer {
-              position: relative;
-              width: 100%;
-              color: #9fa4aa;
-              font-size: 12px;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              border: none;
-              margin-top: 10px;
-            }
-            
-            .footer div {
-              margin-right: 1rem;
-              height: 20px;
-              display: flex;
-              align-items: center;
-              cursor: pointer;
-            }
-            
-            .footer svg {
-              margin-right: 5px;
-              height: 100%;
-              stroke: #9fa4aa;
-            }
-            
-            .viewer span {
-              height: 20px;
-              width: 20px;
-              background-color: rgb(28, 117, 219);
-              margin-right: -6px;
-              border-radius: 50%;
-              border: 1px solid #fff;
-              display: grid;
-              align-items: center;
-              text-align: center;
-              font-weight: bold;
-              font-size: 8px;
-              color: #fff;
-              padding: 2px;
-            }
-            
-            .viewer span svg {
-              stroke: #fff;
-            }
-        #available_slots {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-    
-        #available_slots p {
-            margin: 5px 0;
-            padding: 5px;
-            background-color: #f5f5f5;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-    </style>
+
+
+      label {
+         font-weight: bold;
+      }
+      body {
+        background-color: #f2f2f2; /* Light grey background color */
+    }
+   </style>
 </head>
 
-<body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Gym Trainer Dashboard</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Members:view_pending_requests' %}">View Requests</a>
-                </li>
 
-                <li class="nav-item">
-                    <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
-                </li>
-            </ul>
+      <header class="header-area header-sticky"  style="background:  #000000;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">Sports<em>Hub</em></a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="{% url 'index' %}">Home</a></li>
+                        
+ 
+                            <li class="scroll-to-section"><a href="{% url 'Members:create_weekly_plan' %}" style="color: #fff; margin-bottom: 40px; text-shadow: 1px 1px 2px #000;"><i class="far fa-calendar-alt fa-lg"></i> Weekly Plan</a></li>
+
+                            <li class="scroll-to-section"><a href="{% url 'Members:create_training_plan' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="far fa-file-alt fa-lg"></i> Create Plan</a></li>
+                                                    <li class="scroll-to-section"><a href="{% url 'Members:cereservation_page' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="fas fa-tools fa-lg"></i> Equipment</a></li>
+
+                            <li class="scroll-to-section"><a href="{% url 'Members:make_reservation' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="far fa-calendar-plus fa-lg"></i> Make Reservations</a></li>
+
+                            
+                            <li class="scroll-to-section"><a href="{% url 'Members:suggest_training_plans' %}" style="color: #fff; margin-bottom: 10px; text-shadow: 1px 1px 2px #000;"><i class="fas fa-list fa-lg"></i> Training Plans</a></li>
+                        
+     
+                        <li class="scroll-to-section"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
+                            
+                        </ul>        
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
         </div>
-    </nav>
+    </header>
+<br>
 
     <!-- Equipment Reservation -->
-    <div class="container" style="background-color: #264653!important; margin-top: 70px; margin-bottom: 50px;">
+    <div class="container" style="background-color: #775ca7!important; margin-top: 70px; margin-bottom: 50px;">
         <center><h1 style="color: rgb(241, 241, 241); font-weight: bold; text-transform: uppercase;">Make Reservation</h1></center>
       </div>
       <div id="success-message" class="alert alert-success" style="display: none;">
         Reservation created successfully!
     </div>
     <center>   <!-- Display Messages -->
-    <div  style="max-width: 800px;">
+    <div  style="max-width: 800px;"  style=" background-color: #000000">
    
   
-    <div class="container" style="margin-top: 90px;">
+    <div class="container" style="margin-top: 90px; background-color: #000000">
 
 
         <!-- Equipment Reservation Form -->
@@ -280,6 +174,7 @@
 
 <!-- AJAX Script -->
 <!-- AJAX Script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -370,7 +265,6 @@
         });
         
     });
-    
 </script>
 <script>
     // Get the current date
